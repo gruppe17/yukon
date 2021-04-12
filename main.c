@@ -1,6 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include "deck/deck.h"
+
+
+
 
 int main() {
-    printf("Hello, World!\n");
-    return 0;
+	DECK * deck = NewDeck();
+	printf("Hello, World!\n");
+	return 0;
 }
