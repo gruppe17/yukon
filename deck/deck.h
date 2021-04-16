@@ -9,7 +9,10 @@
 
 typedef int BOOL;
 
-typedef struct _deck DECK;
+typedef struct _deck{
+	CARD* card;
+	struct _deck* next;
+} DECK;
 
 DECK *NewDeck();
 

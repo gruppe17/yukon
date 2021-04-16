@@ -8,11 +8,7 @@
 #define TRUE 1;
 #define FALSE 0;
 
-typedef struct _deck{
-	CARD* card;
 
-	struct _deck* next;
-} DECK;
 
 DECK *NewDeckElement(CARD* card) {
 	DECK *newDeckElementPtr;
@@ -90,13 +86,20 @@ BOOL MoveAfterToDeck(DECK* newEnd, DECK* newDeckHead){
 }
 
 DECK* InterweaveDecks(DECK* a, DECK* b){
+	if (a == NULL) return b;
 	DECK* newDeckHead = a, *aNext;
-	while (a->next != NULL && b->next != NULL){
+	while (a != NULL && b != NULL){
+		//Remember the next card in the a pile
 		aNext = a->next;
+		//Set the next card in the a pile to the next card in b pile
 		a->next = b;
+		//Move to the next pair of cards
 		a = a->next;
 		b = b->next;
+		//Set the next card of the a pile to the original next card
 		a->next = aNext;
+		//Move a to point at this card
+		a = a->next;
 	}
 	return newDeckHead;
 }
