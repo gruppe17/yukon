@@ -23,6 +23,8 @@ void InsertDeckElementAtIndex(DECK** root, DECK * newElementPtr, int index);
 BOOL RemoveCard(DECK** root, CARD *card);
 BOOL DeleteCard(DECK** root, CARD *card);
 
+DECK* CutDeckAfter(DECK* deck);
+BOOL MoveAfterToDeck(DECK* newEnd, DECK* newDeckHead);
 
 
 #endif //YUKON_DECK_H

@@ -53,7 +53,7 @@ void InsertDeckElementAtIndex(DECK** root, DECK * newElementPtr, int index){
 	*tracer = newElementPtr;
 }
 
-int RemoveCard(DECK** root, CARD *card){
+BOOL RemoveCard(DECK** root, CARD *card){
 	int found = FALSE;
 	DECK *old;
 	DECK **tracer = root;
@@ -69,9 +69,24 @@ int RemoveCard(DECK** root, CARD *card){
 	return found;
 }
 
-int DeleteCard(DECK** root, CARD *card){
+BOOL DeleteCard(DECK** root, CARD *card){
 	if (!RemoveCard(root, card)) return FALSE;
 	free(card);
+	return TRUE;
+}
+
+DECK* CutDeckAfter(DECK* deck){
+	DECK *cut = deck->next;
+	deck->next = NULL;
+	return cut;
+}
+
+BOOL MoveAfterToDeck(DECK* newEnd, DECK* newDeckHead){
+	DECK *end = CutDeckAfter(newEnd);
+	while (newDeckHead->next != NULL){
+		newDeckHead = newDeckHead->next;
+	}
+	newDeckHead->next = end;
 	return TRUE;
 }
 
