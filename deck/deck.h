@@ -21,7 +21,8 @@ DECK *NewDeckElement2(unsigned char suit, unsigned char number);
 
 void InsertDeckElement(DECK** root, DECK * newElementPtr, int (*comparator)(DECK*, DECK*) );
 void InsertDeckElementBefore(DECK** deckElement, DECK *newElement);
-void InsertDeckElementAtIndex(DECK** root, DECK * newElementPtr, int index);
+BOOL InsertDeckElementAtIndex(DECK* root, DECK * newElementPtr, int index);
+DECK* GetElementAtIndex(DECK *header, int index);
 
 BOOL RemoveCard(DECK** root, CARD *card);
 BOOL DeleteCard(DECK** root, CARD *card);

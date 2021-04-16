@@ -39,15 +39,24 @@ void InsertDeckElementBefore(DECK** deckElement, DECK *newElement){
 	*deckElement = newElement;
 }
 
-void InsertDeckElementAtIndex(DECK** root, DECK * newElementPtr, int index){
-	DECK ** tracer = root;
-	for (int i = 0; i < index; ++i) {
-		if (!tracer) break;
-		tracer = &(*tracer)->next;
-	}
-	newElementPtr->next = *tracer;
-	*tracer = newElementPtr;
+BOOL InsertDeckElementAtIndex(DECK* root, DECK * newElementPtr, int index){
+	if (newElementPtr == NULL) return FALSE;
+
+	DECK *element = GetElementAtIndex(root, index - 1);
+	if (element == NULL) return FALSE;
+	MoveAfterToDeck(element, newElementPtr);
+	element->next = newElementPtr;
+	return TRUE;
 }
+
+DECK* GetElementAtIndex(DECK *header, int index){
+	for (; index > 0; index--) {
+		if (!header) break;
+		header = header->next;
+	}
+	return header;
+}
+
 
 BOOL RemoveCard(DECK** root, CARD *card){
 	int found = FALSE;
