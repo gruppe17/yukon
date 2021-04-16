@@ -30,6 +30,7 @@ BOOL DeleteCard(DECK** root, CARD *card);
 DECK* CutDeckAfter(DECK* deck);
 BOOL MoveAfterToDeck(DECK* newEnd, DECK* newDeckHead);
 DECK* InterweaveDecks(DECK* a, DECK* b);
+void ShuffleDeck(DECK** deck);
 
 
 #endif //YUKON_DECK_H

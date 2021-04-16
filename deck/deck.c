@@ -113,6 +113,21 @@ DECK* InterweaveDecks(DECK* a, DECK* b){
 	return newDeckHead;
 }
 
+int _randomComparator(void* a, void* b){
+	return rand() % 2 == 0 ? -1 : 1;
+}
+
+void ShuffleDeck(DECK** deck){
+	DECK* shuffledDeck = NULL;
+	while (deck != NULL){
+		DECK* deckElement = deck;
+		deck = deck->next;
+		deckElement->next = NULL;
+		InsertDeckElement(&shuffledDeck, deckElement, (int (*)(DECK *, DECK *)) _randomComparator);
+	}
+	(*deck)=shuffledDeck;
+}
+
 DECK *NewDeck(){
 	DECK *deck = NULL, *tail;
 	InsertDeckElementBefore(&deck, NewDeckElement2(0, 0));
