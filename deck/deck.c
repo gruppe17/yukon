@@ -28,10 +28,10 @@ DECK *NewDeckElement2(unsigned char suit, unsigned char number) {
 
 void InsertDeckElement(DECK** root, DECK * newElementPtr, int (*comparator)(DECK*, DECK*) ){
 	DECK ** tracer = root;
-	while (tracer && comparator((*tracer), newElementPtr) < 1){
+	while (*tracer && (comparator((*tracer), newElementPtr) < 1)){
 		tracer = &(*tracer)->next;
 	}
-	InsertDeckElementBefore(root, newElementPtr);
+	InsertDeckElementBefore(tracer, newElementPtr);
 }
 
 void InsertDeckElementBefore(DECK** deckElement, DECK *newElement){
@@ -114,7 +114,7 @@ DECK* InterweaveDecks(DECK* a, DECK* b){
 }
 
 int _randomComparator(void* a, void* b){
-	return rand() % 2 == 0 ? -1 : 1;
+	return rand() % 2;
 }
 
 void ShuffleDeck(DECK** head){
