@@ -19,4 +19,13 @@ void GetCommandFromString(char* str);
 
 char* ReadString();
 
+
+/**
+ * Prints a string
+ * @author Tobias Maneschijn, s205422
+ */
+
+char* PrintString(char *str);
+
+
 #endif //YUKON_COMMAND_H
