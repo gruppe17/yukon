@@ -65,7 +65,6 @@ BOOL RemoveCard(DECK** root, CARD *card){
 		*tracer = (*tracer)->next;
 		free(old);
 	}
-
 	return found;
 }
 
@@ -88,6 +87,18 @@ BOOL MoveAfterToDeck(DECK* newEnd, DECK* newDeckHead){
 	}
 	newDeckHead->next = end;
 	return TRUE;
+}
+
+DECK* InterweaveDecks(DECK* a, DECK* b){
+	DECK* newDeckHead = a, *aNext;
+	while (a->next != NULL && b->next != NULL){
+		aNext = a->next;
+		a->next = b;
+		a = a->next;
+		b = b->next;
+		a->next = aNext;
+	}
+	return newDeckHead;
 }
 
 DECK *NewDeck(){
