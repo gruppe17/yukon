@@ -30,9 +30,9 @@ DECK *NewDeckElement2(unsigned char suit, unsigned char number) {
 	return NewDeckElement(card);
 }
 
-void InsertDeckElement(DECK** root, DECK * newElementPtr, int (*comparator)(void*, void*) ){
+void InsertDeckElement(DECK** root, DECK * newElementPtr, int (*comparator)(DECK*, DECK*) ){
 	DECK ** tracer = root;
-	while (tracer && comparator((*tracer)->card, newElementPtr->card) < 1){
+	while (tracer && comparator((*tracer), newElementPtr) < 1){
 		tracer = &(*tracer)->next;
 	}
 	InsertDeckElementBefore(root, newElementPtr);
