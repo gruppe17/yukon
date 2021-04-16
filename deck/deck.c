@@ -43,7 +43,7 @@ BOOL InsertDeckElementAtIndex(DECK* root, DECK * newElementPtr, int index){
 	if (newElementPtr == NULL) return FALSE;
 
 	DECK *element = GetElementAtIndex(root, index - 1);
-	if (element == NULL) return FALSE;
+	if (element == NULL && index != 0) return FALSE;
 	MoveAfterToDeck(element, newElementPtr);
 	element->next = newElementPtr;
 	return TRUE;
@@ -118,12 +118,16 @@ int _randomComparator(void* a, void* b){
 }
 
 void ShuffleDeck(DECK** head){
-	DECK* shuffledDeck = NULL, *deck = *head;
+	DECK* shuffledDeck = *head, *deck = (*head)->next;
+	int shuffledDeckSize = 1;
+	shuffledDeck->next = NULL;
 	while (deck != NULL){
 		DECK* deckElement = deck;
 		deck = deck->next;
 		deckElement->next = NULL;
-		InsertDeckElement(&shuffledDeck, deckElement, (int (*)(DECK *, DECK *)) _randomComparator);
+		int index = rand() % shuffledDeckSize++;
+		InsertDeckElementAtIndex(shuffledDeck, deckElement, index);
+		//InsertDeckElement(&shuffledDeck, deckElement, (int (*)(DECK *, DECK *)) _randomComparator);
 	}
 	(*head)=shuffledDeck;
 }
