@@ -150,7 +150,7 @@ LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex){
 }
 
 LinkedList* cutEnd(LinkedList *linkedList, int startIndex){
-	return cutList(linkedList, startIndex, linkedList->size);
+	return cutList(linkedList, startIndex, linkedList->size - 1);
 }
 
 
@@ -271,6 +271,8 @@ BOOL interweaveLinkedList(LinkedList *linkedList, LinkedList *into){
 	free(linkedList);
 	return TRUE;
 }
+
+
 
 BOOL sort(LinkedList *linkedList){
 	if (linkedList->comparator == NULL) return FALSE;
