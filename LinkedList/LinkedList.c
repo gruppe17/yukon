@@ -24,6 +24,8 @@ Node* newNode(void* data){
 Node* getLastNode(LinkedList *linkedList);
 Node** getNode(LinkedList *linkedList, int index);
 
+BOOL appendToEmpty(LinkedList *appendTo, LinkedList *appending);
+
 struct linkedList {
 	int size;
 	Node* head;
@@ -100,15 +102,6 @@ BOOL add(LinkedList *linkedList, void* t){
 	return TRUE;
 }
 
-
-BOOL appendToEmpty(LinkedList *appendTo, LinkedList *appending){
-	appendTo->head = appending->head;
-	appendTo->tail = appending->tail;
-	appendTo->size = appending->size;
-	free(appending);
-	return TRUE;
-}
-
 BOOL append(LinkedList *appendTo, LinkedList *appending){
 	if (appendTo->size == 0) return appendToEmpty(appendTo, appending);
 	appendTo->size += appending->size;
@@ -118,47 +111,13 @@ BOOL append(LinkedList *appendTo, LinkedList *appending){
 	return TRUE;
 }
 
-/**
- * Cuts out the sublist beginning and ending with the
- * specified indices inclusive, and returns the removed
- * sublist as a new linked list.
- * @param linkedList 	The LinkedList which is to be cut
- * @param startIndex 	The index of the first element in
- * 						the sublist
- * @param endIndex 		The index of the last element in
- * 						the sublist
- * @return				A new LinkedList containing the
- * 						elements from startIndex inclusive
- * 						through endIndex
- */
-LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex){
-	if (startIndex > endIndex || startIndex < 0 || endIndex >= linkedList->size) return NULL;
-	LinkedList* newList = (LinkedList*) malloc(sizeof(LinkedList));
-	if (newList == NULL) return NULL;
-
-	//Find the start of the new list
-	Node** tracer = &linkedList->head, **cut;
-	for (int i = 0; i < startIndex; ++i) {
-		tracer = &(*tracer)->next;
-	}
-	newList->head = *tracer;
-	cut = tracer;
-	//Find the end of the new list
-	for (int i = startIndex; i < endIndex; ++i) {
-		tracer = &(*tracer)->next;
-	}
-	*cut = (*tracer)->next;
-	newList->tail = *tracer;
-	newList->tail->next = NULL;
-	newList->size = endIndex - startIndex + 1;
-	linkedList->size -= newList->size;
-	return newList;
+BOOL appendToEmpty(LinkedList *appendTo, LinkedList *appending){
+	appendTo->head = appending->head;
+	appendTo->tail = appending->tail;
+	appendTo->size = appending->size;
+	free(appending);
+	return TRUE;
 }
-
-LinkedList* cutEnd(LinkedList *linkedList, int startIndex){
-	return cutList(linkedList, startIndex, linkedList->size - 1);
-}
-
 
 BOOL push(LinkedList *linkedList, void *t){
 	Node *node = newNode(t);
@@ -252,6 +211,48 @@ BOOL insertAt(LinkedList *linkedList, void *t, int index){
 	*tracer = node;
 	return TRUE;
 }
+
+/**
+ * Cuts out the sublist beginning and ending with the
+ * specified indices inclusive, and returns the removed
+ * sublist as a new linked list.
+ * @param linkedList 	The LinkedList which is to be cut
+ * @param startIndex 	The index of the first element in
+ * 						the sublist
+ * @param endIndex 		The index of the last element in
+ * 						the sublist
+ * @return				A new LinkedList containing the
+ * 						elements from startIndex inclusive
+ * 						through endIndex
+ */
+LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex){
+	if (startIndex > endIndex || startIndex < 0 || endIndex >= linkedList->size) return NULL;
+	LinkedList* newList = (LinkedList*) malloc(sizeof(LinkedList));
+	if (newList == NULL) return NULL;
+
+	//Find the start of the new list
+	Node** tracer = &linkedList->head, **cut;
+	for (int i = 0; i < startIndex; ++i) {
+		tracer = &(*tracer)->next;
+	}
+	newList->head = *tracer;
+	cut = tracer;
+	//Find the end of the new list
+	for (int i = startIndex; i < endIndex; ++i) {
+		tracer = &(*tracer)->next;
+	}
+	*cut = (*tracer)->next;
+	newList->tail = *tracer;
+	newList->tail->next = NULL;
+	newList->size = endIndex - startIndex + 1;
+	linkedList->size -= newList->size;
+	return newList;
+}
+
+LinkedList* cutEnd(LinkedList *linkedList, int startIndex){
+	return cutList(linkedList, startIndex, linkedList->size - 1);
+}
+
 
 int size(LinkedList *linkedList){
 	return linkedList->size;

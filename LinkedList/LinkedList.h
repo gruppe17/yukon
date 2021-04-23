@@ -79,6 +79,13 @@ BOOL add(LinkedList *linkedList, void* t);
  * @author Rasmus Nylander, s205418
  */
 BOOL append(LinkedList *appendTo, LinkedList *appending);
+/**
+ * Adds the specified element to the front of the specified list
+ * @param linkedList the LinkedList to which an element should be added
+ * @param t the element which is to be added to the from of the list
+ * @return TRUE if the list was changed
+ * @author Rasmus Nylander, s205418
+ */
 BOOL push(LinkedList *linkedList, void *t);
 void* pop(LinkedList* linkedList);
 void* poll(LinkedList* linkedList);
