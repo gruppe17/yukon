@@ -16,7 +16,7 @@ int main() {
     shouldExit = false;
 
     while(!shouldExit){
-        char *str= ReadString();
+        char *str = ReadString();
         GetCommandFromString(str);
     }
 

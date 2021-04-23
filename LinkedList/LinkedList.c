@@ -296,6 +296,12 @@ BOOL swap(LinkedList *linkedList, int i, int j){
 }
 
 BOOL mergeSort(LinkedList *linkedList, int startIndex, int endIndex);
+/**
+ * Sorts a list bubbly! I.e. sorts a list with bubble sort.
+ * @param linkedList the LinkedList to be sorted
+ * @return TRUE if the list is sorted
+ * @author Rasmus Nylander, s205418
+ */
 BOOL bubbleSort(LinkedList *linkedList);
 
 BOOL sort(LinkedList *linkedList){
