@@ -251,6 +251,27 @@ int size(LinkedList *linkedList){
 	return linkedList->size;
 }
 
+BOOL interweaveLinkedList(LinkedList *linkedList, LinkedList *into){
+	if (linkedList == NULL || into == NULL || linkedList->size == 0) return FALSE;
+	Node *a = into->head, *b = linkedList->head, **aNext;
+	while (a != NULL && b != NULL){
+		//Remember the next card in the a pile
+		aNext = &a->next;
+		//Insert the next card in the b pile into the a pile
+		a->next = b;
+		b = b->next;
+		a->next = (*aNext);
+		//Move to the next card in the a pile
+		a = a->next;
+	}
+	if (a == NULL) {
+		(*aNext) = b;
+		into->tail = linkedList->tail;
+	}
+	free(linkedList);
+	return TRUE;
+}
+
 BOOL sort(LinkedList *linkedList){
 	if (linkedList->comparator == NULL) return FALSE;
 	//Todo: implement this

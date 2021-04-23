@@ -37,6 +37,8 @@ LinkedList* cutEnd(LinkedList *linkedList, int startIndex);
 
 
 int size(LinkedList *linkedList);
+
+BOOL interweaveLinkedList(LinkedList *linkedList, LinkedList *into);
 BOOL sort(LinkedList *linkedList);
 
 #endif //YUKON_LINKEDLIST_H
