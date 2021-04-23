@@ -10,8 +10,10 @@
 #define NUM_CARDS_IN_SUIT 13
 #define BITS_FOR_CARDS_IN_SUIT 4
 
-typedef struct card CARD;
+typedef struct playingCard PlayingCard;
 
-CARD* NewCard(unsigned char suit, unsigned char number);
+PlayingCard* newCard(unsigned char suit, unsigned char number);
+
+
 
 #endif //YUKON_PLAYINGCARD_H

@@ -9,9 +9,12 @@
 #include "utils/strutils.h"
 #include "LinkedList/LinkedList.h"
 
+#define NUM_COLUMNS_IN_GAME 7
 
 int main() {
     PrintConsoleMenu("Welcome to Yukon!");
+    LinkedList *decks = newLinkedList();
+
 
     shouldExit = false;
 

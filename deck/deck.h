@@ -2,35 +2,28 @@
 // Created by Nylander on 09-04-2021.
 //
 
+/**
+ * This functions as an extension of LinkedList
+ */
 #ifndef YUKON_DECK_H
 #define YUKON_DECK_H
 
 #include "playingCard.h"
+#include "../LinkedList/LinkedList.h"
 
-typedef int BOOL;
 
-typedef struct _deck{
-	CARD* card;
-	struct _deck* next;
-} DECK;
+typedef LinkedList Deck;
 
-DECK *NewDeck();
+Deck *newDeck();
+Deck *newStandardDeck();
+/**
+ * Adds one copy of every card to the specified Deck
+ * @param deck the Deck to add cards to
+ * @return TRUE if the Deck was changed
+ */
+BOOL fillDeck(Deck* deck);
 
-DECK *NewDeckElement(CARD* card);
-DECK *NewDeckElement2(unsigned char suit, unsigned char number);
-
-void InsertDeckElement(DECK** root, DECK * newElementPtr, int (*comparator)(DECK*, DECK*) );
-void InsertDeckElementBefore(DECK** deckElement, DECK *newElement);
-BOOL InsertDeckElementAtIndex(DECK* root, DECK * newElementPtr, int index);
-DECK* GetElementAtIndex(DECK *header, int index);
-
-BOOL RemoveCard(DECK** root, CARD *card);
-BOOL DeleteCard(DECK** root, CARD *card);
-
-DECK* CutDeckAfter(DECK* deck);
-BOOL MoveAfterToDeck(DECK* newEnd, DECK* newDeckHead);
-DECK* InterweaveDecks(DECK* a, DECK* b);
-void ShuffleDeck(DECK** deck);
-
+Deck *loadDeckFromFile(char* fileName);
+BOOL SaveDeckToFile(char* fileName);
 
 #endif //YUKON_DECK_H

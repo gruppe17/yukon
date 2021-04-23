@@ -5,19 +5,19 @@
 #include <stdlib.h>
 #include "playingCard.h"
 
-typedef struct card{
+struct playingCard{
 	unsigned int suit : BITS_FOR_SUITS;
 	unsigned int number : BITS_FOR_CARDS_IN_SUIT;
-} CARD;
+};
 
-CARD* NewCard(unsigned char suit, unsigned char number){
+PlayingCard* newCard(unsigned char suit, unsigned char number){
 	if (suit >= NUM_SUITS || number >= NUM_CARDS_IN_SUIT) {
 		//Do something! This can't be tolerated!
 		return NULL;
 	}
-	CARD *newCardPtr;
-	newCardPtr = (CARD *) malloc(sizeof(CARD));
-	newCardPtr->suit = suit;
-	newCardPtr->number = number;
-	return newCardPtr;
+	PlayingCard *cardPtr = (PlayingCard *) malloc(sizeof(PlayingCard));
+	if (cardPtr == NULL) return NULL;
+	cardPtr->suit = suit;
+	cardPtr->number = number;
+	return cardPtr;
 }
