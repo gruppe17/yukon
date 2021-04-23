@@ -331,33 +331,67 @@ BOOL swap(LinkedList *linkedList, int i, int j){
 	return swapNodes(getNode(linkedList, i), getNode(linkedList, j));
 }
 
+BOOL mergeSort(LinkedList *linkedList, int startIndex, int endIndex);
+BOOL bubbleSort(LinkedList *linkedList);
+
 BOOL sort(LinkedList *linkedList){
-	if (linkedList->comparator == NULL) return FALSE;
+	if (!hasComparator(linkedList)) return FALSE;
 	if (linkedList->size < 2) return TRUE;
-	//Todo: implement this
-	return FALSE;
+	//return mergeSort(linkedList, 0, size(linkedList) - 1);
+	bubbleSort(linkedList);
 }
 
-BOOL mergeSorted(LinkedList *linkedList, int startIndex, int endIndex, int midPoint){
-	if (linkedList->comparator == NULL) return FALSE;
-	//for ()
+BOOL bubbleSort(LinkedList *linkedList){
+	if (!hasComparator(linkedList)) return FALSE;
 
+	int listLength = size(linkedList);
+	for (int i = 0; i < listLength; ++i) {
+		BOOL hasSwapped = FALSE;
+		Node **tracer = &linkedList->head;
+		for (int j = 0; j < listLength - i - 1; ++j) {
+			if (linkedList->comparator((*tracer)->data, (*tracer)->next->data) >= 1){
+				swapNodes(tracer, &(*tracer)->next);
+				hasSwapped = TRUE;
+			}
+			tracer = &(*tracer)->next;
+		}
+		if (!hasSwapped) return TRUE;
+	}
 	return TRUE;
-
 }
 
+/**DOES NOT WORK!*/
+BOOL mergeSorted(LinkedList *linkedList, int startIndex, int endIndex, int midPoint);
 BOOL mergeSort(LinkedList *linkedList, int startIndex, int endIndex){
-	if (linkedList->comparator == NULL) return FALSE;
-	if (startIndex - endIndex < 1) return TRUE;
+	if (!hasComparator(linkedList)) return FALSE;
+	if (endIndex - startIndex < 1) return TRUE;
 
 	int midpoint = ((endIndex - startIndex) / 2) + startIndex;
 	mergeSort(linkedList, startIndex, midpoint);
-	mergeSort(linkedList, midpoint, endIndex);
+	mergeSort(linkedList, midpoint + 1, endIndex);
 	mergeSorted(linkedList, startIndex, endIndex, midpoint);
 	return TRUE;
 }
 
+BOOL mergeSorted(LinkedList *linkedList, int startIndex, int endIndex, int midPoint){
+	if (!hasComparator(linkedList)) return FALSE;
 
+	Node *startNode = *getNode(linkedList, startIndex);
+	Node *midNode = *getNode(linkedList, midPoint + 1);
+	while (startIndex <= midPoint && endIndex > midPoint){
+		Node *startNext = startNode->next;
 
+		if (linkedList->comparator(midNode->data, startNode->data) < 1){
+			startNode->next = midNode;
+			midNode = midNode->next;
+			startNode->next = startNext;
+			endIndex--;
+		} else startIndex++;
+		startNode = startNode->next;
+	}
+	if (midPoint < endIndex){
+		startNode->next = midNode;
+	}
 
-
+	return TRUE;
+}
