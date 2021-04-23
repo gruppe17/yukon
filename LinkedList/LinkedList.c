@@ -131,6 +131,7 @@ BOOL push(LinkedList *linkedList, void *t){
 }
 
 void* pop(LinkedList* linkedList){
+	if (size(linkedList) == 0) return NULL;
 	Node *popped = linkedList->head;
 	linkedList->head = linkedList->head->next;
 	linkedList->size--;
@@ -144,11 +145,7 @@ void* pop(LinkedList* linkedList){
 void* poll(LinkedList* linkedList){
 	return getFirst(linkedList);
 }
-/*
-void* remove(LinkedList* linkedList){
-	return pop(linkedList);
-}
-*/
+
 void* removeIndex(LinkedList *linkedList, int index){
 	if (!validIndex(linkedList, index)) return NULL;
 
@@ -163,24 +160,22 @@ void* removeIndex(LinkedList *linkedList, int index){
 	return data;
 }
 
-void* removeElement(LinkedList *linkedList, void* t){
-	if (!hasComparator(linkedList)) return NULL;
+BOOL removeElement(LinkedList *linkedList, void* t){
+	if (!hasComparator(linkedList)) return FALSE;
 
 	BOOL present = FALSE;
 	Node **tracer = &(linkedList->head);
-	for (int i = 0; i < linkedList->size; ++i) { //This could be a while loop
+	while ((*tracer)->next != NULL) { //This could be a for loop
 		if ( (present = (linkedList->comparator(t, (*tracer)->data)) == 0) ) break;
 		tracer = &(*tracer)->next;
 	}
 	if (present){
 		Node* node = *tracer; //Remember the node
 		*tracer = (*tracer)->next; //Remove the node from the linked list
-		void *data = node->data; //Free the memory of the node and return the data the node contained
-		free(node);
+		free(node); //Free the memory of the node
 		linkedList->size--;
-		return data;
 	}
-	return NULL;
+	return present;
 }
 
 BOOL insert(LinkedList *linkedList, void *t){

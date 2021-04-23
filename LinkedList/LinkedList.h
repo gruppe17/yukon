@@ -87,11 +87,41 @@ BOOL append(LinkedList *appendTo, LinkedList *appending);
  * @author Rasmus Nylander, s205418
  */
 BOOL push(LinkedList *linkedList, void *t);
+/**
+ * Removes the first element in the specified list and returns it
+ * @param linkedList the LinkedList from which to pop the first element
+ * @return the first element in the list or NULL if the list is empty
+ * @author Rasmus Nylander, s205418
+ */
 void* pop(LinkedList* linkedList);
+/**
+ * Returns the 0'th element of the specified list or null if the list is empty.
+ * Identical to getFirst
+ * @param linkedList the LinkedList from which to retrieve the first element
+ * @return the 0'th element of the specified list or null if the list is empty
+ * @author Rasmus Nylander, s205418
+ */
 void* poll(LinkedList* linkedList);
-//void* remove(LinkedList* linkedList);
+/**
+ * Removes the element at the specified index in the specified LinkedList
+ * and returns it or NULL if no such element exists.
+ * @param linkedList the LinkedList from which an element should be removed
+ * @param index the index of the element to remove
+ * @return The removed element or NULL if no such element exists
+ * @author Rasmus Nylander, s205418
+ */
 void* removeIndex(LinkedList *linkedList, int index);
-void* removeElement(LinkedList *linkedList, void* t);
+/**
+ * Removes the specified element from the specified LinkedList.
+ * The comparator function of the specified LinkedList must be set.
+ * If the element is not contained in the list or if the list have
+ * not been assigned a comparator, the list will be unchanged.
+ * @param linkedList the LinkedList from which to remove an element
+ * @param t the element to remove from the list
+ * @return TRUE if the list was changed
+ * @author Rasmus Nylander, s205418
+ */
+BOOL removeElement(LinkedList *linkedList, void* t);
 
 BOOL insert(LinkedList *linkedList, void *t);
 BOOL insertAt(LinkedList *linkedList, void *t, int index);
