@@ -22,6 +22,7 @@ Node* newNode(void* data){
 
 
 Node* getLastNode(LinkedList *linkedList);
+Node** getNode(LinkedList *linkedList, int index);
 
 struct linkedList {
 	int size;
@@ -47,19 +48,19 @@ void setComparator(LinkedList *linkedList, int (*comparator) (void* a, void* b))
 	linkedList->comparator = comparator;
 }
 
+/**
+ * Returns whether the specified index is a valid index of the specified list
+ * @param linkedList the list which the index should be validated for
+ * @param index the index to validate
+ * @return TRUE if the index is valid
+ * @author Rasmus Nylander, s205418
+ */
 BOOL validIndex(LinkedList *linkedList, int index){
 	return index < linkedList->size && index >= 0;
 }
 
 void* get(LinkedList* linkedList, int index){
-	if (!validIndex(linkedList, index)) return NULL;
-	if (index == linkedList->size) return getLast(linkedList);
-
-	Node* node = linkedList->head;
-	for (int i = 0; i < index; ++i) {
-		node = node->next;
-	}
-	return node->data;
+	return (*getNode(linkedList, index))->data;
 }
 
 void* getFirst(LinkedList* linkedList){
@@ -70,22 +71,6 @@ void* getLast(LinkedList *linkedList) {
 	return getLastNode(linkedList)->data;
 	//return linkedList->tail->data;
 }
-
-/*
-void addedItemHead(LinkedList *linkedList){
-	if (linkedList->size == 0){
-		linkedList->tail = linkedList->head;
-	}
-	linkedList->size++;
-}
-
-void removedItemHead(LinkedList *linkedList){
-	if (linkedList->size < 3){
-		linkedList->tail = linkedList->head;
-	}
-	linkedList->size--;
-}
-*/
 
 Node** getNode(LinkedList *linkedList, int index){
 	if (!validIndex(linkedList, index)) return NULL;
