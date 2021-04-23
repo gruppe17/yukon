@@ -194,6 +194,7 @@ BOOL insert(LinkedList *linkedList, void *t){
 }
 
 BOOL insertAt(LinkedList *linkedList, void *t, int index){
+	if (index == size(linkedList)) return add(linkedList, t);
 	if (!validIndex(linkedList, index)) return FALSE;
 	Node *node = newNode(t);
 	if (node == NULL) return FALSE;

@@ -123,7 +123,30 @@ void* removeIndex(LinkedList *linkedList, int index);
  */
 BOOL removeElement(LinkedList *linkedList, void* t);
 
+/**
+ * Inserts the specified element in the specified list
+ * in such a way that if the list is sorted it will
+ * remain sorted after the insert.
+ * Requires the list to have been assigned a comparator:
+ * if the list has not been assigned a comparator the list
+ * will remain unchanged.
+ * @param linkedList tbe LinkedList into which the element should be inserted
+ * @param t the element to insert into the list
+ * @return TRUE if the list was changed
+ * @author Rasmus Nylander, s205418
+ */
 BOOL insert(LinkedList *linkedList, void *t);
+/**
+ * Inserts the specified element at the specified position
+ * in the specified LinkedList, such that the elements index
+ * will be equal to the specified index after insertion. If
+ * the index is invalid the list will remain unchanged.
+ * @param linkedList the list into which the element should be inserted
+ * @param t the element which to insert into the list
+ * @param index the index of the element after insertion
+ * @return TRUE if the list was changed
+ * @author Rasmus Nylander, s205418
+ */
 BOOL insertAt(LinkedList *linkedList, void *t, int index);
 
 LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex);
