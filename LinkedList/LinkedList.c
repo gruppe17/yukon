@@ -94,19 +94,12 @@ Node* getLastNode(LinkedList *linkedList){
 BOOL add(LinkedList *linkedList, void* t){
 	Node *node = newNode(t);
 	if (node == NULL) return FALSE;
-	linkedList->size++;
 	getLastNode(linkedList)->next = node;
-	/*
-	if (linkedList->size == 1){
-		linkedList->tail = node;
-		linkedList->head = node;
-		return TRUE;
-	}
-	linkedList->tail->next = node;
+	linkedList->size++;
 	linkedList->tail = node;
-	 */
 	return TRUE;
 }
+
 
 BOOL appendToEmpty(LinkedList *appendTo, LinkedList *appending){
 	appendTo->head = appending->head;
