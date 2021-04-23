@@ -16,9 +16,8 @@ char* LD(char* filename){
     if(strlen(filename) < 0)
         return "You need to specify a filename";
 
-    char* out;
-    sprintf(out, "Loading deck from file %s", filename);
-    return out;
+    char out[255] = "Loading deck from file ";
+    return strcat(out, filename) ;
 }
 
 char* SW() {
@@ -30,7 +29,7 @@ char* SW() {
 char* SI(int split) {
 
 
-    char* out;
+    char out[255];
     sprintf(out, "SI was called with split %i", split);
     return out;
 
@@ -43,7 +42,7 @@ char* SR() {
 
 char* SD(char *filename) {
 
-    char* out;
+    char out[255];  
     sprintf(out, "Saving deck to file %s", filename);
     return out;
 }

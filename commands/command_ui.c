@@ -26,7 +26,7 @@
 void GetCommandFromString(char* str) {
   const char delim[] = " ";
   const char* firstWord = strtok(str, delim);
-  const char* secondWord =strtok(str, delim);
+  const char* secondWord =strtok(NULL, delim);
 
   char* firstWordCpy;
 
