@@ -2,9 +2,11 @@
 // Created by Tobias Maneschijn on 16/04/2021.
 //
 
-#ifndef YUKON_COMMAND_H
-#define YUKON_COMMAND_H
+#ifndef YUKON_COMMAND_UI_H
+#define YUKON_COMMAND_UI_H
 
+
+#include <stdbool.h>
 
 /**
  * Returns a command corresponding to the given string.
@@ -34,4 +36,8 @@ char *PrintConsoleMenu(char *message);
  */
 char* lastCommand;
 
-#endif //YUKON_COMMAND_H
+/**
+ * If program should exit
+ */
+ bool shouldExit;
+#endif //YUKON_COMMAND_UI_H

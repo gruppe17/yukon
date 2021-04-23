@@ -7,7 +7,7 @@
 
 // Project includes
 #include "deck/deck.h"
-#include "commands/command.h"
+#include "commands/command_ui.h"
 #include "utils/strutils.h"
 
 
@@ -20,10 +20,8 @@ int main() {
     while(!shouldClose){
 
         char *str= ReadString();
-        trim(str);
-        if(strcmp("exit", str) == 0){
-            shouldClose = true;
-        }
+
+
 
         GetCommandFromString(str);
     }
