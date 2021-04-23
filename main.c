@@ -15,14 +15,10 @@ int main() {
 
     PrintConsoleMenu("Welcome to Yukon!");
 
-    bool shouldClose = false;
+    shouldExit = false;
 
-    while(!shouldClose){
-
+    while(!shouldExit){
         char *str= ReadString();
-
-
-
         GetCommandFromString(str);
     }
 

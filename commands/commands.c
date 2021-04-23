@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "commands.h"
+#include "command_ui.h"
 
 
 char* LD(char* filename){
@@ -48,7 +49,7 @@ char* SD(char *filename) {
 }
 
 char* QQ() {
-
+    shouldExit = true;
     return "Stopping program";
 }
 
