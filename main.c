@@ -7,7 +7,7 @@
 
 int main() {
 
-    PrintString("Welcome to Yukon!");
+    PrintConsoleMenu("Welcome to Yukon!");
 
     while(1){
 
