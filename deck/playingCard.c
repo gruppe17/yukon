@@ -6,8 +6,8 @@
 #include "playingCard.h"
 
 typedef struct card{
-	unsigned char topSuit : BITS_FOR_SUITS;
-	unsigned char topNumber : BITS_FOR_CARDS_IN_SUIT;
+	unsigned int suit : BITS_FOR_SUITS;
+	unsigned int number : BITS_FOR_CARDS_IN_SUIT;
 } CARD;
 
 CARD* NewCard(unsigned char suit, unsigned char number){
@@ -17,7 +17,7 @@ CARD* NewCard(unsigned char suit, unsigned char number){
 	}
 	CARD *newCardPtr;
 	newCardPtr = (CARD *) malloc(sizeof(CARD));
-	newCardPtr->topSuit = suit;
-	newCardPtr->topNumber = number;
+	newCardPtr->suit = suit;
+	newCardPtr->number = number;
 	return newCardPtr;
 }

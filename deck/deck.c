@@ -8,11 +8,7 @@
 #define TRUE 1;
 #define FALSE 0;
 
-typedef struct _deck{
-	CARD* card;
 
-	struct _deck* next;
-} DECK;
 
 DECK *NewDeckElement(CARD* card) {
 	DECK *newDeckElementPtr;
@@ -32,10 +28,10 @@ DECK *NewDeckElement2(unsigned char suit, unsigned char number) {
 
 void InsertDeckElement(DECK** root, DECK * newElementPtr, int (*comparator)(DECK*, DECK*) ){
 	DECK ** tracer = root;
-	while (tracer && comparator((*tracer), newElementPtr) < 1){
+	while (*tracer && (comparator((*tracer), newElementPtr) < 1)){
 		tracer = &(*tracer)->next;
 	}
-	InsertDeckElementBefore(root, newElementPtr);
+	InsertDeckElementBefore(tracer, newElementPtr);
 }
 
 void InsertDeckElementBefore(DECK** deckElement, DECK *newElement){
@@ -43,15 +39,24 @@ void InsertDeckElementBefore(DECK** deckElement, DECK *newElement){
 	*deckElement = newElement;
 }
 
-void InsertDeckElementAtIndex(DECK** root, DECK * newElementPtr, int index){
-	DECK ** tracer = root;
-	for (int i = 0; i < index; ++i) {
-		if (!tracer) break;
-		tracer = &(*tracer)->next;
-	}
-	newElementPtr->next = *tracer;
-	*tracer = newElementPtr;
+BOOL InsertDeckElementAtIndex(DECK* root, DECK * newElementPtr, int index){
+	if (newElementPtr == NULL) return FALSE;
+
+	DECK *element = GetElementAtIndex(root, index - 1);
+	if (element == NULL && index != 0) return FALSE;
+	MoveAfterToDeck(element, newElementPtr);
+	element->next = newElementPtr;
+	return TRUE;
 }
+
+DECK* GetElementAtIndex(DECK *header, int index){
+	for (; index > 0; index--) {
+		if (!header) break;
+		header = header->next;
+	}
+	return header;
+}
+
 
 BOOL RemoveCard(DECK** root, CARD *card){
 	int found = FALSE;
@@ -90,15 +95,41 @@ BOOL MoveAfterToDeck(DECK* newEnd, DECK* newDeckHead){
 }
 
 DECK* InterweaveDecks(DECK* a, DECK* b){
+	if (a == NULL) return b;
 	DECK* newDeckHead = a, *aNext;
-	while (a->next != NULL && b->next != NULL){
+	while (a != NULL && b != NULL){
+		//Remember the next card in the a pile
 		aNext = a->next;
+		//Set the next card in the a pile to the next card in b pile
 		a->next = b;
+		//Move to the next pair of cards
 		a = a->next;
 		b = b->next;
+		//Set the next card of the a pile to the original next card
 		a->next = aNext;
+		//Move a to point at this card
+		a = a->next;
 	}
 	return newDeckHead;
+}
+
+int _randomComparator(void* a, void* b){
+	return rand() % 2;
+}
+
+void ShuffleDeck(DECK** head){
+	DECK* shuffledDeck = *head, *deck = (*head)->next;
+	int shuffledDeckSize = 1;
+	shuffledDeck->next = NULL;
+	while (deck != NULL){
+		DECK* deckElement = deck;
+		deck = deck->next;
+		deckElement->next = NULL;
+		int index = rand() % shuffledDeckSize++;
+		InsertDeckElementAtIndex(shuffledDeck, deckElement, index);
+		//InsertDeckElement(&shuffledDeck, deckElement, (int (*)(DECK *, DECK *)) _randomComparator);
+	}
+	(*head)=shuffledDeck;
 }
 
 DECK *NewDeck(){

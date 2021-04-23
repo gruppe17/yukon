@@ -9,7 +9,10 @@
 
 typedef int BOOL;
 
-typedef struct _deck DECK;
+typedef struct _deck{
+	CARD* card;
+	struct _deck* next;
+} DECK;
 
 DECK *NewDeck();
 
@@ -18,7 +21,8 @@ DECK *NewDeckElement2(unsigned char suit, unsigned char number);
 
 void InsertDeckElement(DECK** root, DECK * newElementPtr, int (*comparator)(DECK*, DECK*) );
 void InsertDeckElementBefore(DECK** deckElement, DECK *newElement);
-void InsertDeckElementAtIndex(DECK** root, DECK * newElementPtr, int index);
+BOOL InsertDeckElementAtIndex(DECK* root, DECK * newElementPtr, int index);
+DECK* GetElementAtIndex(DECK *header, int index);
 
 BOOL RemoveCard(DECK** root, CARD *card);
 BOOL DeleteCard(DECK** root, CARD *card);
@@ -26,6 +30,7 @@ BOOL DeleteCard(DECK** root, CARD *card);
 DECK* CutDeckAfter(DECK* deck);
 BOOL MoveAfterToDeck(DECK* newEnd, DECK* newDeckHead);
 DECK* InterweaveDecks(DECK* a, DECK* b);
+void ShuffleDeck(DECK** deck);
 
 
 #endif //YUKON_DECK_H
