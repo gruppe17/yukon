@@ -131,19 +131,19 @@ LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex){
 	if (newList == NULL) return NULL;
 
 	//Find the start of the new list
-	Node** tracer = &linkedList->head;
+	Node** tracer = &linkedList->head, **cut;
 	for (int i = 0; i < startIndex; ++i) {
 		tracer = &(*tracer)->next;
 	}
 	newList->head = *tracer;
-	Node **cut = tracer;
+	cut = tracer;
 	//Find the end of the new list
-	for (int i = 0; i < endIndex; ++i) {
+	for (int i = startIndex; i < endIndex; ++i) {
 		tracer = &(*tracer)->next;
 	}
-	newList->tail = *tracer;
 	*cut = (*tracer)->next;
-	(*tracer)->next = NULL;
+	newList->tail = *tracer;
+	newList->tail->next = NULL;
 	newList->size = endIndex - startIndex + 1;
 	linkedList->size -= newList->size;
 	return newList;
