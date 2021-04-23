@@ -4,6 +4,7 @@
 
 #include "LinkedList.h"
 #include <stdlib.h>
+#include <time.h>
 
 typedef struct _node{
 	struct _node* next;
@@ -86,10 +87,20 @@ void removedItemHead(LinkedList *linkedList){
 }
 */
 
+Node** getNode(LinkedList *linkedList, int index){
+	if (!validIndex(linkedList, index)) return NULL;
+
+	Node **tracer = &linkedList->head;
+	for (int i = 0; i < index; ++i) {
+		tracer = &(*tracer)->next;
+	}
+	return tracer;
+}
+
 Node* getLastNode(LinkedList *linkedList){
 	Node **tracer = &linkedList->head;
 	while ((*tracer)->next != NULL){
-		tracer = (*tracer)->next;
+		tracer = &(*tracer)->next;
 	}
 	return (*tracer);
 	//return linkedList->tail;
@@ -291,34 +302,61 @@ BOOL interweaveLinkedList(LinkedList *into, LinkedList *linkedList){
 }
 
 BOOL shuffle(LinkedList *linkedList){
+	int s = size(linkedList);
+	if (s < 2) return TRUE;
 
+	time_t t;
+	srand((unsigned) time(&t));
+	int swaps = s - 1;
+	for (int i = 0; i < swaps; ++i) {
+		swap(linkedList, i, (rand() % (s - i)) + i);
+	}
+	return TRUE;
+}
+
+BOOL swapNodes(Node **a, Node **b){
+	if (*a == *b || (*a) == NULL || (*b) == NULL) return FALSE;
+	Node *temp = (*a);
+	*a = *b;
+	*b = temp;
+
+	temp = (*a)->next;
+	(*a)->next = (*b)->next;
+	(*b)->next = temp;
+	return TRUE;
 }
 
 BOOL swap(LinkedList *linkedList, int i, int j){
 	if (!validIndex(linkedList, i) || !validIndex(linkedList, j)) return FALSE;
-	if (i == j) return FALSE;
-	Node **tracer = &linkedList->head, **ipp = NULL, **jpp = NULL;
-	int index = 0;
-	while (ipp == NULL || jpp == NULL){
-		if (index == i){
-			ipp = tracer;
-		} else if (index == j){
-			jpp = tracer;
-		}
-		tracer = &(*tracer)->next;
-		index++;
-	}
-	Node *temp = (*ipp)->next;
-	(*ipp)->next = (*jpp)->next;
-	(*jpp)->next = temp;
-	return TRUE;
+	return swapNodes(getNode(linkedList, i), getNode(linkedList, j));
 }
 
 BOOL sort(LinkedList *linkedList){
 	if (linkedList->comparator == NULL) return FALSE;
+	if (linkedList->size < 2) return TRUE;
 	//Todo: implement this
 	return FALSE;
 }
+
+BOOL mergeSorted(LinkedList *linkedList, int startIndex, int endIndex, int midPoint){
+	if (linkedList->comparator == NULL) return FALSE;
+	//for ()
+
+	return TRUE;
+
+}
+
+BOOL mergeSort(LinkedList *linkedList, int startIndex, int endIndex){
+	if (linkedList->comparator == NULL) return FALSE;
+	if (startIndex - endIndex < 1) return TRUE;
+
+	int midpoint = ((endIndex - startIndex) / 2) + startIndex;
+	mergeSort(linkedList, startIndex, midpoint);
+	mergeSort(linkedList, midpoint, endIndex);
+	mergeSorted(linkedList, startIndex, endIndex, midpoint);
+	return TRUE;
+}
+
 
 
 
