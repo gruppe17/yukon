@@ -5,6 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "command.h"
+#include "../utils/strutils.h"
 
 
 #define MAX_STRING_LENGTH 16384
