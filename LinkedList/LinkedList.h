@@ -149,16 +149,83 @@ BOOL insert(LinkedList *linkedList, void *t);
  */
 BOOL insertAt(LinkedList *linkedList, void *t, int index);
 
+/**
+ * Cuts out the sublist beginning and ending with the
+ * specified indices inclusive, and returns the removed
+ * sublist as a new linked list.
+ * @param linkedList 	The LinkedList which is to be cut
+ * @param startIndex 	The index of the first element in
+ * 						the sublist
+ * @param endIndex 		The index of the last element in
+ * 						the sublist
+ * @return				A new LinkedList containing the
+ * 						elements from startIndex inclusive
+ * 						through endIndex or NULL if the
+ * 						indices are invalid or memory
+ * 						cannot be allocated
+ * @author Rasmus Nylander, s205418
+ */
 LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex);
+/**
+ * Cuts off the end of the specified LinkedList and returns
+ * it as a new LinkedList.
+ * @param linkedList 	the linkedList to cut
+ * @param startIndex 	the index of the first element in the
+ * 						removed sublist
+ * @return 	A new linked list containing the element at
+ * 			startIndex and all subsequent element
+ * @author Rasmus Nylander, s205418
+ */
 LinkedList* cutEnd(LinkedList *linkedList, int startIndex);
 
-
+/**
+ * Returns the number of elements in the specified LinkedList
+ * @param linkedList the LinkedList whose length is desired
+ * @return the number of elements in the specified LinkedList
+ * @author Rasmus Nylander, s205418
+ */
 int size(LinkedList *linkedList);
 
+/**
+ * Weaves one LinkedList into another and frees its memory.
+ * If one list is longer than the other, then the excess is
+ * appended to the end of the list.
+ * 1 → 2 → 3 → 4 → 5 → 6 → 7 & a → b → c → d → e
+ * will become
+ * 1 → a → 2 → b → 3 → c → 4 → d → 5 → e → 6 → 7.
+ * @param into the LinkedList to weave the other into
+ * @param linkedList the LinkedList to weave into another
+ * @return TRUE if either list changed
+ * @author Rasmus Nylander, s205418
+ */
 BOOL interweaveLinkedList(LinkedList *into, LinkedList *linkedList);
+/**
+ * Shuffles the specified LinkedList pseudo-randomly.
+ * @param linkedList the LinkedList to shuffle
+ * @return TRUE if the list changed
+ * @author Rasmus Nylander, s205418
+ */
 BOOL shuffle(LinkedList *linkedList);
+/**
+ * Swaps the two elements at the specified indices in the
+ * specified LinkedList. The list is unchanged if either
+ * index is invalid.
+ * @param linkedList the LinkedList in which to swap to element
+ * @param i the index of the first element
+ * @param j the index of the other element
+ * @return TRUE is the list changed
+ * @author Rasmus Nylander, s205418
+ */
 BOOL swap(LinkedList *linkedList, int i, int j);
 
+/**
+ * Sorts the list in acceding order. Requires the list
+ * to have been assigned a comparator; if the list has
+ * not been assigned a comparator the list cannot be
+ * sorted.
+ * @param linkedList the LinkedList to sort
+ * @return TRUE if the list is sorted
+ */
 BOOL sort(LinkedList *linkedList);
 
 #endif //YUKON_LINKEDLIST_H

@@ -26,6 +26,8 @@ Node** getNode(LinkedList *linkedList, int index);
 
 BOOL appendToEmpty(LinkedList *appendTo, LinkedList *appending);
 
+BOOL swapNodes(Node **a, Node **b);
+
 struct linkedList {
 	int size;
 	Node* head;
@@ -208,19 +210,6 @@ BOOL insertAt(LinkedList *linkedList, void *t, int index){
 	return TRUE;
 }
 
-/**
- * Cuts out the sublist beginning and ending with the
- * specified indices inclusive, and returns the removed
- * sublist as a new linked list.
- * @param linkedList 	The LinkedList which is to be cut
- * @param startIndex 	The index of the first element in
- * 						the sublist
- * @param endIndex 		The index of the last element in
- * 						the sublist
- * @return				A new LinkedList containing the
- * 						elements from startIndex inclusive
- * 						through endIndex
- */
 LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex){
 	if (startIndex > endIndex || startIndex < 0 || endIndex >= linkedList->size) return NULL;
 	LinkedList* newList = (LinkedList*) malloc(sizeof(LinkedList));
@@ -278,7 +267,7 @@ BOOL interweaveLinkedList(LinkedList *into, LinkedList *linkedList){
 
 BOOL shuffle(LinkedList *linkedList){
 	int s = size(linkedList);
-	if (s < 2) return TRUE;
+	if (s < 2) return FALSE;
 
 	time_t t;
 	srand((unsigned) time(&t));
@@ -311,7 +300,7 @@ BOOL bubbleSort(LinkedList *linkedList);
 
 BOOL sort(LinkedList *linkedList){
 	if (!hasComparator(linkedList)) return FALSE;
-	if (linkedList->size < 2) return TRUE;
+	if (size(linkedList) < 2) return TRUE;
 	//return mergeSort(linkedList, 0, size(linkedList) - 1);
 	bubbleSort(linkedList);
 }
