@@ -5,13 +5,16 @@
 #include <stdlib.h>
 #include "playingCard.h"
 
+#define BITS_FOR_SUITS 2
+#define BITS_FOR_CARDS_IN_SUIT 4
+
 struct playingCard{
 	unsigned int suit : BITS_FOR_SUITS;
 	unsigned int number : BITS_FOR_CARDS_IN_SUIT;
 };
 
 PlayingCard* newCard(unsigned char suit, unsigned char number){
-	if (suit >= NUM_SUITS || number >= NUM_CARDS_IN_SUIT) {
+	if (suit >= PLAYING_CARD_NUM_SUITS || number >= PLAYING_CARD_NUM_CARDS_IN_SUIT) {
 		//Do something! This can't be tolerated!
 		return NULL;
 	}
@@ -20,4 +23,8 @@ PlayingCard* newCard(unsigned char suit, unsigned char number){
 	cardPtr->suit = suit;
 	cardPtr->number = number;
 	return cardPtr;
+}
+
+char* PlayingCardToString(PlayingCard* card){
+	return "PlayingCardToString Not Implemented";
 }
