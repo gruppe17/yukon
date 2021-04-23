@@ -39,6 +39,9 @@ LinkedList* cutEnd(LinkedList *linkedList, int startIndex);
 int size(LinkedList *linkedList);
 
 BOOL interweaveLinkedList(LinkedList *into, LinkedList *linkedList);
+BOOL shuffle(LinkedList *linkedList);
+BOOL swap(LinkedList *linkedList, int i, int j);
+
 BOOL sort(LinkedList *linkedList);
 
 #endif //YUKON_LINKEDLIST_H

@@ -46,8 +46,12 @@ void setComparator(LinkedList *linkedList, int (*comparator) (void* a, void* b))
 	linkedList->comparator = comparator;
 }
 
+BOOL validIndex(LinkedList *linkedList, int index){
+	return index < linkedList->size && index >= 0;
+}
+
 void* get(LinkedList* linkedList, int index){
-	if (index < 0 || index >= linkedList->size) return NULL;
+	if (!validIndex(linkedList, index)) return NULL;
 	if (index == linkedList->size) return getLast(linkedList);
 
 	Node* node = linkedList->head;
@@ -198,7 +202,7 @@ void* remove(LinkedList* linkedList){
 }
 */
 void* removeIndex(LinkedList *linkedList, int index){
-	if (index < 0 || index > linkedList->size) return NULL;
+	if (!validIndex(linkedList, index)) return NULL;
 
 	Node** tracer = &linkedList->head;
 	for (int i = 0; i < index; i++){
@@ -247,7 +251,7 @@ BOOL insert(LinkedList *linkedList, void *t){
 }
 
 BOOL insertAt(LinkedList *linkedList, void *t, int index){
-	if (index < 0 || index > linkedList->size) return FALSE;
+	if (!validIndex(linkedList, index)) return FALSE;
 	Node *node = newNode(t);
 	if (node == NULL) return FALSE;
 
@@ -286,7 +290,29 @@ BOOL interweaveLinkedList(LinkedList *into, LinkedList *linkedList){
 	return TRUE;
 }
 
+BOOL shuffle(LinkedList *linkedList){
 
+}
+
+BOOL swap(LinkedList *linkedList, int i, int j){
+	if (!validIndex(linkedList, i) || !validIndex(linkedList, j)) return FALSE;
+	if (i == j) return FALSE;
+	Node **tracer = &linkedList->head, **ipp = NULL, **jpp = NULL;
+	int index = 0;
+	while (ipp == NULL || jpp == NULL){
+		if (index == i){
+			ipp = tracer;
+		} else if (index == j){
+			jpp = tracer;
+		}
+		tracer = &(*tracer)->next;
+		index++;
+	}
+	Node *temp = (*ipp)->next;
+	(*ipp)->next = (*jpp)->next;
+	(*jpp)->next = temp;
+	return TRUE;
+}
 
 BOOL sort(LinkedList *linkedList){
 	if (linkedList->comparator == NULL) return FALSE;
