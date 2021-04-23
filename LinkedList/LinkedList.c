@@ -125,6 +125,19 @@ BOOL append(LinkedList *appendTo, LinkedList *appending){
 	return TRUE;
 }
 
+/**
+ * Cuts out the sublist beginning and ending with the
+ * specified indices inclusive, and returns the removed
+ * sublist as a new linked list.
+ * @param linkedList 	The LinkedList which is to be cut
+ * @param startIndex 	The index of the first element in
+ * 						the sublist
+ * @param endIndex 		The index of the last element in
+ * 						the sublist
+ * @return				A new LinkedList containing the
+ * 						elements from startIndex inclusive
+ * 						through endIndex
+ */
 LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex){
 	if (startIndex > endIndex || startIndex < 0 || endIndex >= linkedList->size) return NULL;
 	LinkedList* newList = (LinkedList*) malloc(sizeof(LinkedList));
@@ -251,23 +264,24 @@ int size(LinkedList *linkedList){
 	return linkedList->size;
 }
 
-BOOL interweaveLinkedList(LinkedList *linkedList, LinkedList *into){
+BOOL interweaveLinkedList(LinkedList *into, LinkedList *linkedList){
 	if (linkedList == NULL || into == NULL || linkedList->size == 0) return FALSE;
-	Node *a = into->head, *b = linkedList->head, **aNext;
-	while (a != NULL && b != NULL){
-		//Remember the next card in the a pile
-		aNext = &a->next;
-		//Insert the next card in the b pile into the a pile
+	Node *a = into->head, *b = linkedList->head, *aNext;
+	while (a->next != NULL && b != NULL){
+		aNext = a->next;
+
 		a->next = b;
+		a = a->next;
 		b = b->next;
-		a->next = (*aNext);
-		//Move to the next card in the a pile
+		a->next = aNext;
+
 		a = a->next;
 	}
-	if (a == NULL) {
-		(*aNext) = b;
+	if (b != NULL) {
+		a->next = b;
 		into->tail = linkedList->tail;
 	}
+	into->size += linkedList->size;
 	free(linkedList);
 	return TRUE;
 }
