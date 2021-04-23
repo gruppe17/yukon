@@ -3,6 +3,7 @@
 //
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "command.h"
 
 
@@ -11,30 +12,27 @@
 #define COMMAND_LD "LD"
 
 
+
+
 void GetCommandFromString(char* str) {
+  const char delim[] = " ";
+  const char* firstWord = strtok(str, delim);
 
-
-
-    char delim[] = " ";
-
-    char* firstWord = strtok(str, delim);
-
-    char* firstWordCpy;
-
+  char* firstWordCpy;
 
     if(firstWord && strlen(firstWord) > 1){
-        printf("%s", firstWord);
+        trim(firstWord);
+        lastCommand = firstWord;
         // add if else ladder here with command checks
-        if(strcmp(firstWord, COMMAND_LD) == 0){
-            PrintString("LD was called");
+        if(strcmp(lastCommand, COMMAND_LD) == 0){
+            PrintConsoleMenu("LD was called");
         }
         else{
-            PrintString("The command was not found! Try again...");
+            PrintConsoleMenu("The command was not found! Try again...");
         }
-
     }
     else{
-        PrintString("You have to write a command!");
+        PrintConsoleMenu("You have to write a command!");
     }
 }
 
@@ -46,9 +44,9 @@ char *ReadString() {
     return &str;
 }
 
-char *PrintString(char *in) {
-    printf("LAST Command: %s \n", "TEMPORARY");
-    printf("Message: %s \n", in);
+char *PrintConsoleMenu(char *message) {
+    printf("LAST Command: %s \n", lastCommand);
+    printf("Message: %s \n", message);
     printf("Input:> ");
 }
 

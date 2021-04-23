@@ -22,10 +22,16 @@ char* ReadString();
 
 /**
  * Prints a string
+ * @param message the message to show
+ * @param lastCommand
  * @author Tobias Maneschijn, s205422
  */
 
-char* PrintString(char *str);
+char *PrintConsoleMenu(char *message);
 
+/**
+ * Last command called by player
+ */
+char* lastCommand;
 
 #endif //YUKON_COMMAND_H
