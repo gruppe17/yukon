@@ -58,9 +58,8 @@ Game newGame(){
 		newGame->finished[i] = newDeck();
 	}
 	newGame->moves = newLinkedList();
+	return newGame;
 }
-
-
 
 BOOL saveGameToFile(Game game, char* filename){
 	//Todo: check if valid file
