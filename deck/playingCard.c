@@ -25,6 +25,6 @@ PlayingCard* newCard(unsigned char suit, unsigned char number){
 	return cardPtr;
 }
 
-char* PlayingCardToString(PlayingCard* card){
+char* playingCardToString(PlayingCard* card){
 	return "PlayingCardToString Not Implemented";
 }

@@ -1,5 +1,5 @@
 //
-// Created by Nylan on 23-04-2021.
+// Created by Nylander on 23-04-2021.
 //
 
 #ifndef YUKON_DICTIONARY_H

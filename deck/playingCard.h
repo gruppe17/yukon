@@ -25,13 +25,30 @@ typedef struct playingCard PlayingCard;
  * @author Rasmus Nylander, s205418
  */
 PlayingCard* newCard(unsigned char suit, unsigned char number);
+
+/**
+ * Returns a string representation of the specified PlayingCard's suit
+ * @param card the PlayingCard whose suit it to be represented as a string
+ * @return a new string representing the card's suit
+ * @author Rasmus Nylander, s205418
+ */
+char* playingCardSuitToString(PlayingCard* card);
+
+/**
+ * Returns a string representation of the specified PlayingCard's number
+ * @param card the PlayingCard whose number it to be represented as a string
+ * @return a new string representing the card's number
+ * @author Rasmus Nylander, s205418
+ */
+char* playingCardNumberToString(PlayingCard* card);
+
 /**
  * Returns a string representation of the specified PlayingCard.
  * @param card the PlayingCard to be represented as a string
  * @return A new string representing the card
  * @author Rasmus Nylander, s205418
  */
-char* PlayingCardToString(PlayingCard* card);
+char* playingCardToString(PlayingCard* card);
 
 
 
