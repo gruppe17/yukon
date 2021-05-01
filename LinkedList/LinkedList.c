@@ -88,7 +88,7 @@ Node** getNode(LinkedList *linkedList, int index){
 
 Node* getLastNode(LinkedList *linkedList){
 	Node **tracer = &linkedList->head;
-	while ((*tracer)->next != NULL){
+	while ((*tracer) && (*tracer)->next != NULL){
 		tracer = &(*tracer)->next;
 	}
 	return (*tracer);
