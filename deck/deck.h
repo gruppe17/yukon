@@ -15,7 +15,7 @@
  * Represents a deck of cards
  * @author Rasmus Nylander, s205418
  */
-typedef LinkedList Deck;
+typedef LinkedList* Deck;
 
 /**
  * Creates a new, empty deck and returns a pointer to it
@@ -24,7 +24,7 @@ typedef LinkedList Deck;
  * 			memory allocation fails.
  * @author Rasmus Nylander, s205418
  */
-Deck *newDeck();
+Deck newDeck();
 /**
  * Creates a new standard deck of 52 playing card and
  * returns a pointer to it or NULL if memory allocation
@@ -33,16 +33,16 @@ Deck *newDeck();
  * 			card or NULL if memory allocation fails.
  * @author Rasmus Nylander, s205418
  */
-Deck *newStandardDeck();
+Deck newStandardDeck();
 /**
  * Adds one copy of every card to the specified Deck
  * @param deck the Deck to add cards to
  * @return TRUE if the Deck was changed
  * @author Rasmus Nylander, s205418
  */
-BOOL fillDeck(Deck* deck);
+BOOL fillDeck(Deck deck);
 
-Deck *loadDeckFromFile(char* fileName);
+Deck loadDeckFromFile(char* fileName);
 BOOL saveDeckToFile(char* fileName);
 
 #endif //YUKON_DECK_H
