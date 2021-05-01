@@ -43,6 +43,7 @@ BOOL saveDeckArrayToFile(Deck decks[], int length, char *filename);
 BOOL saveGameMovesToFile(Game game, char *filename);
 
 struct game {
+	Deck deck;
 	Deck columns[NUM_COLUMNS_IN_GAME];
 	Deck finished[PLAYING_CARD_NUM_SUITS];
 	LinkedList *moves;
@@ -63,7 +64,8 @@ Game newGame(){
 
 BOOL saveGameToFile(Game game, char* filename){
 	//Todo: check if valid file
-	return  saveGameColumnsToFile(game, filename) &&
+	return  saveDeckToFile(getDeck(game), filename) &&
+			saveGameColumnsToFile(game, filename) &&
 			saveGameFinishedToFile(game, filename) &&
 			saveGameMovesToFile(game, filename);
 }
@@ -86,4 +88,33 @@ BOOL saveDeckArrayToFile(Deck decks[], int length, char *filename){
 
 BOOL saveGameMovesToFile(Game game, char *filename){
 	return FALSE;
+}
+
+Deck getDeck(Game game){
+	return game->deck;
+}
+
+BOOL setDeck(Game game, Deck deck){
+	if (deck == getDeck(game)) return FALSE;
+	game->deck = deck;
+	return TRUE;
+}
+
+Deck* getColumns(Game game){
+	return game->columns;
+}
+
+Deck* getFinished(Game game){
+	return game->finished;
+}
+
+void dealCards(Game game){
+	Deck cards = getDeck(game);
+	for (int i = 0; i < NUM_COLUMNS_IN_GAME; ++i) {
+		for (int j = 0; j < numCardsInColumns[i]; ++j) {
+			PlayingCard *card = get(cards, i + j);
+			if (card == NULL) return;
+			add(game->columns[i], card);
+		}
+	}
 }
