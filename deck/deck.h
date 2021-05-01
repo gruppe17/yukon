@@ -42,7 +42,7 @@ Deck newStandardDeck();
  */
 BOOL fillDeck(Deck deck);
 
-Deck loadDeckFromFile(char* fileName);
-BOOL saveDeckToFile(char* fileName);
+Deck loadDeckFromFile(Deck deck, char* fileName);
+BOOL saveDeckToFile(Deck deck, char* fileName);
 
 #endif //YUKON_DECK_H
