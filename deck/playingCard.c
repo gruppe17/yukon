@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "playingCard.h"
 
 #define BITS_FOR_SUITS 2
@@ -13,6 +14,7 @@
 struct playingCard{
 	unsigned int suit : BITS_FOR_SUITS;
 	unsigned int number : BITS_FOR_CARDS_IN_SUIT;
+	bool faceUp : 1;
 };
 
 void writePlayingCardSuitToString(PlayingCard *card, char *string);
@@ -27,6 +29,7 @@ PlayingCard* newCard(unsigned char suit, unsigned char number){
 	if (cardPtr == NULL) return NULL;
 	cardPtr->suit = suit;
 	cardPtr->number = number;
+	cardPtr->faceUp = false;
 	return cardPtr;
 }
 
