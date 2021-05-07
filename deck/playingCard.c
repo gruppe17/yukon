@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "playingCard.h"
+#include "../utils/integerUtils.h"
 
 #define BITS_FOR_SUITS 2
 #define BITS_FOR_CARDS_IN_SUIT 4
@@ -93,21 +94,6 @@ char* playingCardNumberToString(PlayingCard card){
 	*(numberString + stringLength) = 0;
 	writePlayingCardNumberToString(card, numberString);
 	return numberString;
-}
-
-/**
- * Calculate the number of decimal digits the specified number has
- * @param number the number to get the number of decimal digits of
- * @return an int containing the number of decimal digits of the specified number
- * @author Rasmus Nylander, s205418
- */
-int getNumDecDigits(int number){
-	int numDigits = 0;
-	do {
-		numDigits++;
-		number /= 10;
-	} while(number != 0);
-	return numDigits;
 }
 
 //This should use a dictionary or something
