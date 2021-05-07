@@ -24,4 +24,16 @@ int getNumDigits(int number, int base);
  */
 int getNumDecDigits(int number);
 
+/**
+ * Calculates sum of the number of digits of the numbers in the range
+ * from the specified start inclusive to the specified end exclusive
+ * in the specified base and returns it.
+ * @param start the start of the range inclusive
+ * @param end the end of the range exclusive
+ * @param base the base in which to calculate the number of digits
+ * @return an unsigned long containing the number of digits
+ * @author Rasmus Nylander, s205418
+ */
+unsigned long numDigitsInRange(int start, int end, int base);
+
 #endif //YUKON_INTEGERUTILS_H

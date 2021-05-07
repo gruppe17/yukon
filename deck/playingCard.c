@@ -14,7 +14,7 @@
 struct playingCard{
 	unsigned int suit : BITS_FOR_SUITS;
 	unsigned int number : BITS_FOR_CARDS_IN_SUIT;
-	bool faceUp : 1;
+	_Bool faceUp : 1;
 };
 
 void writePlayingCardSuitToString(PlayingCard card, char *string);
@@ -33,7 +33,7 @@ PlayingCard newCard(unsigned char suit, unsigned char number){
 	return card;
 }
 
-bool isFaceUp(PlayingCard card){
+_Bool isFaceUp(PlayingCard card){
 	return card->faceUp;
 }
 

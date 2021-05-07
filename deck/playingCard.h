@@ -32,7 +32,7 @@ PlayingCard newCard(unsigned char suit, unsigned char number);
  * @return true if the card if face up
  * @author Rasmus Nylander, s205418
  */
-bool isFaceUp(PlayingCard card);
+_Bool isFaceUp(PlayingCard card);
 
 /**
  * Returns a string representation of the specified PlayingCard.
