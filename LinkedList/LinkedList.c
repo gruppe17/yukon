@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+
 typedef struct _node{
 	struct _node* next;
 	void* data;
@@ -19,6 +20,8 @@ Node* newNode(void* data){
 	node->data = data;
 	return node;
 }
+
+
 
 
 Node* getLastNode(LinkedList *linkedList);

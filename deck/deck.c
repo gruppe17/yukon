@@ -28,3 +28,7 @@ BOOL fillDeck(Deck deck){
 	}
 	return TRUE;
 }
+
+BOOL saveDeckToFile(Deck deck, char* fileName){
+	return FALSE;
+}
