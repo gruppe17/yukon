@@ -12,7 +12,7 @@
  * Represents a standard playing card
  * @author Rasmus Nylander, s205418
  */
-typedef struct playingCard PlayingCard;
+typedef struct playingCard* PlayingCard;
 
 /**
  * Creates a new PlayingCard with the specified suit and
@@ -24,7 +24,7 @@ typedef struct playingCard PlayingCard;
  * 			memory allocation fails
  * @author Rasmus Nylander, s205418
  */
-PlayingCard* newCard(unsigned char suit, unsigned char number);
+PlayingCard newCard(unsigned char suit, unsigned char number);
 
 /**
  * Returns a string representation of the specified PlayingCard.
@@ -32,7 +32,7 @@ PlayingCard* newCard(unsigned char suit, unsigned char number);
  * @return A new string representing the card or null if memory can't be allocated
  * @author Rasmus Nylander, s205418
  */
-char* playingCardToString(PlayingCard* card);
+char* playingCardToString(PlayingCard card);
 
 /**
  * Returns a string representation of the specified PlayingCard's suit
@@ -40,7 +40,7 @@ char* playingCardToString(PlayingCard* card);
  * @return a char representing the card's suit or null if memory can't be allocated
  * @author Rasmus Nylander, s205418
  */
-char* playingCardSuitToString(PlayingCard* card);
+char* playingCardSuitToString(PlayingCard card);
 
 /**
  * Returns a string representation of the specified PlayingCard's number
@@ -48,7 +48,7 @@ char* playingCardSuitToString(PlayingCard* card);
  * @return a new string representing the card's number or null if memory can't be allocated
  * @author Rasmus Nylander, s205418
  */
-char* playingCardNumberToString(PlayingCard* card);
+char* playingCardNumberToString(PlayingCard card);
 
 
 

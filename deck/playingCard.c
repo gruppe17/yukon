@@ -3,7 +3,6 @@
 //
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include "playingCard.h"
@@ -17,23 +16,23 @@ struct playingCard{
 	bool faceUp : 1;
 };
 
-void writePlayingCardSuitToString(PlayingCard *card, char *string);
-void writePlayingCardNumberToString(PlayingCard* card, char* string);
+void writePlayingCardSuitToString(PlayingCard card, char *string);
+void writePlayingCardNumberToString(PlayingCard card, char* string);
 
-PlayingCard* newCard(unsigned char suit, unsigned char number){
+PlayingCard newCard(unsigned char suit, unsigned char number){
 	if (suit >= PLAYING_CARD_NUM_SUITS || number >= PLAYING_CARD_NUM_CARDS_IN_SUIT) {
 		//Do something! This can't be tolerated!
 		return NULL;
 	}
-	PlayingCard *cardPtr = (PlayingCard *) malloc(sizeof(PlayingCard));
-	if (cardPtr == NULL) return NULL;
-	cardPtr->suit = suit;
-	cardPtr->number = number;
-	cardPtr->faceUp = false;
-	return cardPtr;
+	PlayingCard card = (PlayingCard) malloc(sizeof(struct playingCard));
+	if (card == NULL) return NULL;
+	card->suit = suit;
+	card->number = number;
+	card->faceUp = false;
+	return card;
 }
 
-char* playingCardToString(PlayingCard* card){
+char* playingCardToString(PlayingCard card){
 	char *cardNumberString = playingCardNumberToString(card);
 	if (cardNumberString == NULL) return NULL;
 
@@ -55,14 +54,14 @@ char* playingCardToString(PlayingCard* card){
 }
 
 //This should also use a dictionary or something
-char* playingCardSuitToString(PlayingCard* card){
+char* playingCardSuitToString(PlayingCard card){
 	char *suitString = malloc(sizeof(char) * 2);
 	if (suitString == NULL) return NULL;
 	*(suitString + 1) = 0;
 	
 }
 
-void writePlayingCardSuitToString(PlayingCard *card, char *string){
+void writePlayingCardSuitToString(PlayingCard card, char *string){
 	char suit;
 	switch (card->suit) {
 		case 0:
@@ -81,7 +80,7 @@ void writePlayingCardSuitToString(PlayingCard *card, char *string){
 	*string = suit;
 }
 
-char* playingCardNumberToString(PlayingCard* card){
+char* playingCardNumberToString(PlayingCard card){
 	int stringLength = 1;
 	if (card->number == 9) stringLength++;
 	char *numberString = malloc(stringLength * sizeof(char) + 1);
@@ -108,7 +107,7 @@ int getNumDecDigits(int number){
 }
 
 //This should use a dictionary or something
-void writePlayingCardNumberToString(PlayingCard* card, char* string) {
+void writePlayingCardNumberToString(PlayingCard card, char* string) {
 	int number = card->number;
 	switch (number) {
 		case 0:
