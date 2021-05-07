@@ -3,9 +3,11 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "commands.h"
 #include "command_ui.h"
+#include "../utils/strutils.h"
 
 
 char* LD(char* filename){
@@ -27,11 +29,23 @@ char* SW() {
 
 }
 
-char* SI(int split) {
+char* SI(Game game, char *parameters) {
+	char out[256];
 
+	int split = size(getDeck(game))/2;
+	trim(parameters);
+	int length = strlen(parameters);
+	if (length > 0){
+		int parameter = atoi(parameters);
+		if (parameter < 0 || parameter > size(getDeck(game))) {
+			sprintf_s(out, 256, "SI was called with parameter %i, which resulted in an error. SI must be provided with an integer", split);
+			return out;
+		}
+		split = parameter;
+	}
 
-    char out[255];
-    sprintf(out, "SI was called with split %i", split);
+	interweaveLinkedList(getDeck(game), cutEnd(getDeck(game), split));
+    sprintf(out, "SI was called with parameter %i", split);
     return out;
 
 }
@@ -62,4 +76,3 @@ char* Q()  {
 
     return "Stopping current game";
 }
-

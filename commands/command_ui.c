@@ -47,7 +47,7 @@ void GetCommandFromString(char* str) {
             PrintConsoleMenu( SW());
         }
         else if(strcmp(lastCommand, COMMAND_SI) == 0){
-            PrintConsoleMenu( SI(atoi(secondWord)));
+           // PrintConsoleMenu( SI(atoi(secondWord)));
         }
         else if(strcmp(lastCommand, COMMAND_SR) == 0){
             PrintConsoleMenu( SR());
