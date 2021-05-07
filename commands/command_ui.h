@@ -14,12 +14,6 @@
  */
 void GetCommandFromString(char* str);
 
-/**
- * Reads a string
- * @author Tobias Maneschijn, s205422
- */
-
-char* ReadString();
 
 
 /**

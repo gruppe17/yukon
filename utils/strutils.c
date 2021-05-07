@@ -4,6 +4,10 @@
 
 #include <string.h>
 #include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_STRING_LENGTH 16384
 
 void trim(char * string) {
     char *p = string;
@@ -17,4 +21,13 @@ void trim(char * string) {
     while (*p && isspace(*p)) ++p, --l;
 
     memmove(string, p, l + 1);
+}
+
+char readStringBuffer[MAX_STRING_LENGTH];
+char *ReadString() {
+	fgets(readStringBuffer, sizeof(readStringBuffer), stdin);
+	unsigned int stringLength = strlen(readStringBuffer);
+	char* string = (char*) malloc((stringLength + 1) * sizeof(char));
+	strcpy(string, readStringBuffer);
+	return string;
 }
