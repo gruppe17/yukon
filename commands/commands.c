@@ -32,6 +32,11 @@ char* SW() {
 char* SI(Game game, char *parameters) {
 	char out[256];
 
+	if (game == NULL || getDeck(game) == NULL) {
+		sprintf_s(out, 256, "SI was called but game has no deck");
+		return out;
+	}
+
 	int split = size(getDeck(game))/2;
 	trim(parameters);
 	int length = strlen(parameters);
@@ -45,18 +50,22 @@ char* SI(Game game, char *parameters) {
 	}
 
 	interweaveLinkedList(getDeck(game), cutEnd(getDeck(game), split));
-    sprintf(out, "SI was called with parameter %i", split);
+    sprintf_s(out, 256, "SI was called with parameter %i", split);
     return out;
-
 }
 
-char* SR() {
+char* SR(Game game) {
+	char out[256];
 
-    return "SR was called";
+	if (game == NULL || getDeck(game) == NULL) {
+		sprintf_s(out, 256, "SR was called but game has no deck");
+		return out;
+	}
+	sprintf_s(out, 256, "SR was called and deck was shuffled");
+	return out;
 }
 
 char* SD(char *filename) {
-
     char out[255];  
     sprintf(out, "Saving deck to file %s", filename);
     return out;

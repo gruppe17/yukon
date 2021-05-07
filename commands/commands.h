@@ -33,7 +33,7 @@ char* SI(Game game, char *parameters);
 
 /**
  * Shuffles the card in a random manner
- * @author Tobias Maneschijn, s205422
+ * @author Rasmus Nylander, s205418
  */
 char* SR();
 
