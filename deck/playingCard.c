@@ -32,6 +32,10 @@ PlayingCard newCard(unsigned char suit, unsigned char number){
 	return card;
 }
 
+bool isFaceUp(PlayingCard card){
+	return card->faceUp;
+}
+
 char* playingCardToString(PlayingCard card){
 	char *cardNumberString = playingCardNumberToString(card);
 	if (cardNumberString == NULL) return NULL;

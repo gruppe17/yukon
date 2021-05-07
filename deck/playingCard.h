@@ -1,5 +1,5 @@
 //
-// Created by Nylan on 09-04-2021.
+// Created by Nylander on 09-04-2021.
 //
 
 #ifndef YUKON_PLAYINGCARD_H
@@ -25,6 +25,14 @@ typedef struct playingCard* PlayingCard;
  * @author Rasmus Nylander, s205418
  */
 PlayingCard newCard(unsigned char suit, unsigned char number);
+
+/**
+ * Returns a boolean indicating whether the specified card is face up
+ * @param card the PlayingCard to determine if face up or not
+ * @return true if the card if face up
+ * @author Rasmus Nylander, s205418
+ */
+bool isFaceUp(PlayingCard card);
 
 /**
  * Returns a string representation of the specified PlayingCard.
