@@ -7,14 +7,20 @@
 #include "deck/deck.h"
 #include "commands/command_ui.h"
 #include "utils/strutils.h"
-#include "LinkedList/LinkedList.h"
+#include "game/game.h"
+#include "UI/GameView.h"
 
-#define NUM_COLUMNS_IN_GAME 7
 
 int main() {
-    PrintConsoleMenu("Welcome to Yukon!");
-    LinkedList *decks = newLinkedList();
+	Game game = newGame();
+	setDeck(game, newStandardDeck());
+	shuffle(getDeck(game));
+	dealCards(game);
 
+	char* string = gameToDisplayString(game);
+	printf("%s", string);
+
+    PrintConsoleMenu("Welcome to Yukon!");
 
     shouldExit = false;
 
