@@ -32,3 +32,14 @@ bool fillDeck(Deck deck){
 bool saveDeckToFile(Deck deck, char* fileName){
 	return false;
 }
+
+bool alignCards(Deck deck, bool faceUp){
+	//todo: this maybe should be done with internal stuff
+	// LinkedList should maybe have an applyFunctionToEach
+	int length = size(deck);
+	bool changed = false;
+	for (int i = 0; i < length; ++i) {
+		if (setFaceUp(get(deck, i), faceUp)) changed = true;
+	}
+	return changed;
+}

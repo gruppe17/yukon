@@ -45,4 +45,13 @@ bool fillDeck(Deck deck);
 Deck loadDeckFromFile(Deck deck, char* fileName);
 bool saveDeckToFile(Deck deck, char* fileName);
 
+/**
+ * Makes all the cards in the deck face the same direction
+ * @param deck the Deck to align
+ * @param faceUp true if the cards should face up
+ * @return true if any card changed
+ * @author Rasmus Nylander, s205418
+ */
+bool alignCards(Deck deck, bool faceUp);
+
 #endif //YUKON_DECK_H
