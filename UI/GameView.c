@@ -108,7 +108,7 @@ char *getCardText(PlayingCard card){
 int getTallestColumnHeight(Deck *columns, int numColumns){
 	int maxSize = size(*columns);
 	for (int i = 1; i < numColumns; ++i) {
-		int contenderSize = size(*(columns + 1));
+		int contenderSize = size(*(columns + i));
 		if (contenderSize > maxSize) maxSize = contenderSize;
 	}
 	return maxSize;
