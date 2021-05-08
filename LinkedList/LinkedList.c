@@ -88,17 +88,21 @@ Node** getNode(LinkedList *linkedList, int index){
 
 Node* getLastNode(LinkedList *linkedList){
 	Node **tracer = &linkedList->head;
-	while ((*tracer)->next != NULL){
+	while ((*tracer) && (*tracer)->next != NULL){
 		tracer = &(*tracer)->next;
 	}
-	return (*tracer);
+	return *tracer;
 	//return linkedList->tail;
 }
 
 BOOL add(LinkedList *linkedList, void* t){
 	Node *node = newNode(t);
 	if (node == NULL) return FALSE;
-	getLastNode(linkedList)->next = node;
+
+	Node *lastNode = getLastNode(linkedList);
+	if (lastNode == NULL) return push(linkedList, t);
+	lastNode->next = node;
+
 	linkedList->size++;
 	linkedList->tail = node;
 	return TRUE;
