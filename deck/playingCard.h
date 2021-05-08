@@ -5,6 +5,8 @@
 #ifndef YUKON_PLAYINGCARD_H
 #define YUKON_PLAYINGCARD_H
 
+#include <stdbool.h>
+
 #define PLAYING_CARD_NUM_SUITS 4
 #define PLAYING_CARD_NUM_CARDS_IN_SUIT 13
 
@@ -32,7 +34,7 @@ PlayingCard newCard(unsigned char suit, unsigned char number);
  * @return true if the card if face up
  * @author Rasmus Nylander, s205418
  */
-_Bool isFaceUp(PlayingCard card);
+bool isFaceUp(PlayingCard card);
 
 /**
  * Returns a string representation of the specified PlayingCard.

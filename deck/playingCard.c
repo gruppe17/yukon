@@ -4,7 +4,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 #include "playingCard.h"
 #include "../utils/integerUtils.h"
 
@@ -14,7 +13,7 @@
 struct playingCard{
 	unsigned int suit : BITS_FOR_SUITS;
 	unsigned int number : BITS_FOR_CARDS_IN_SUIT;
-	_Bool faceUp : 1;
+	bool faceUp : 1;
 };
 
 void writePlayingCardSuitToString(PlayingCard card, char *string);
@@ -33,7 +32,7 @@ PlayingCard newCard(unsigned char suit, unsigned char number){
 	return card;
 }
 
-_Bool isFaceUp(PlayingCard card){
+bool isFaceUp(PlayingCard card){
 	return card->faceUp;
 }
 

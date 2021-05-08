@@ -5,6 +5,7 @@
 #ifndef YUKON_GAME_H
 #define YUKON_GAME_H
 
+#define NUM_COLUMNS_IN_GAME 7
 
 #include "../deck/deck.h"
 
@@ -40,6 +41,17 @@ Game loadGameFromFile(char* filename);
  * @author Rasmus Nylander, s205418
  */
 Deck getDeck(Game game);
+
+/**
+ * Returns the Deck of the specified Game in the same format
+ * as get columns, as if the cards were dealt by placing one
+ * card in each column left to right until no cards remain.
+ * @param game the Game which Deck is desired
+ * @return 	the Deck of the specified Game in the same format
+ * 			as getColumns
+ * @author Rasmus Nylander, s205418
+ */
+Deck* getDeckAsColumns(Game game);
 
 /**
  * Sets the Deck of the specified Game to the specified

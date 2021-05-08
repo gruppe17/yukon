@@ -5,7 +5,6 @@
 #include "game.h"
 #include <stdlib.h>
 
-#define NUM_COLUMNS_IN_GAME 7
 const int numCardsInColumns[NUM_COLUMNS_IN_GAME] = {1, 6, 7, 8, 9, 10, 11};
 
 /**
@@ -98,6 +97,17 @@ BOOL setDeck(Game game, Deck deck){
 	if (deck == getDeck(game)) return FALSE;
 	game->deck = deck;
 	return TRUE;
+}
+
+Deck* getDeckAsColumns(Game game){
+	Deck* deckAsColumns = NULL;
+	while (deckAsColumns == NULL) deckAsColumns = (Deck*) malloc(NUM_COLUMNS_IN_GAME * sizeof(Deck));
+	Deck deck = getDeck(game);
+	int deckSize = size(deck);
+	for (int i = 0; i < deckSize; ++i) {
+		add(*(deckAsColumns + (i % NUM_COLUMNS_IN_GAME)), get(deck, i));
+	}
+	return deckAsColumns;
 }
 
 Deck* getColumns(Game game){
