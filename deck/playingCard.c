@@ -36,6 +36,16 @@ bool isFaceUp(PlayingCard card){
 	return card->faceUp;
 }
 
+bool setFaceUp(PlayingCard card, bool up){
+	if (isFaceUp(card) == up) return false;
+	card->faceUp = up;
+	return true;
+}
+
+bool flipPlayingCard(PlayingCard card){
+	return setFaceUp(card, !isFaceUp(card));
+}
+
 char* playingCardToString(PlayingCard card){
 	char *cardNumberString = playingCardNumberToString(card);
 	if (cardNumberString == NULL) return NULL;

@@ -37,6 +37,24 @@ PlayingCard newCard(unsigned char suit, unsigned char number);
 bool isFaceUp(PlayingCard card);
 
 /**
+ * Sets whether the card the specified card faces up
+ * @param card the PlayingCard to turn face up or down
+ * @param up whether the card should face up
+ * @return true if the card changed
+ * @author Rasmus Nylander, s205418
+ */
+bool setFaceUp(PlayingCard card, bool up);
+
+/**
+ * Flips the specified card. I.e. if it is facing up, after
+ * applying this function it will be facing down and vice versa
+ * @param card the PlayingCard to turn
+ * @return true if the card changed
+ * @author Rasmus Nylander, s205418
+ */
+bool flipPlayingCard(PlayingCard card);
+
+/**
  * Returns a string representation of the specified PlayingCard.
  * @param card the PlayingCard to be represented as a string
  * @return A new string representing the card or null if memory can't be allocated
