@@ -31,3 +31,9 @@ char *ReadString() {
 	strcpy(string, readStringBuffer);
 	return string;
 }
+
+char* newString(int length){
+	char *string = NULL;
+	while (string == NULL) string = calloc(length + 1, sizeof(char));
+	return string;
+}
