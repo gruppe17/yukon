@@ -27,9 +27,9 @@ Node* newNode(void* data){
 Node* getLastNode(LinkedList *linkedList);
 Node** getNode(LinkedList *linkedList, int index);
 
-BOOL appendToEmpty(LinkedList *appendTo, LinkedList *appending);
+bool appendToEmpty(LinkedList *appendTo, LinkedList *appending);
 
-BOOL swapNodes(Node **a, Node **b);
+bool swapNodes(Node **a, Node **b);
 
 struct linkedList {
 	int size;
@@ -47,7 +47,7 @@ LinkedList* newLinkedList(){
 	linkedList->tail = NULL;
 }
 
-BOOL hasComparator(LinkedList *linkedList){
+bool hasComparator(LinkedList *linkedList){
 	return linkedList->comparator != NULL;
 }
 
@@ -59,10 +59,10 @@ void setComparator(LinkedList *linkedList, int (*comparator) (void* a, void* b))
  * Returns whether the specified index is a valid index of the specified list
  * @param linkedList the list which the index should be validated for
  * @param index the index to validate
- * @return TRUE if the index is valid
+ * @return true if the index is valid
  * @author Rasmus Nylander, s205418
  */
-BOOL validIndex(LinkedList *linkedList, int index){
+bool validIndex(LinkedList *linkedList, int index){
 	return index < linkedList->size && index >= 0;
 }
 
@@ -98,9 +98,9 @@ Node* getLastNode(LinkedList *linkedList){
 	//return linkedList->tail;
 }
 
-BOOL add(LinkedList *linkedList, void* t){
+bool add(LinkedList *linkedList, void* t){
 	Node *node = newNode(t);
-	if (node == NULL) return FALSE;
+	if (node == NULL) return false;
 
 	Node *lastNode = getLastNode(linkedList);
 	if (lastNode == NULL) return push(linkedList, t);
@@ -108,39 +108,39 @@ BOOL add(LinkedList *linkedList, void* t){
 
 	linkedList->size++;
 	linkedList->tail = node;
-	return TRUE;
+	return true;
 }
 
-BOOL append(LinkedList *appendTo, LinkedList *appending){
+bool append(LinkedList *appendTo, LinkedList *appending){
 	if (appendTo->size == 0) return appendToEmpty(appendTo, appending);
 	appendTo->size += appending->size;
 	appendTo->tail->next = appending->head;
 	appendTo->tail = appending->tail;
 	free(appending);
-	return TRUE;
+	return true;
 }
 
-BOOL appendToEmpty(LinkedList *appendTo, LinkedList *appending){
+bool appendToEmpty(LinkedList *appendTo, LinkedList *appending){
 	appendTo->head = appending->head;
 	appendTo->tail = appending->tail;
 	appendTo->size = appending->size;
 	free(appending);
-	return TRUE;
+	return true;
 }
 
-BOOL push(LinkedList *linkedList, void *t){
+bool push(LinkedList *linkedList, void *t){
 	Node *node = newNode(t);
-	if (node == NULL) return FALSE;
+	if (node == NULL) return false;
 
 	node->next = linkedList->head;
 	linkedList->head = node;
 	linkedList->size++;
 	if (linkedList->size == 1) linkedList->tail = linkedList->head;
-	return TRUE;
+	return true;
 }
 
 void* pop(LinkedList* linkedList){
-	if (size(linkedList) == 0) return NULL;
+	if (isEmpty(linkedList)) return NULL;
 	Node *popped = linkedList->head;
 	linkedList->head = linkedList->head->next;
 	linkedList->size--;
@@ -169,10 +169,10 @@ void* removeIndex(LinkedList *linkedList, int index){
 	return data;
 }
 
-BOOL removeElement(LinkedList *linkedList, void* t){
-	if (!hasComparator(linkedList)) return FALSE;
+bool removeElement(LinkedList *linkedList, void* t){
+	if (!hasComparator(linkedList)) return false;
 
-	BOOL present = FALSE;
+	bool present = false;
 	Node **tracer = &(linkedList->head);
 	while ((*tracer)->next != NULL) { //This could be a for loop
 		if ( (present = (linkedList->comparator(t, (*tracer)->data)) == 0) ) break;
@@ -187,10 +187,10 @@ BOOL removeElement(LinkedList *linkedList, void* t){
 	return present;
 }
 
-BOOL insert(LinkedList *linkedList, void *t){
-	if (linkedList->comparator == NULL) return FALSE;
+bool insert(LinkedList *linkedList, void *t){
+	if (linkedList->comparator == NULL) return false;
 	Node* node = newNode(t);
-	if (node == NULL) return FALSE;
+	if (node == NULL) return false;
 
 	Node **tracer = &linkedList->head;
 	while ((*tracer != NULL) && linkedList->comparator((*tracer)->data, t) < 1){
@@ -199,14 +199,14 @@ BOOL insert(LinkedList *linkedList, void *t){
 	node->next = *tracer;
 	*tracer = node;
 	linkedList->size++;
-	return TRUE;
+	return true;
 }
 
-BOOL insertAt(LinkedList *linkedList, void *t, int index){
+bool insertAt(LinkedList *linkedList, void *t, int index){
 	if (index == size(linkedList)) return add(linkedList, t);
-	if (!validIndex(linkedList, index)) return FALSE;
+	if (!validIndex(linkedList, index)) return false;
 	Node *node = newNode(t);
-	if (node == NULL) return FALSE;
+	if (node == NULL) return false;
 
 	Node **tracer = &linkedList->head;
 	for (int i = 0; i < index; ++i) {
@@ -214,7 +214,7 @@ BOOL insertAt(LinkedList *linkedList, void *t, int index){
 	}
 	node->next = *tracer;
 	*tracer = node;
-	return TRUE;
+	return true;
 }
 
 LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex){
@@ -250,8 +250,8 @@ int size(LinkedList *linkedList){
 	return linkedList->size;
 }
 
-BOOL interweaveLinkedList(LinkedList *into, LinkedList *linkedList){
-	if (linkedList == NULL || into == NULL || linkedList->size == 0) return FALSE;
+bool interweaveLinkedList(LinkedList *into, LinkedList *linkedList){
+	if (linkedList == NULL || into == NULL || linkedList->size == 0) return false;
 	Node *a = into->head, *b = linkedList->head, *aNext;
 	while (a->next != NULL && b != NULL){
 		aNext = a->next;
@@ -269,12 +269,12 @@ BOOL interweaveLinkedList(LinkedList *into, LinkedList *linkedList){
 	}
 	into->size += linkedList->size;
 	free(linkedList);
-	return TRUE;
+	return true;
 }
 
-BOOL shuffle(LinkedList *linkedList){
+bool shuffle(LinkedList *linkedList){
 	int s = size(linkedList);
-	if (s < 2) return FALSE;
+	if (s < 2) return false;
 
 	time_t t;
 	srand((unsigned) time(&t));
@@ -282,11 +282,11 @@ BOOL shuffle(LinkedList *linkedList){
 	for (int i = 0; i < swaps; ++i) {
 		swap(linkedList, i, (rand() % (s - i)) + i);
 	}
-	return TRUE;
+	return true;
 }
 
-BOOL swapNodes(Node **a, Node **b){
-	if (*a == *b || (*a) == NULL || (*b) == NULL) return FALSE;
+bool swapNodes(Node **a, Node **b){
+	if (*a == *b || (*a) == NULL || (*b) == NULL) return false;
 	Node *temp = (*a);
 	*a = *b;
 	*b = temp;
@@ -294,64 +294,64 @@ BOOL swapNodes(Node **a, Node **b){
 	temp = (*a)->next;
 	(*a)->next = (*b)->next;
 	(*b)->next = temp;
-	return TRUE;
+	return true;
 }
 
-BOOL swap(LinkedList *linkedList, int i, int j){
-	if (!validIndex(linkedList, i) || !validIndex(linkedList, j)) return FALSE;
+bool swap(LinkedList *linkedList, int i, int j){
+	if (!validIndex(linkedList, i) || !validIndex(linkedList, j)) return false;
 	return swapNodes(getNode(linkedList, i), getNode(linkedList, j));
 }
 
-BOOL mergeSort(LinkedList *linkedList, int startIndex, int endIndex);
+bool mergeSort(LinkedList *linkedList, int startIndex, int endIndex);
 /**
  * Sorts a list bubbly! I.e. sorts a list with bubble sort.
  * @param linkedList the LinkedList to be sorted
- * @return TRUE if the list is sorted
+ * @return true if the list is sorted
  * @author Rasmus Nylander, s205418
  */
-BOOL bubbleSort(LinkedList *linkedList);
+bool bubbleSort(LinkedList *linkedList);
 
-BOOL sort(LinkedList *linkedList){
-	if (!hasComparator(linkedList)) return FALSE;
-	if (size(linkedList) < 2) return TRUE;
+bool sort(LinkedList *linkedList){
+	if (!hasComparator(linkedList)) return false;
+	if (size(linkedList) < 2) return true;
 	//return mergeSort(linkedList, 0, size(linkedList) - 1);
 	bubbleSort(linkedList);
 }
 
-BOOL bubbleSort(LinkedList *linkedList){
-	if (!hasComparator(linkedList)) return FALSE;
+bool bubbleSort(LinkedList *linkedList){
+	if (!hasComparator(linkedList)) return false;
 
 	int listLength = size(linkedList);
 	for (int i = 0; i < listLength; ++i) {
-		BOOL hasSwapped = FALSE;
+		bool hasSwapped = false;
 		Node **tracer = &linkedList->head;
 		for (int j = 0; j < listLength - i - 1; ++j) {
 			if (linkedList->comparator((*tracer)->data, (*tracer)->next->data) >= 1){
 				swapNodes(tracer, &(*tracer)->next);
-				hasSwapped = TRUE;
+				hasSwapped = true;
 			}
 			tracer = &(*tracer)->next;
 		}
-		if (!hasSwapped) return TRUE;
+		if (!hasSwapped) return true;
 	}
-	return TRUE;
+	return true;
 }
 
 /**DOES NOT WORK!*/
-BOOL mergeSorted(LinkedList *linkedList, int startIndex, int endIndex, int midPoint);
-BOOL mergeSort(LinkedList *linkedList, int startIndex, int endIndex){
-	if (!hasComparator(linkedList)) return FALSE;
-	if (endIndex - startIndex < 1) return TRUE;
+bool mergeSorted(LinkedList *linkedList, int startIndex, int endIndex, int midPoint);
+bool mergeSort(LinkedList *linkedList, int startIndex, int endIndex){
+	if (!hasComparator(linkedList)) return false;
+	if (endIndex - startIndex < 1) return true;
 
 	int midpoint = ((endIndex - startIndex) / 2) + startIndex;
 	mergeSort(linkedList, startIndex, midpoint);
 	mergeSort(linkedList, midpoint + 1, endIndex);
 	mergeSorted(linkedList, startIndex, endIndex, midpoint);
-	return TRUE;
+	return true;
 }
 
-BOOL mergeSorted(LinkedList *linkedList, int startIndex, int endIndex, int midPoint){
-	if (!hasComparator(linkedList)) return FALSE;
+bool mergeSorted(LinkedList *linkedList, int startIndex, int endIndex, int midPoint){
+	if (!hasComparator(linkedList)) return false;
 
 	Node *startNode = *getNode(linkedList, startIndex);
 	Node *midNode = *getNode(linkedList, midPoint + 1);
@@ -370,5 +370,23 @@ BOOL mergeSorted(LinkedList *linkedList, int startIndex, int endIndex, int midPo
 		startNode->next = midNode;
 	}
 
-	return TRUE;
+	return true;
 }
+
+bool clearList(LinkedList *linkedList){
+	if (isEmpty(linkedList)) return false;
+	while (!isEmpty(linkedList)){
+		pop(linkedList);
+	}
+	return true;
+}
+
+void destroyList(LinkedList *linkedList){
+	clearList(linkedList);
+	free(linkedList);
+}
+
+bool isEmpty(LinkedList *linkedList){
+	return size(linkedList) < 1;
+}
+

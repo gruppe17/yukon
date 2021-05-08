@@ -5,9 +5,8 @@
 #ifndef YUKON_LINKEDLIST_H
 #define YUKON_LINKEDLIST_H
 //There probably should be a file with this
-typedef int BOOL;
-#define TRUE 1
-#define FALSE 0
+
+#include <stdbool.h>
 
 /**
  * Represents a generic linked list
@@ -26,10 +25,10 @@ LinkedList* newLinkedList();
  * Whether the specified LinkedList has been assigned
  * a comparator function
  * @param linkedList the LinkedList to check if assigned a comparator function
- * @return TRUE if the specified LinkedList has been assigned a comparator function
+ * @return true if the specified LinkedList has been assigned a comparator function
  * @author Rasmus Nylander, s205418
  */
-BOOL hasComparator(LinkedList *linkedList);
+bool hasComparator(LinkedList *linkedList);
 /**
  * Sets the comparator function of a LinkedList to the specified function
  * @param linkedList the LinkedList which is to be assigned a comparator function
@@ -70,23 +69,23 @@ void *getLast(LinkedList *LinkedList);
  * @return True if the list was modified
  * @author Rasmus Nylander, s205418
  */
-BOOL add(LinkedList *linkedList, void* t);
+bool add(LinkedList *linkedList, void* t);
 /**
  * Appends a LinkedList to another and frees appended lists memory
  * @param appendTo the list to append to
  * @param appending the list to append
- * @return TRUE if either list was changed
+ * @return true if either list was changed
  * @author Rasmus Nylander, s205418
  */
-BOOL append(LinkedList *appendTo, LinkedList *appending);
+bool append(LinkedList *appendTo, LinkedList *appending);
 /**
  * Adds the specified element to the front of the specified list
  * @param linkedList the LinkedList to which an element should be added
  * @param t the element which is to be added to the from of the list
- * @return TRUE if the list was changed
+ * @return true if the list was changed
  * @author Rasmus Nylander, s205418
  */
-BOOL push(LinkedList *linkedList, void *t);
+bool push(LinkedList *linkedList, void *t);
 /**
  * Removes the first element in the specified list and returns it
  * @param linkedList the LinkedList from which to pop the first element
@@ -118,10 +117,10 @@ void* removeIndex(LinkedList *linkedList, int index);
  * not been assigned a comparator, the list will be unchanged.
  * @param linkedList the LinkedList from which to remove an element
  * @param t the element to remove from the list
- * @return TRUE if the list was changed
+ * @return true if the list was changed
  * @author Rasmus Nylander, s205418
  */
-BOOL removeElement(LinkedList *linkedList, void* t);
+bool removeElement(LinkedList *linkedList, void* t);
 
 /**
  * Inserts the specified element in the specified list
@@ -132,10 +131,10 @@ BOOL removeElement(LinkedList *linkedList, void* t);
  * will remain unchanged.
  * @param linkedList tbe LinkedList into which the element should be inserted
  * @param t the element to insert into the list
- * @return TRUE if the list was changed
+ * @return true if the list was changed
  * @author Rasmus Nylander, s205418
  */
-BOOL insert(LinkedList *linkedList, void *t);
+bool insert(LinkedList *linkedList, void *t);
 /**
  * Inserts the specified element at the specified position
  * in the specified LinkedList, such that the elements index
@@ -144,10 +143,10 @@ BOOL insert(LinkedList *linkedList, void *t);
  * @param linkedList the list into which the element should be inserted
  * @param t the element which to insert into the list
  * @param index the index of the element after insertion
- * @return TRUE if the list was changed
+ * @return true if the list was changed
  * @author Rasmus Nylander, s205418
  */
-BOOL insertAt(LinkedList *linkedList, void *t, int index);
+bool insertAt(LinkedList *linkedList, void *t, int index);
 
 /**
  * Cuts out the sublist beginning and ending with the
@@ -195,17 +194,17 @@ int size(LinkedList *linkedList);
  * 1 → a → 2 → b → 3 → c → 4 → d → 5 → e → 6 → 7.
  * @param into the LinkedList to weave the other into
  * @param linkedList the LinkedList to weave into another
- * @return TRUE if either list changed
+ * @return true if either list changed
  * @author Rasmus Nylander, s205418
  */
-BOOL interweaveLinkedList(LinkedList *into, LinkedList *linkedList);
+bool interweaveLinkedList(LinkedList *into, LinkedList *linkedList);
 /**
  * Shuffles the specified LinkedList pseudo-randomly.
  * @param linkedList the LinkedList to shuffle
- * @return TRUE if the list changed
+ * @return true if the list changed
  * @author Rasmus Nylander, s205418
  */
-BOOL shuffle(LinkedList *linkedList);
+bool shuffle(LinkedList *linkedList);
 /**
  * Swaps the two elements at the specified indices in the
  * specified LinkedList. The list is unchanged if either
@@ -213,10 +212,10 @@ BOOL shuffle(LinkedList *linkedList);
  * @param linkedList the LinkedList in which to swap to element
  * @param i the index of the first element
  * @param j the index of the other element
- * @return TRUE is the list changed
+ * @return true is the list changed
  * @author Rasmus Nylander, s205418
  */
-BOOL swap(LinkedList *linkedList, int i, int j);
+bool swap(LinkedList *linkedList, int i, int j);
 
 /**
  * Sorts the list in acceding order. Requires the list
@@ -224,8 +223,37 @@ BOOL swap(LinkedList *linkedList, int i, int j);
  * not been assigned a comparator the list cannot be
  * sorted.
  * @param linkedList the LinkedList to sort
- * @return TRUE if the list is sorted
+ * @return true if the list is sorted
  */
-BOOL sort(LinkedList *linkedList);
+bool sort(LinkedList *linkedList);
+
+/**
+ * Empties the list.
+ * <p>
+ * <b>Note:</b> does not free the memory used
+ * by the list elements
+ * @param linkedList the LinkedList to clear
+ * @return true if the list changed
+ */
+bool clearList(LinkedList *linkedList);
+
+/**
+ * Frees the memory used by the list.
+ * <b>Note:</b> this does not include the memory
+ * used be the list's elements
+ * <p>
+ * <b>Note:</b> this includes the list's Nodes
+ * @param linkedList the LinkedList to destroy
+ */
+void destroyList(LinkedList *linkedList);
+
+/**
+ * Returns whether the specified LinkedList is empty
+ * @param linkedList the LinkedList to determine if empty
+ * @return true if the specified list is empty
+ */
+bool isEmpty(LinkedList *linkedList);
+
+
 
 #endif //YUKON_LINKEDLIST_H
