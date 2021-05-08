@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 const int numCardsInColumns[NUM_COLUMNS_IN_GAME] = {1, 6, 7, 8, 9, 10, 11};
+const int numShownCardsAtStart = 4;
 
 /**
  * Saves the columns of the specified Game to the specified file
@@ -124,11 +125,14 @@ Deck* getFinished(Game game){
 
 void dealCards(Game game){
 	Deck cards = getDeck(game);
+	alignCards(cards, false);
+	int numCardsAdded = 0;
 	for (int i = 0; i < NUM_COLUMNS_IN_GAME; ++i) {
 		for (int j = 0; j < numCardsInColumns[i]; ++j) {
-			PlayingCard *card = get(cards, i + j);
+			PlayingCard card = get(cards, numCardsAdded++);
 			if (card == NULL) return;
 			add(game->columns[i], card);
+			if (numCardsInColumns[i] - j <= numShownCardsAtStart) flipPlayingCard(card);
 		}
 	}
 }
