@@ -4,7 +4,6 @@
 
 #ifndef YUKON_LINKEDLIST_H
 #define YUKON_LINKEDLIST_H
-//There probably should be a file with this
 
 #include <stdbool.h>
 
@@ -224,6 +223,7 @@ bool swap(LinkedList *linkedList, int i, int j);
  * sorted.
  * @param linkedList the LinkedList to sort
  * @return true if the list is sorted
+ * @author Rasmus Nylander, s205418
  */
 bool sort(LinkedList *linkedList);
 
@@ -234,6 +234,7 @@ bool sort(LinkedList *linkedList);
  * by the list elements
  * @param linkedList the LinkedList to clear
  * @return true if the list changed
+ * @author Rasmus Nylander, s205418
  */
 bool clearList(LinkedList *linkedList);
 
@@ -244,6 +245,7 @@ bool clearList(LinkedList *linkedList);
  * <p>
  * <b>Note:</b> this includes the list's Nodes
  * @param linkedList the LinkedList to destroy
+ * @author Rasmus Nylander, s205418
  */
 void destroyList(LinkedList *linkedList);
 
@@ -251,6 +253,7 @@ void destroyList(LinkedList *linkedList);
  * Returns whether the specified LinkedList is empty
  * @param linkedList the LinkedList to determine if empty
  * @return true if the specified list is empty
+ * @author Rasmus Nylander, s205418
  */
 bool isEmpty(LinkedList *linkedList);
 
