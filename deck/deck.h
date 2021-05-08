@@ -37,12 +37,12 @@ Deck newStandardDeck();
 /**
  * Adds one copy of every card to the specified Deck
  * @param deck the Deck to add cards to
- * @return TRUE if the Deck was changed
+ * @return true if the Deck was changed
  * @author Rasmus Nylander, s205418
  */
-BOOL fillDeck(Deck deck);
+bool fillDeck(Deck deck);
 
 Deck loadDeckFromFile(Deck deck, char* fileName);
-BOOL saveDeckToFile(Deck deck, char* fileName);
+bool saveDeckToFile(Deck deck, char* fileName);
 
 #endif //YUKON_DECK_H

@@ -17,8 +17,8 @@ Deck newStandardDeck(){
 	return deck;
 }
 
-BOOL fillDeck(Deck deck){
-	if (deck == NULL) return FALSE;
+bool fillDeck(Deck deck){
+	if (deck == NULL) return false;
 	for (int suit = 0; suit < PLAYING_CARD_NUM_SUITS; ++suit) {
 		for (int cardNumber = 0; cardNumber < PLAYING_CARD_NUM_CARDS_IN_SUIT; ++cardNumber) {
 			PlayingCard card = NULL;
@@ -26,9 +26,9 @@ BOOL fillDeck(Deck deck){
 			add(deck, card);
 		}
 	}
-	return TRUE;
+	return true;
 }
 
-BOOL saveDeckToFile(Deck deck, char* fileName){
-	return FALSE;
+bool saveDeckToFile(Deck deck, char* fileName){
+	return false;
 }
