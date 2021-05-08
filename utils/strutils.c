@@ -32,7 +32,7 @@ char *ReadString() {
 	return string;
 }
 
-char* newString(int length){
+char* newString(unsigned long long length){
 	char *string = NULL;
 	while (string == NULL) string = calloc(length + 1, sizeof(char));
 	return string;

@@ -9,6 +9,7 @@
 
 #define PLAYING_CARD_NUM_SUITS 4
 #define PLAYING_CARD_NUM_CARDS_IN_SUIT 13
+#define PLAYING_CARD_MAX_LENGTH_AS_STRING 3
 
 /**
  * Represents a standard playing card

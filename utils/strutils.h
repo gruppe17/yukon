@@ -26,6 +26,6 @@ char* ReadString();
  * @return a char* pointer to the string
  * @author Rasmus Nylander, s205418
  */
-char* newString(int length);
+char* newString(unsigned long long length);
 
 #endif //YUKON_STRUTILS_H

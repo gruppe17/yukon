@@ -14,7 +14,7 @@ const int numCardsInColumns[NUM_COLUMNS_IN_GAME] = {1, 6, 7, 8, 9, 10, 11};
  * @return True if the game's columns were successfully saved
  * @author Rasmus Nylander, s205418
  */
-BOOL saveGameColumnsToFile(Game game, char *filename);
+bool saveGameColumnsToFile(Game game, char *filename);
 /**
  * Saves the "finished-deck"s of the specified Game to the specified file
  * @param game the game whose "finished-deck"s are to be saved
@@ -22,7 +22,7 @@ BOOL saveGameColumnsToFile(Game game, char *filename);
  * @return True if the game's "finished-deck"s were successfully saved
  * @author Rasmus Nylander, s205418
  */
-BOOL saveGameFinishedToFile(Game game, char *filename);
+bool saveGameFinishedToFile(Game game, char *filename);
 /**
  * Saves the specified array of Decks to the specified file
  * @param decks the array of decks to save
@@ -31,7 +31,7 @@ BOOL saveGameFinishedToFile(Game game, char *filename);
  * @return true if the array was successfully saved
  * @author Rasmus Nylander, s205418
  */
-BOOL saveDeckArrayToFile(Deck decks[], int length, char *filename);
+bool saveDeckArrayToFile(Deck decks[], int length, char *filename);
 /**
  * Saves the stack of moves of the specified Game to the specified file
  * @param game the game whose stack of moves are to be saved
@@ -39,7 +39,7 @@ BOOL saveDeckArrayToFile(Deck decks[], int length, char *filename);
  * @return True if the game's stack of moves were successfully saved
  * @author Rasmus Nylander, s205418
  */
-BOOL saveGameMovesToFile(Game game, char *filename);
+bool saveGameMovesToFile(Game game, char *filename);
 
 struct game {
 	Deck deck;
@@ -61,7 +61,7 @@ Game newGame(){
 	return newGame;
 }
 
-BOOL saveGameToFile(Game game, char* filename){
+bool saveGameToFile(Game game, char* filename){
 	//Todo: check if valid file
 	return  saveDeckToFile(getDeck(game), filename) &&
 			saveGameColumnsToFile(game, filename) &&
@@ -69,39 +69,43 @@ BOOL saveGameToFile(Game game, char* filename){
 			saveGameMovesToFile(game, filename);
 }
 
-BOOL saveGameColumnsToFile(Game game, char *filename){
+bool saveGameColumnsToFile(Game game, char *filename){
 	return saveDeckArrayToFile(game->columns, NUM_COLUMNS_IN_GAME, filename);
 }
 
-BOOL saveGameFinishedToFile(Game game, char *filename){
+bool saveGameFinishedToFile(Game game, char *filename){
 	return saveDeckArrayToFile(game->finished, PLAYING_CARD_NUM_SUITS, filename);
 }
 
-BOOL saveDeckArrayToFile(Deck decks[], int length, char *filename){
-	BOOL successful = TRUE;
+bool saveDeckArrayToFile(Deck decks[], int length, char *filename){
+	bool successful = true;
 	for (int i = 0; i < length; ++i) {
-		if (!saveDeckToFile(decks[i], filename)) successful = FALSE;
+		if (!saveDeckToFile(decks[i], filename)) successful = false;
 	}
 	return successful;
 }
 
-BOOL saveGameMovesToFile(Game game, char *filename){
-	return FALSE;
+bool saveGameMovesToFile(Game game, char *filename){
+	return false;
 }
 
 Deck getDeck(Game game){
 	return game->deck;
 }
 
-BOOL setDeck(Game game, Deck deck){
-	if (deck == getDeck(game)) return FALSE;
+bool setDeck(Game game, Deck deck){
+	if (deck == getDeck(game)) return false;
 	game->deck = deck;
-	return TRUE;
+	return true;
 }
 
 Deck* getDeckAsColumns(Game game){
 	Deck* deckAsColumns = NULL;
 	while (deckAsColumns == NULL) deckAsColumns = (Deck*) malloc(NUM_COLUMNS_IN_GAME * sizeof(Deck));
+	for (int i = 0; i < NUM_COLUMNS_IN_GAME; ++i) {
+		*(deckAsColumns + i) = newDeck();
+	}
+
 	Deck deck = getDeck(game);
 	int deckSize = size(deck);
 	for (int i = 0; i < deckSize; ++i) {

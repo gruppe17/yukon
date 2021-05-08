@@ -32,5 +32,16 @@ const char hiddenCardText[] = "[]";
  * @author Rasmus Nylander, s205418
  */
 const char rowSuffix[] = "\n";
+/**
+ * Spacer used to separate the columns and the finished decks.
+ * @author Rasmus Nylander, s205418
+ */
+const char finishedColumnSpacer[] = "\t\t";
+/**
+ * The minimum number of columns to draw. This is required
+ * to correctly draw the finished decks.
+ * @author Rasmus Nylander, s205418
+ */
+const int gameViewMinNumColumns = PLAYING_CARD_NUM_SUITS * 2 - 1;
 
 #endif //YUKON_GAMEVIEWCONSTANTS_H

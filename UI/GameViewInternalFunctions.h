@@ -28,15 +28,17 @@ unsigned long long writeColumnHeaders(int numColumns, char *str);
  */
 char* getHeaderText(int numColumns);
 /**
- * Writes the specified Deck array as columns to the specified string
+ * Writes the specified Deck arrays as columns to the specified string
  * @param columns the columns of a game to be written to the string
- * @param numColumns the number of elements in the array
+ * @param numColumns the number of elements in the columns array
+ * @param finishedDecks the finished decks of the game
+ * @param numFinishedDecks the number of elements in the finished decks array
  * @param str the string to write the columns to
  * @return 	an unsigned long long representing the number of characters
  * 			written to the string, excluding the ending null character
  * @author Rasmus Nylander, s205418
  */
-unsigned long long writeColumns(Deck *columns, int numColumns, char* str);
+unsigned long long writeColumns(Deck *columns, int numColumns, Deck *finishedDecks, int numFinishedDecks, char* str);
 /**
  * Returns the size of the biggest deck in the specified
  * array of decks
@@ -60,9 +62,41 @@ int getTallestColumnHeight(Deck *columns, int numColumns);
  * @author Rasmus Nylander, s205418
  */
 unsigned long long writeRow(int row, Deck *columns, int numColumns, char *str);
-
+/**
+ * Returns a new string containing the row text for the specified
+ * row of the specified columns
+ * @param row the row which to create the text for
+ * @param columns 	the columns which of the table which the row
+ * 					text is desired
+ * @param numColumns the number of elements in the column array
+ * @return 	a new string containing the row text for the specified
+ * 			row of the specified columns
+ */
 char* getRowText(int row, Deck *columns, int numColumns);
-char *getCardText(PlayingCard card, int row);
-unsigned long long writeFinishedDecks(Deck *finished, int numFinishedDecks, char *str);
+/**
+ * Returns the display text for the specified card
+ * @param card the card to generate the display text for
+ * @return 	a new string containing the display text for
+ * 			the specified card
+ * @author Rasmus Nylander, s205418
+ */
+char *getCardText(PlayingCard card);
+/**
+ * Writes the specified finished deck to the specified string
+ * @param finished the deck to write to the string
+ * @param str the string to write the deck to
+ * @return 	the number of characters written, excluding the terminating
+ * 			null character
+ */
+unsigned long long writeFinishedDeck(Deck finished, char *str);
+/**
+ * Returns a string representation of the top card in the specified deck
+ * if it is not empty, otherwise returns a string containing the hiddenCardText
+ * @param deck the deck to return the top card if
+ * @return 	a string representation of the top card in the specified deck
+ * 			if it is not empty, otherwise returns a string containing the
+ * 			hiddenCardText
+ */
+char* getFinishedDeckText(Deck deck);
 
 #endif //YUKON_GAMEVIEWINTERNALFUNCTIONS_H
