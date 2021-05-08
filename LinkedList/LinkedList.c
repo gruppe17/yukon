@@ -12,7 +12,23 @@ typedef struct _node{
 	void* data;
 } Node;
 
+/**
+ * Creates a new node containing the specified data and returns
+ * a pointer to it or NULL if memory allocation failed.
+ * @param data a pointer to the data the nodes should contain
+ * @return a pointer to a new node containing the specified data
+ * 			or NULL if memory allocation fails
+ * @author Rasmus Nylander, s205418
+ */
 Node* newNode(void* data);
+/**
+ * Extract the data of a specified node and returns it.
+ * If the node is NULL function returns NULL,
+ * @param node the node to extract data from
+ * @return the data contained in the node or NULL if the node is NULL
+ * @author Rasmus Nylander, s205418
+ */
+void* extractData(Node* node);
 
 Node* newNode(void* data){
 	Node *node = (Node *) malloc(sizeof(Node));
@@ -23,9 +39,9 @@ Node* newNode(void* data){
 
 
 
-
 Node* getLastNode(LinkedList *linkedList);
-Node** getNode(LinkedList *linkedList, int index);
+Node* getNodePtr(LinkedList *linkedList, int index);
+Node** getNodePtrPtr(LinkedList *linkedList, int index);
 
 bool appendToEmpty(LinkedList *appendTo, LinkedList *appending);
 
@@ -66,20 +82,30 @@ bool validIndex(LinkedList *linkedList, int index){
 	return index < linkedList->size && index >= 0;
 }
 
+void* extractData(Node* node){
+	if (node == NULL) return NULL;
+	return node->data;
+}
+
 void* get(LinkedList* linkedList, int index){
-	return (*getNode(linkedList, index))->data;
+	return extractData(getNodePtr(linkedList, index));
 }
 
 void* getFirst(LinkedList* linkedList){
-	return linkedList->head->data;
+	return extractData(linkedList->head);
 }
 
 void* getLast(LinkedList *linkedList) {
-	return getLastNode(linkedList)->data;
-	//return linkedList->tail->data;
+	return extractData(getLastNode(linkedList));
 }
 
-Node** getNode(LinkedList *linkedList, int index){
+Node* getNodePtr(LinkedList *linkedList, int index){
+	Node **pNode = getNodePtrPtr(linkedList, index);
+	if (pNode == NULL) return NULL;
+	return *pNode;
+}
+
+Node** getNodePtrPtr(LinkedList *linkedList, int index){
 	if (!validIndex(linkedList, index)) return NULL;
 
 	Node **tracer = &linkedList->head;
@@ -158,10 +184,7 @@ void* poll(LinkedList* linkedList){
 void* removeIndex(LinkedList *linkedList, int index){
 	if (!validIndex(linkedList, index)) return NULL;
 
-	Node** tracer = &linkedList->head;
-	for (int i = 0; i < index; i++){
-		tracer = &(*tracer)->next;
-	}
+	Node** tracer = getNodePtrPtr(linkedList, index);
 	Node *target = *tracer;
 	*tracer = (*tracer)->next;
 	void *data = target->data;
@@ -299,7 +322,7 @@ bool swapNodes(Node **a, Node **b){
 
 bool swap(LinkedList *linkedList, int i, int j){
 	if (!validIndex(linkedList, i) || !validIndex(linkedList, j)) return false;
-	return swapNodes(getNode(linkedList, i), getNode(linkedList, j));
+	return swapNodes(getNodePtrPtr(linkedList, i), getNodePtrPtr(linkedList, j));
 }
 
 bool mergeSort(LinkedList *linkedList, int startIndex, int endIndex);
@@ -353,8 +376,8 @@ bool mergeSort(LinkedList *linkedList, int startIndex, int endIndex){
 bool mergeSorted(LinkedList *linkedList, int startIndex, int endIndex, int midPoint){
 	if (!hasComparator(linkedList)) return false;
 
-	Node *startNode = *getNode(linkedList, startIndex);
-	Node *midNode = *getNode(linkedList, midPoint + 1);
+	Node *startNode = getNodePtr(linkedList, startIndex);
+	Node *midNode = getNodePtr(linkedList, midPoint + 1);
 	while (startIndex <= midPoint && endIndex > midPoint){
 		Node *startNext = startNode->next;
 

@@ -21,10 +21,10 @@ Game newGame();
  * Saves the specified Game to the specified file
  * @param game the Game to save
  * @param filename the path of the file to save the game to
- * @return True if the game was successfully saved
+ * @return true if the game was successfully saved
  * @author Rasmus Nylander, s205418
  */
-BOOL saveGameToFile(Game game, char* filename);
+bool saveGameToFile(Game game, char* filename);
 /**
  * Loads the Game saved in the specified file and returns it
  * @param filename the path to where the Game has been saved
@@ -58,10 +58,10 @@ Deck* getDeckAsColumns(Game game);
  * Deck. NB the old Deck is NOT freed!
  * @param game the Game whose deck it to be set
  * @param deck new Deck of the specified Game
- * @return True if the game changed
+ * @return true if the game changed
  * @author Rasmus Nylander, s205418
  */
-BOOL setDeck(Game game, Deck deck);
+bool setDeck(Game game, Deck deck);
 
 /**
  * Returns a pointer to the columns of the specified
