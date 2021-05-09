@@ -6,7 +6,7 @@
 #define YUKON_COMMAND_UI_H
 
 #include <stdbool.h>
-
+#include "../game/game.h"
 /**
  * Tries to run a command corresponding to the given string. 
  * If the command is found, then it will be called and then returns a string with a message.
@@ -14,7 +14,7 @@
  * @param str the char* pointer to compare with the command names.
  * @author Tobias Maneschijn, s205422
  */
-char *RunCommand(char *str);
+char *RunCommand(Game game, char *str);
 
 /**
  * Last command called by player

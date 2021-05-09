@@ -10,7 +10,7 @@
 #include "../utils/strutils.h"
 
 
-char* LD(char* filename){
+char* LD(Game game, char* filename){
 
 
     if(!filename)
@@ -23,7 +23,7 @@ char* LD(char* filename){
     return strcat(out, filename) ;
 }
 
-char* SW() {
+char* SW(Game game) {
 
     return "SW was called";
 
@@ -65,7 +65,7 @@ char* SR(Game game) {
 	return out;
 }
 
-char* SD(char *filename) {
+char* SD(Game game, char *filename) {
     char out[255];  
     sprintf(out, "Saving deck to file %s", filename);
     return out;
@@ -81,7 +81,7 @@ char* P() {
     return "Starting game";
 }
 
-char* Q()  {
+char* Q(Game game)  {
 
     return "Stopping current game";
 }

@@ -18,7 +18,7 @@
 #define COMMAND_Q "Q"
 #define COMMAND_QQ "QQ"
 
-char *RunCommand(char *str)
+char *RunCommand(Game game, char *str)
 {
     const char delim[] = " ";
     char *firstWord = strtok(str, delim);
@@ -38,23 +38,23 @@ char *RunCommand(char *str)
         // add if else ladder here with command checks
         if (strcmp(lastCommand, COMMAND_LD) == 0)
         {
-            return LD(secondWord);
+            return LD(game, secondWord);
         }
         else if (strcmp(lastCommand, COMMAND_SW) == 0)
         {
-            return (SW());
+            return (SW(game));
         }
         else if (strcmp(lastCommand, COMMAND_SI) == 0)
         {
-            // PrintConsoleMenu( SI(atoi(secondWord)));
+            return SI(game, secondWord);
         }
         else if (strcmp(lastCommand, COMMAND_SR) == 0)
         {
-            return (SR());
+            return (SR(game));
         }
         else if (strcmp(lastCommand, COMMAND_SD) == 0)
         {
-            return (SD(secondWord));
+            return (SD(game, secondWord));
         }
         else if (strcmp(lastCommand, COMMAND_P) == 0)
         {
@@ -66,7 +66,7 @@ char *RunCommand(char *str)
         }
         else if (strcmp(lastCommand, COMMAND_Q) == 0)
         {
-            return (Q());
+            return (Q(game));
         }
         else
         {
@@ -78,4 +78,3 @@ char *RunCommand(char *str)
         return ("You have to write a command!");
     }
 }
-

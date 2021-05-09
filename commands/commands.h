@@ -13,13 +13,13 @@
  * @param filename
  * @author Tobias Maneschijn, s205422
  */
-char* LD(char *filename);
+char* LD(Game game, char *filename);
 
 /**
  * Show all cards
  * @author Tobias Maneschijn, s205422
  */
-char* SW();
+char* SW(Game game);
 
  /**
   * Shuffles the deck of a Game in an interleaved manner
@@ -35,14 +35,14 @@ char* SI(Game game, char *parameters);
  * Shuffles the card in a random manner
  * @author Rasmus Nylander, s205418
  */
-char* SR();
+char* SR(Game game);
 
 /**
  * Save the cards from the current deck to a file
  * @param filename the file to save to
  * @author Tobias Maneschijn, s205422
  */
-char* SD(char *filename);
+char* SD(Game game, char *filename);
 
 /**
  * Quit the program
@@ -60,7 +60,7 @@ char* P();
  * Stop current game and go back to startup phase
   * @author Tobias Maneschijn, s205422
   * */
-char* Q();
+char* Q(Game game);
 
 /**
  * Move card
@@ -68,6 +68,6 @@ char* Q();
  * @param to
  * @author Tobias Maneschijn, s205422
  */
-char* move(char *from, char *to);
+char* move(Game game, char *from, char *to);
 
 #endif //YUKON_COMMANDS_H

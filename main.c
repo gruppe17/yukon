@@ -24,7 +24,7 @@ int main() {
 
     while(!shouldExit){
         char *str = ReadString();
-        char* commandStr = RunCommand(str);
+        char* commandStr = RunCommand(game, str);
 		displayGame(game, commandStr);
     }
 
