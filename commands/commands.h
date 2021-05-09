@@ -5,6 +5,9 @@
 #ifndef YUKON_COMMANDS_H
 #define YUKON_COMMANDS_H
 
+#include "../deck/deck.h"
+#include "../game/game.h"
+
 /**
  * Load a deck of cards
  * @param filename
@@ -18,16 +21,19 @@ char* LD(char *filename);
  */
 char* SW();
 
-/**
- * Shuffles the cards in an interleaved manner
- * @param split How many piles to split
- * @author Tobias Maneschijn, s205422
- */
-char* SI(int split);
+ /**
+  * Shuffles the deck of a Game in an interleaved manner
+  * @param game 		the Game which Deck to shuffle
+  * @param parameters 	a string representation of an integer
+  * 					determining where to split the deck
+  * @return 			A string describing what happened
+  * @author Rasmus Nylander, s205418
+  */
+char* SI(Game game, char *parameters);
 
 /**
  * Shuffles the card in a random manner
- * @author Tobias Maneschijn, s205422
+ * @author Rasmus Nylander, s205418
  */
 char* SR();
 

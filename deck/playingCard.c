@@ -3,9 +3,9 @@
 //
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include "playingCard.h"
+#include "../utils/integerUtils.h"
 
 #define BITS_FOR_SUITS 2
 #define BITS_FOR_CARDS_IN_SUIT 4
@@ -13,24 +13,40 @@
 struct playingCard{
 	unsigned int suit : BITS_FOR_SUITS;
 	unsigned int number : BITS_FOR_CARDS_IN_SUIT;
+	bool faceUp : 1;
 };
 
-void writePlayingCardSuitToString(PlayingCard *card, char *string);
-void writePlayingCardNumberToString(PlayingCard* card, char* string);
+void writePlayingCardSuitToString(PlayingCard card, char *string);
+void writePlayingCardNumberToString(PlayingCard card, char* string);
 
-PlayingCard* newCard(unsigned char suit, unsigned char number){
+PlayingCard newCard(unsigned char suit, unsigned char number){
 	if (suit >= PLAYING_CARD_NUM_SUITS || number >= PLAYING_CARD_NUM_CARDS_IN_SUIT) {
 		//Do something! This can't be tolerated!
 		return NULL;
 	}
-	PlayingCard *cardPtr = (PlayingCard *) malloc(sizeof(PlayingCard));
-	if (cardPtr == NULL) return NULL;
-	cardPtr->suit = suit;
-	cardPtr->number = number;
-	return cardPtr;
+	PlayingCard card = (PlayingCard) malloc(sizeof(struct playingCard));
+	if (card == NULL) return NULL;
+	card->suit = suit;
+	card->number = number;
+	card->faceUp = false;
+	return card;
 }
 
-char* playingCardToString(PlayingCard* card){
+bool isFaceUp(PlayingCard card){
+	return card->faceUp;
+}
+
+bool setFaceUp(PlayingCard card, bool up){
+	if (isFaceUp(card) == up) return false;
+	card->faceUp = up;
+	return true;
+}
+
+bool flipPlayingCard(PlayingCard card){
+	return setFaceUp(card, !isFaceUp(card));
+}
+
+char* playingCardToString(PlayingCard card){
 	char *cardNumberString = playingCardNumberToString(card);
 	if (cardNumberString == NULL) return NULL;
 
@@ -52,14 +68,14 @@ char* playingCardToString(PlayingCard* card){
 }
 
 //This should also use a dictionary or something
-char* playingCardSuitToString(PlayingCard* card){
+char* playingCardSuitToString(PlayingCard card){
 	char *suitString = malloc(sizeof(char) * 2);
 	if (suitString == NULL) return NULL;
 	*(suitString + 1) = 0;
 	
 }
 
-void writePlayingCardSuitToString(PlayingCard *card, char *string){
+void writePlayingCardSuitToString(PlayingCard card, char *string){
 	char suit;
 	switch (card->suit) {
 		case 0:
@@ -78,7 +94,7 @@ void writePlayingCardSuitToString(PlayingCard *card, char *string){
 	*string = suit;
 }
 
-char* playingCardNumberToString(PlayingCard* card){
+char* playingCardNumberToString(PlayingCard card){
 	int stringLength = 1;
 	if (card->number == 9) stringLength++;
 	char *numberString = malloc(stringLength * sizeof(char) + 1);
@@ -89,23 +105,8 @@ char* playingCardNumberToString(PlayingCard* card){
 	return numberString;
 }
 
-/**
- * Calculate the number of decimal digits the specified number has
- * @param number the number to get the number of decimal digits of
- * @return an int containing the number of decimal digits of the specified number
- * @author Rasmus Nylander, s205418
- */
-int getNumDecDigits(int number){
-	int numDigits = 0;
-	do {
-		numDigits++;
-		number /= 10;
-	} while(number != 0);
-	return numDigits;
-}
-
 //This should use a dictionary or something
-void writePlayingCardNumberToString(PlayingCard* card, char* string) {
+void writePlayingCardNumberToString(PlayingCard card, char* string) {
 	int number = card->number;
 	switch (number) {
 		case 0:

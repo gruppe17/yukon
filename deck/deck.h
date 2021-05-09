@@ -37,12 +37,21 @@ Deck newStandardDeck();
 /**
  * Adds one copy of every card to the specified Deck
  * @param deck the Deck to add cards to
- * @return TRUE if the Deck was changed
+ * @return true if the Deck was changed
  * @author Rasmus Nylander, s205418
  */
-BOOL fillDeck(Deck deck);
+bool fillDeck(Deck deck);
 
-Deck loadDeckFromFile(char* fileName);
-BOOL saveDeckToFile(char* fileName);
+Deck loadDeckFromFile(Deck deck, char* fileName);
+bool saveDeckToFile(Deck deck, char* fileName);
+
+/**
+ * Makes all the cards in the deck face the same direction
+ * @param deck the Deck to align
+ * @param faceUp true if the cards should face up
+ * @return true if any card changed
+ * @author Rasmus Nylander, s205418
+ */
+bool alignCards(Deck deck, bool faceUp);
 
 #endif //YUKON_DECK_H

@@ -10,7 +10,7 @@
 #include "commands.h"
 
 
-#define MAX_STRING_LENGTH 16384
+
 
 #define COMMAND_LD "LD"
 #define COMMAND_SW "SW"
@@ -47,7 +47,7 @@ void GetCommandFromString(char* str) {
             PrintConsoleMenu( SW());
         }
         else if(strcmp(lastCommand, COMMAND_SI) == 0){
-            PrintConsoleMenu( SI(atoi(secondWord)));
+           // PrintConsoleMenu( SI(atoi(secondWord)));
         }
         else if(strcmp(lastCommand, COMMAND_SR) == 0){
             PrintConsoleMenu( SR());
@@ -75,14 +75,7 @@ void GetCommandFromString(char* str) {
 
 
 
-char *ReadString() {
-	//Todo: maybe a large array like this should be in the global scope into which the string is read
-	// and then the size of the string is determined and an array of an appropriate size is created
-	// the string is copied therein, and a pointer to the array is then returned
-    char str[MAX_STRING_LENGTH];
-    fgets(str, sizeof(str), stdin);
-    return &str;
-}
+
 
 char *PrintConsoleMenu(char *message) {
 

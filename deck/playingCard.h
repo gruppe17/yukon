@@ -1,18 +1,21 @@
 //
-// Created by Nylan on 09-04-2021.
+// Created by Nylander on 09-04-2021.
 //
 
 #ifndef YUKON_PLAYINGCARD_H
 #define YUKON_PLAYINGCARD_H
 
+#include <stdbool.h>
+
 #define PLAYING_CARD_NUM_SUITS 4
 #define PLAYING_CARD_NUM_CARDS_IN_SUIT 13
+#define PLAYING_CARD_MAX_LENGTH_AS_STRING 3
 
 /**
  * Represents a standard playing card
  * @author Rasmus Nylander, s205418
  */
-typedef struct playingCard PlayingCard;
+typedef struct playingCard* PlayingCard;
 
 /**
  * Creates a new PlayingCard with the specified suit and
@@ -24,7 +27,33 @@ typedef struct playingCard PlayingCard;
  * 			memory allocation fails
  * @author Rasmus Nylander, s205418
  */
-PlayingCard* newCard(unsigned char suit, unsigned char number);
+PlayingCard newCard(unsigned char suit, unsigned char number);
+
+/**
+ * Returns a boolean indicating whether the specified card is face up
+ * @param card the PlayingCard to determine if face up or not
+ * @return true if the card if face up
+ * @author Rasmus Nylander, s205418
+ */
+bool isFaceUp(PlayingCard card);
+
+/**
+ * Sets whether the card the specified card faces up
+ * @param card the PlayingCard to turn face up or down
+ * @param up whether the card should face up
+ * @return true if the card changed
+ * @author Rasmus Nylander, s205418
+ */
+bool setFaceUp(PlayingCard card, bool up);
+
+/**
+ * Flips the specified card. I.e. if it is facing up, after
+ * applying this function it will be facing down and vice versa
+ * @param card the PlayingCard to turn
+ * @return true if the card changed
+ * @author Rasmus Nylander, s205418
+ */
+bool flipPlayingCard(PlayingCard card);
 
 /**
  * Returns a string representation of the specified PlayingCard.
@@ -32,7 +61,7 @@ PlayingCard* newCard(unsigned char suit, unsigned char number);
  * @return A new string representing the card or null if memory can't be allocated
  * @author Rasmus Nylander, s205418
  */
-char* playingCardToString(PlayingCard* card);
+char* playingCardToString(PlayingCard card);
 
 /**
  * Returns a string representation of the specified PlayingCard's suit
@@ -40,7 +69,7 @@ char* playingCardToString(PlayingCard* card);
  * @return a char representing the card's suit or null if memory can't be allocated
  * @author Rasmus Nylander, s205418
  */
-char* playingCardSuitToString(PlayingCard* card);
+char* playingCardSuitToString(PlayingCard card);
 
 /**
  * Returns a string representation of the specified PlayingCard's number
@@ -48,7 +77,7 @@ char* playingCardSuitToString(PlayingCard* card);
  * @return a new string representing the card's number or null if memory can't be allocated
  * @author Rasmus Nylander, s205418
  */
-char* playingCardNumberToString(PlayingCard* card);
+char* playingCardNumberToString(PlayingCard card);
 
 
 
