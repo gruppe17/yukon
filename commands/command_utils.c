@@ -49,7 +49,6 @@ char *RunCommand(Game game, char *str)
     char *secondWord = strtok(NULL, delim);//Todo: This is never freed
 
     char *firstWordCpy;
-
     if (strlen(firstWord) > 0)
     {
 
@@ -93,11 +92,11 @@ char *RunCommand(Game game, char *str)
         }
         else
         {
-            return ("The command was not found! Try again...");
+            return newStringFromString("The command was not found! Try again...");
         }
     }
     else
     {
-        return ("You have to write a command!");
+        return newStringFromString("You have to write a command!");
     }
 }

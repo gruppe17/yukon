@@ -14,7 +14,7 @@ char* LD(Game game, char* filename){
 
 
     if(!filename || strlen(filename) < 0)
-        return "You need to specify a filename";
+        return newStringFromString("You need to specify a filename");
 
     char out[255] = "Loading deck from file ";
     return strcat(out, filename) ;
@@ -32,7 +32,7 @@ char* SW(Game game) {
 	for (int i = 0; i < deckSize; ++i) {
 		setFaceUp(get(deck, i), true);
 	}
-    return "SW was called and executed correctly";
+    return newStringFromString("SW was called and executed correctly");
 }
 
 char* SI(Game game, char *parameters) {
@@ -81,15 +81,15 @@ char* SD(Game game, char *filename) {
 
 char* QQ() {
     shouldExit = true;
-    return "Stopping program";
+    return newStringFromString("Stopping program");
 }
 
 char* P(Game game) {
 	startGame(game);
-    return "Starting game";
+    return newStringFromString("Starting game");
 }
 
 char* Q(Game game)  {
 	unstartGame(game);
-    return "Stopping current game";
+    return newStringFromString("Stopping current game");
 }
