@@ -69,6 +69,7 @@ char* SR(Game game) {
 		sprintf(output, "SR was called but game has no deck");
 		return output;
 	}
+	shuffle(getDeck(game));
 	sprintf(output, "SR was called and deck was shuffled");
 	return output;
 }
