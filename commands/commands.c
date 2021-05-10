@@ -45,8 +45,7 @@ char* SI(Game game, char *parameters) {
 
 	int split = size(getDeck(game))/2;
 	trim(parameters);
-	int length = strlen(parameters);
-	if (length > 0){
+	if (parameters != NULL && strlen(parameters)  > 0){
 		int parameter = atoi(parameters);
 		if (parameter < 0 || parameter > size(getDeck(game))) {
 			sprintf(output,
