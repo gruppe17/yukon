@@ -136,3 +136,27 @@ void dealCards(Game game){
 		}
 	}
 }
+
+void emptyDeckArray(Deck* decks, int size){
+	for (int i = 0; i < size; ++i) {
+		clearList(*(decks + i));
+	}
+}
+
+bool startGame(Game game){
+	if (game == NULL || getDeck(game) == NULL) return false;
+	dealCards(game);
+	return true;
+}
+
+void unstartGame(Game game){
+	if (game == NULL) return;
+	emptyDeckArray(getColumns(game), NUM_COLUMNS_IN_GAME);
+	emptyDeckArray(getFinished(game), PLAYING_CARD_NUM_SUITS);
+	Deck deck = getDeck(game);
+	int deckSize = size(deck);
+	for (int i = 0; i < deckSize; ++i) {
+		setFaceUp(get(deck, i), false);
+	}
+}
+

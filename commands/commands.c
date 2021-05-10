@@ -21,9 +21,18 @@ char* LD(Game game, char* filename){
 }
 
 char* SW(Game game) {
+	char* output = newString(256);
 
-    return "SW was called";
-
+	if (game == NULL || getDeck(game) == NULL){
+		sprintf(output, "Game has no deck and thus its cards cannot be shown");
+		return output;
+	}
+	Deck deck = getDeck(game);
+	int deckSize = size(deck);
+	for (int i = 0; i < deckSize; ++i) {
+		setFaceUp(get(deck, i), true);
+	}
+    return "SW was called and executed correctly";
 }
 
 char* SI(Game game, char *parameters) {
@@ -75,12 +84,12 @@ char* QQ() {
     return "Stopping program";
 }
 
-char* P() {
-
+char* P(Game game) {
+	startGame(game);
     return "Starting game";
 }
 
 char* Q(Game game)  {
-
+	unstartGame(game);
     return "Stopping current game";
 }

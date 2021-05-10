@@ -16,8 +16,9 @@
 char* LD(Game game, char *filename);
 
 /**
- * Show all cards
- * @author Tobias Maneschijn, s205422
+ * Turns all the cards face up
+ * @param game the game whose Deck is to be turned face-up
+ * @author Rasmus Nylander, s205418
  */
 char* SW(Game game);
 
@@ -51,15 +52,16 @@ char* SD(Game game, char *filename);
 char* QQ();
 
 /**
- * Start game using current deck
-  * @author Tobias Maneschijn, s205422
-  * */
-char* P();
+ * Starts the specified game
+ * @author Rasmus Nylander, s205418
+ */
+char* P(Game game);
 
 /**
- * Stop current game and go back to startup phase
-  * @author Tobias Maneschijn, s205422
-  * */
+ * Stops the specified game and goes back to startup phase
+ * @param Game the Game to stop
+ * @author Rasmus Nylander, s205418
+ */
 char* Q(Game game);
 
 /**

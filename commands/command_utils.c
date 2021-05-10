@@ -81,7 +81,7 @@ char *RunCommand(Game game, char *str)
         }
         else if (strcmp(lastCommand, COMMAND_P) == 0)
         {
-            return (P());
+            return (P(game));
         }
         else if (strcmp(lastCommand, COMMAND_QQ) == 0)
         {
