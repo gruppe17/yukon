@@ -20,5 +20,14 @@ void displayGame(Game game, char* commandStr);
  */
 void initDisplay(Game game);
 
+/**
+ * Creates a new string containing the console menu
+ * including the specified message.
+ * @param message the message to display in the menu
+ * @return a new string containing the console menu text
+ * @author Rasmus Nylander, s205418
+ */
+char* consoleMenuString(char* message);
+
 
 #endif // USER_INTERFACE_H

@@ -7,6 +7,6 @@
  * @author Tobias Maneschijn, s205422
  */
 
-char *printConsoleMenu(char *message);
+void printConsoleMenu(char *message);
 
 #endif // USER_INPUT_H

@@ -1,10 +1,11 @@
 #include "user_input.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include "../commands/command_utils.h"
+#include "user_interface.h"
 
-char *printConsoleMenu(char *message)
-{
-    printf("LAST Command: %s \n", lastCommand);
-    printf("Message: %s \n", message);
-    printf("Input:> ");
+void printConsoleMenu(char *message){
+	char* consoleMenuString = consoleMenuString(message);
+	printf("%s", consoleMenuString);
+	free(consoleMenuString);
 }
