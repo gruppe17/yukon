@@ -23,7 +23,7 @@ void initDisplay(Game game) {
 
 char* consoleMenuString(char* message){
 	char *lastCommand = getLastCommand();
-	char *string = newString(strlen(consoleMenuText) + strlen(lastCommand) + strlen(message));
+	char *string = newString(strlen(consoleMenuText) - 2*numVariablesConsoleMenuText + strlen(lastCommand) + strlen(message));
 	sprintf(string, consoleMenuText, lastCommand, message);
 	free(lastCommand);
 	return string;
