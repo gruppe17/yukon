@@ -37,3 +37,10 @@ char* newString(unsigned long long length){
 	while (string == NULL) string = calloc(length + 1, sizeof(char));
 	return string;
 }
+
+char* newStringFromString(char* string){
+	if(string == NULL) return newString(0);
+	char* newStr = newString(strlen(string));
+	strcpy(newStr, string);
+	return newStr;
+}

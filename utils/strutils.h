@@ -28,4 +28,13 @@ char* ReadString();
  */
 char* newString(unsigned long long length);
 
+/**
+ * Creates a new string the length of and containing a copy of
+ * the specified text.
+ * @param string a string containing the text a copy of which the new string will contain
+ * @return a new string containing the supplied text.
+ * @author Rasmus Nylander, s205418
+ */
+char* newStringFromString(char* string)
+
 #endif //YUKON_STRUTILS_H
