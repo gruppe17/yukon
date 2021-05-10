@@ -18,9 +18,7 @@ void displayGame(Game game, char* commandStr) {
 }
 
 void initDisplay(Game game) {
-	char* string = gameToDisplayString(game);
-	printf("%s", string);
-    printConsoleMenu("Welcome to Yukon!");    
+	displayGame(game, "Welcome to Youkon!");
 }
 
 char* consoleMenuString(char* message){
