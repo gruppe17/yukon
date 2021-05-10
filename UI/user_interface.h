@@ -17,6 +17,7 @@ void displayGame(Game game, char* commandStr);
  * 
  * @param game the game to display
  * @author Tobias Maneschijn, s205422
+ * @author Rasmus Nylander, s205418
  */
 void initDisplay(Game game);
 
