@@ -49,9 +49,11 @@ char* getHeaderText(int numColumns){
 
 	unsigned long long offset = 0;
 	for (int i = 0; i < numColumns - 1; ++i) {
-		offset += sprintf(headerText + offset, headerLength - offset, "%s%d%s", columnPrefix, i + 1, columnSpacer);
+		//offset += sprintf_s(headerText + offset, headerLength - offset, "%s%d%s", columnPrefix, i + 1, columnSpacer);
+		offset += sprintf(headerText + offset, "%s%d%s", columnPrefix, i + 1, columnSpacer);
 	}
-	sprintf(headerText + offset, headerLength - offset, "%s%d%s", columnPrefix, numColumns, headerSuffix);
+	//sprintf_s(headerText + offset, headerLength - offset, "%s%d%s", columnPrefix, numColumns, headerSuffix);
+	sprintf(headerText + offset, "%s%d%s", columnPrefix, numColumns, headerSuffix);
 	return headerText;
 }
 
@@ -92,10 +94,12 @@ char* getRowText(int row, Deck *columns, int numColumns){
 	unsigned long long offset = 0;
 	for (int i = 0; i < numColumns; ++i) {
 		char * cardText = getCardText(get(columns[i], row));
-		offset += sprintf(rowTextBuffer + offset, rowMaxLength - offset, "%s%s", cardText, columnSpacer);
+		//offset += sprintf_s(rowTextBuffer + offset, rowMaxLength - offset, "%s%s", cardText, columnSpacer);
+		offset += sprintf(rowTextBuffer + offset, "%s%s", cardText, columnSpacer);
 		free(cardText);
 	}
-	sprintf(rowTextBuffer + offset - 1, rowMaxLength - offset + 1, "%s", rowSuffix); //Remove last column spacer and write suffix
+	//sprintf_s(rowTextBuffer + offset - 1, rowMaxLength - offset + 1, "%s", rowSuffix); //Remove last column spacer and write suffix
+	sprintf(rowTextBuffer + offset - 1, "%s", rowSuffix); //Remove last column spacer and write suffix
 	return realloc(rowTextBuffer, offset + 1);
 }
 
