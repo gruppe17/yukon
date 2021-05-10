@@ -26,6 +26,7 @@ int main() {
         char *str = ReadString();
         char* commandStr = RunCommand(game, str);
 		displayGame(game, commandStr);
+		free(commandStr);
     }
 
 	return 0;

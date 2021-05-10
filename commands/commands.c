@@ -13,10 +13,7 @@
 char* LD(Game game, char* filename){
 
 
-    if(!filename)
-        return "You need to specify a filename";
-
-    if(strlen(filename) < 0)
+    if(!filename || strlen(filename) < 0)
         return "You need to specify a filename";
 
     char out[255] = "Loading deck from file ";
@@ -30,11 +27,11 @@ char* SW(Game game) {
 }
 
 char* SI(Game game, char *parameters) {
-	char out[256];
+	char *output = newString(256);
 
 	if (game == NULL || getDeck(game) == NULL) {
-		sprintf(out, 256, "SI was called but game has no deck");
-		return out;
+		sprintf(output, "SI was called but game has no deck");
+		return output;
 	}
 
 	int split = size(getDeck(game))/2;
@@ -43,32 +40,34 @@ char* SI(Game game, char *parameters) {
 	if (length > 0){
 		int parameter = atoi(parameters);
 		if (parameter < 0 || parameter > size(getDeck(game))) {
-			sprintf(out, 256, "SI was called with parameter %i, which resulted in an error. SI must be provided with an integer", split);
-			return out;
+			sprintf(output,
+		   "SI was called with parameter %s, which resulted in an error. SI must be provided with an integer in the range 0 - %d",
+		   parameters, size(getDeck(game)));
+			return output;
 		}
 		split = parameter;
 	}
 
 	interweaveLinkedList(getDeck(game), cutEnd(getDeck(game), split));
-    sprintf(out, 256, "SI was called with parameter %i", split);
-    return out;
+    sprintf(output, "SI was called with parameter %i", split); //No parameter is the same as half the deck size
+    return output;
 }
 
 char* SR(Game game) {
-	char out[256];
+	char* output = newString(256);
 
 	if (game == NULL || getDeck(game) == NULL) {
-		sprintf(out, 256, "SR was called but game has no deck");
-		return out;
+		sprintf(output, "SR was called but game has no deck");
+		return output;
 	}
-	sprintf(out, 256, "SR was called and deck was shuffled");
-	return out;
+	sprintf(output, "SR was called and deck was shuffled");
+	return output;
 }
 
 char* SD(Game game, char *filename) {
-    char out[255];  
-    sprintf(out, "Saving deck to file %s", filename);
-    return out;
+    char* output = newString(256);
+    sprintf(output, "Saving deck to file %s", filename);
+    return output;
 }
 
 char* QQ() {
