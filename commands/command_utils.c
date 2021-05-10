@@ -18,11 +18,35 @@
 #define COMMAND_Q "Q"
 #define COMMAND_QQ "QQ"
 
+/**
+ * The last command called by the player
+ * @author Tobias Maneschijn, s205422
+ */
+char* lastCommand;
+int lastCommandBufferSize = -1;
+
+char* getLastCommand(){
+	if (lastCommand == NULL) lastCommand = newString(0);
+	char *lastCommandCopy = newString(strlen(lastCommand));
+	strcpy(lastCommandCopy, lastCommand);
+	return lastCommandCopy;
+}
+
+bool setLastCommand(char* commandString){
+	if (commandString == NULL) return false;
+	if (strlen(commandString) >= lastCommandBufferSize){
+		free(lastCommand);
+		lastCommand = newString(strlen(commandString));
+	}
+	strcpy(lastCommand, commandString);
+	return true;
+}
+
 char *RunCommand(Game game, char *str)
 {
     const char delim[] = " ";
     char *firstWord = strtok(str, delim);
-    char *secondWord = strtok(NULL, delim);
+    char *secondWord = strtok(NULL, delim);//Todo: This is never freed
 
     char *firstWordCpy;
 
@@ -33,8 +57,7 @@ char *RunCommand(Game game, char *str)
         trim(firstWord);
         trim(secondWord);
 
-        lastCommand = firstWord;
-
+        setLastCommand(firstWord);
         // add if else ladder here with command checks
         if (strcmp(lastCommand, COMMAND_LD) == 0)
         {

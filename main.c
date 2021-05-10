@@ -15,8 +15,8 @@
 int main() {
 	Game game = newGame();
 	setDeck(game, newStandardDeck());
-	shuffle(getDeck(game));
-	dealCards(game);
+	//shuffle(getDeck(game));
+	//dealCards(game);
 
 	initDisplay(game);
 

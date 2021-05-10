@@ -5,7 +5,7 @@
 #include "user_interface.h"
 
 void printConsoleMenu(char *message){
-	char* consoleMenuString = consoleMenuString(message);
-	printf("%s", consoleMenuString);
-	free(consoleMenuString);
+	char* consoleMenu = consoleMenuString(message);
+	printf("%s", consoleMenu);
+	free(consoleMenu);
 }

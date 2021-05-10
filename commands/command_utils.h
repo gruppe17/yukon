@@ -17,9 +17,20 @@
 char *RunCommand(Game game, char *str);
 
 /**
- * Last command called by player
+ * Returns a copy of the last command called by the player.
+ * @return a string containing the last command called by the player
+ * @author Rasmus Nylander, s205418
  */
-char *lastCommand;
+char* getLastCommand();
+
+/**
+ * Sets the last command called by the player to the
+ * contents of the specified string.
+ * @param commandString the string which contents will the new last command called by the player
+ * @return true if the last command changed
+ * @author Rasmus Nylander, s205418
+ */
+bool setLastCommand(char* commandString);
 
 /**
  * Should the program close?
