@@ -35,6 +35,6 @@ char* newString(unsigned long long length);
  * @return a new string containing the supplied text.
  * @author Rasmus Nylander, s205418
  */
-char* newStringFromString(char* string)
+char* newStringFromString(char* string);
 
 #endif //YUKON_STRUTILS_H
