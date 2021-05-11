@@ -125,7 +125,7 @@ unsigned long long writeFinishedDeck(Deck finished, char *str, int number){
 }
 
 char* getFinishedDeckText(Deck deck){
-	PlayingCard card = poll(deck);
+	PlayingCard card = getLast(deck);
 	if (card == NULL) return strcpy(newString(strlen(hiddenCardText)), hiddenCardText);
 	return playingCardToString(card);
 }
