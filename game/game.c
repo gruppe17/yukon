@@ -134,6 +134,10 @@ Deck* getFinished(Game game){
 	return game->finished;
 }
 
+bool isStarted(Game game){
+	return game->hasStarted;
+}
+
 void dealCards(Game game){
 	Deck cards = getDeck(game);
 	emptyDeckArray(getFinished(game), PLAYING_CARD_NUM_SUITS);
