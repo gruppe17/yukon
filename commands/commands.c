@@ -12,7 +12,7 @@
 
 char* LD(Game game, char* filename){
 	if (game == NULL || isStarted(game)){
-		return newStringFromString("Cannot load a new deck");
+		return newStringFromString("Cannot load a new deck now");
 	}
 
     if(!filename || strlen(filename) < 0){
@@ -20,7 +20,7 @@ char* LD(Game game, char* filename){
     	return newStringFromString("Loaded a new standard deck");
     }
     Deck deck = loadDeckFromFile(filename);
-	if (deck == NULL) return newStringFromString("Could not load deck");
+	if (deck == NULL) return newStringFromString("Could not load deck. Check that the filename was correct");
 	setDeck(game, deck);
     char out[255] = "Loading deck from file ";
     return strcat(out, filename) ;
@@ -49,6 +49,8 @@ char* SI(Game game, char *parameters) {
 		sprintf(output, "SI was called but game has no deck");
 		return output;
 	}
+
+
 
 	int split = size(getDeck(game))/2;
 	trim(parameters);
