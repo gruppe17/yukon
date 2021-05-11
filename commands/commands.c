@@ -50,8 +50,6 @@ char* SI(Game game, char *parameters) {
 		return output;
 	}
 
-
-
 	int split = size(getDeck(game))/2;
 	trim(parameters);
 	if (parameters != NULL && strlen(parameters)  > 0){
@@ -100,11 +98,11 @@ char* QQ() {
 }
 
 char* P(Game game) {
-	if(startGame(game)) newStringFromString("Starting game");
+	if(startGame(game)) return newStringFromString("Starting game");
     return newStringFromString("Could not start game");
 }
 
 char* Q(Game game)  {
-	if (unstartGame(game)) newStringFromString("Quitting current game");
+	if (unstartGame(game)) return newStringFromString("Quitting current game");
     return newStringFromString("Could not quit current game");
 }
