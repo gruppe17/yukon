@@ -101,7 +101,12 @@ char *RunCommand(Game game, char *str)
         }
         else
         {
-            return newStringFromString("The command was not found! Try again...");
+        	secondWord = strtok(NULL, "->");
+        	trim(secondWord);
+	        if (strlen(secondWord) > 0){
+		        return move(game, firstWord, secondWord);
+	        }
+	        return newStringFromString("The command was not found! Try again...");
         }
     }
     else

@@ -215,7 +215,7 @@ bool insertAt(LinkedList *linkedList, void *t, int index){
 
 LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex){
 	if (startIndex > endIndex || startIndex < 0 || endIndex >= linkedList->size) return NULL;
-	LinkedList* newList = (LinkedList*) malloc(sizeof(LinkedList));
+	LinkedList* newList = newLinkedList();
 	if (newList == NULL) return NULL;
 
 	//Find the start of the new list
@@ -231,7 +231,8 @@ LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex){
 	}
 	*cut = (*tracer)->next;
 	newList->tail = *tracer;
-	newList->tail->next = NULL;
+	if (newList->tail != NULL)
+		newList->tail->next = NULL;
 	newList->size = endIndex - startIndex + 1;
 	linkedList->size -= newList->size;
 	return newList;

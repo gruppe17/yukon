@@ -106,3 +106,58 @@ char* Q(Game game)  {
 	if (unstartGame(game)) return newStringFromString("Quitting current game");
     return newStringFromString("Could not quit current game");
 }
+
+const char *invalidMove = "Invalid move";
+const char *moveDelimiter = ":";
+
+
+char* move(Game game, char *from, char *to){
+	if (!isStarted(game)) return newStringFromString("Cannot make a move before game has begun");
+	//This should be done much better but there is no time
+	if ((from[0] != 'C' && from[0] != 'F') || (to[0] != 'C' && to[0] != 'F')) return newStringFromString(invalidMove);
+
+	char * fromColumn = strtok(from, moveDelimiter);
+	char * fromCard = strtok(NULL, moveDelimiter);
+
+	char * toColumn = strtok(to, moveDelimiter);
+	if (strcmp(fromColumn, toColumn) == 0) return newStringFromString(invalidMove);
+
+	int columnFrom = atoi(&fromColumn[1]) - 1;
+	int columnTo = atoi(&toColumn[1]) - 1;
+	if (columnFrom < 0 || columnTo < 0 || columnFrom > NUM_COLUMNS_IN_GAME || columnTo > NUM_COLUMNS_IN_GAME)
+		return newStringFromString(invalidMove);
+	if ((from[0] == 'F' && columnFrom > PLAYING_CARD_NUM_SUITS) || (to[0] == 'F' && columnTo > PLAYING_CARD_NUM_SUITS))
+		return newStringFromString(invalidMove);
+
+	Deck* columns = getColumns(game);
+	Deck toDeck;
+	if (toColumn[0] == 'F'){
+		toDeck = getFinished(game)[columnTo];
+	}
+	else toDeck = columns[columnTo];
+
+	//Should use comparator thingy
+	int deckSize = size(columns[columnFrom]);
+	if (deckSize == 0) return newStringFromString(invalidMove);
+	PlayingCard card;
+	if (fromCard == NULL) card = getLast(columns[columnFrom]);
+	else{
+		for (; deckSize > 0; deckSize--) {
+			card = get(columns[columnFrom], deckSize);
+			if (!isFaceUp(card)) break;
+			char *cardString = playingCardToString(card);
+			if (strcmp(cardString, fromCard)){
+				free(cardString);
+				break;
+			}
+			free(cardString);
+		}
+	}
+	PlayingCard cardEndTo = getLast(toDeck);
+	if ( (cardEndTo == NULL && getCardSize(card) == 12) ||
+			(getCardSize(cardEndTo) > getCardSize(card) && isDifferentSuit(card, cardEndTo))){
+		append(toDeck, cutEnd(columns[columnFrom], deckSize - 1));
+		return newStringFromString("Move successful");
+	}
+	return newStringFromString(invalidMove);
+}
