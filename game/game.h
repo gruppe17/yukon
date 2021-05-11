@@ -93,13 +93,23 @@ void dealCards(Game game);
  * and returns if successful
  * @param game the Game to start
  * @return true if the Game was started
+ * @author Rasmus Nylander, s205418
  */
 bool startGame(Game game);
+
+/**
+ * Returns whether the specified game has begun
+ * @param game the game to check if under way
+ * @return true if the game has started
+ * @author Rasmus Nylander, s205418
+ */
+bool isStarted(Game game);
 
 /**
  * Empties the columns and finished decks of the game
  * and turns the cards in the deck to face down.
  * @param game the game to pseudo-end
+ * @author Rasmus Nylander, s205418
  */
 void unstartGame(Game game);
 

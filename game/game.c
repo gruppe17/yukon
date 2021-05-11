@@ -42,11 +42,20 @@ bool saveDeckArrayToFile(Deck decks[], int length, char *filename);
  */
 bool saveGameMovesToFile(Game game, char *filename);
 
+/**
+ * Clears the decks in the specified deck array
+ * @param decks the array of decks to clear
+ * @param size the number of elements in the array
+ * @author Rasmus Nylander, s205418
+ */
+void emptyDeckArray(Deck* decks, int size);
+
 struct game {
 	Deck deck;
 	Deck columns[NUM_COLUMNS_IN_GAME];
 	Deck finished[PLAYING_CARD_NUM_SUITS];
 	LinkedList *moves;
+	bool hasStarted;
 };
 
 Game newGame(){
@@ -59,10 +68,12 @@ Game newGame(){
 		newGame->finished[i] = newDeck();
 	}
 	newGame->moves = newLinkedList();
+	newGame->hasStarted = false;
 	return newGame;
 }
 
 bool saveGameToFile(Game game, char* filename){
+	if (game->hasStarted)
 	//Todo: check if valid file
 	return  saveDeckToFile(getDeck(game), filename) &&
 			saveGameColumnsToFile(game, filename) &&
@@ -125,13 +136,17 @@ Deck* getFinished(Game game){
 
 void dealCards(Game game){
 	Deck cards = getDeck(game);
+	emptyDeckArray(getFinished(game), PLAYING_CARD_NUM_SUITS);
+	Deck* columns = getColumns(game);
+	emptyDeckArray(columns, NUM_COLUMNS_IN_GAME);
 	alignCards(cards, false);
+
 	int numCardsAdded = 0;
 	for (int i = 0; i < NUM_COLUMNS_IN_GAME; ++i) {
 		for (int j = 0; j < numCardsInColumns[i]; ++j) {
 			PlayingCard card = get(cards, numCardsAdded++);
 			if (card == NULL) return;
-			add(game->columns[i], card);
+			add(columns[i], card);
 			if (numCardsInColumns[i] - j <= numShownCardsAtStart) flipPlayingCard(card);
 		}
 	}
@@ -144,19 +159,22 @@ void emptyDeckArray(Deck* decks, int size){
 }
 
 bool startGame(Game game){
-	if (game == NULL || getDeck(game) == NULL) return false;
+	if (game == NULL || getDeck(game) == NULL || isStarted(game)) return false;
+	game->hasStarted = true;
 	dealCards(game);
 	return true;
 }
 
 void unstartGame(Game game){
-	if (game == NULL) return;
+	if (game == NULL || !isStarted(game)) return;
 	emptyDeckArray(getColumns(game), NUM_COLUMNS_IN_GAME);
 	emptyDeckArray(getFinished(game), PLAYING_CARD_NUM_SUITS);
+	clearList(game->moves);
 	Deck deck = getDeck(game);
 	int deckSize = size(deck);
 	for (int i = 0; i < deckSize; ++i) {
 		setFaceUp(get(deck, i), false);
 	}
+	game->hasStarted = true;
 }
 
