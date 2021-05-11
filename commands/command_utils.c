@@ -64,7 +64,7 @@ char *RunCommand(Game game, char *str) {
 	trim(firstWord);
 	trim(secondWord);
 
-	setLastCommand(str);
+	setLastCommand(command);
 	// add if else ladder here with command checks
 	if (strcmp(lastCommand, COMMAND_LD) == 0) {
 		return LD(game, secondWord);
@@ -82,6 +82,9 @@ char *RunCommand(Game game, char *str) {
 		return (QQ());
 	} else if (strcmp(lastCommand, COMMAND_Q) == 0) {
 		return (Q(game));
+	} else if (strcmp(lastCommand, "dQw4w9WgXcQ") == 0) {
+		setLastCommand(newStringFromString("Never gonna give you up"));
+		return newStringFromString("Never gonna let you down");
 	} else {
 		secondWord = strtok(NULL, "->");
 		trim(secondWord);
