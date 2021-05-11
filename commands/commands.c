@@ -179,6 +179,23 @@ bool cardMayMoveTo(Deck moving, Deck to, bool isFinishedDeck){
 	return false;
 }
 
+int deckIndexFromCardString(Deck deck, char* string){
+	int deckIndex = size(deck) - 1;
+	if (string == NULL || strlen(string) == 0) return deckIndex;
+
+	for (; deckIndex >= 0; deckIndex--) {
+		PlayingCard card = get(deck, deckIndex);
+		if (!isFaceUp(card)) return -1;
+		char *cardString = playingCardToString(card);
+		if (strcmp(cardString, string) == 0){
+			free(cardString);
+			return deckIndex;
+		}
+		free(cardString);
+	}
+	return -1;
+}
+
 //This should be done much better but there is no time
 char* move(Game game, char *from, char *to){
 	if (!isStarted(game)) return newStringFromString("Cannot make a move before game has begun");
@@ -195,22 +212,8 @@ char* move(Game game, char *from, char *to){
 	Deck toDeck = getDeckFromColumnText(game, to);
 	Deck fromDeck = getDeckFromColumnText(game, fromColumn);
 	//Should use comparator thingy
-	int deckIndex = size(fromDeck) - 1;
+	int deckIndex = deckIndexFromCardString(fromDeck, fromCard);
 	if (deckIndex < 0) return newStringFromString(invalidMove);
-	PlayingCard card;
-	if (fromCard == NULL) card = getLast(fromDeck);
-	else{
-		for (; deckIndex >= 0; deckIndex--) {
-			card = get(fromDeck, deckIndex);
-			if (!isFaceUp(card)) break;
-			char *cardString = playingCardToString(card);
-			if (strcmp(cardString, fromCard) == 0){
-				free(cardString);
-				break;
-			}
-			free(cardString);
-		}
-	}
 	Deck moving = cutEnd(fromDeck, deckIndex);
 	if (cardMayMoveTo(moving, toDeck, isFinishedColumn(to))){
 		append(toDeck, moving);
