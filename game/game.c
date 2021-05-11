@@ -184,6 +184,6 @@ bool unstartGame(Game game) {
 	for (int i = 0; i < deckSize; ++i) {
 		setFaceUp(get(deck, i), false);
 	}
-	game->hasStarted = true;
+	game->hasStarted = false;
 	return true;
 }
