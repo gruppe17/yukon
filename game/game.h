@@ -109,9 +109,10 @@ bool isStarted(Game game);
  * Empties the columns and finished decks of the game
  * and turns the cards in the deck to face down.
  * @param game the game to pseudo-end
+ * @return true if the game was stopped
  * @author Rasmus Nylander, s205418
  */
-void unstartGame(Game game);
+bool unstartGame(Game game);
 
 
 #endif //YUKON_GAME_H

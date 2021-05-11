@@ -85,11 +85,11 @@ char* QQ() {
 }
 
 char* P(Game game) {
-	startGame(game);
-    return newStringFromString("Starting game");
+	if(startGame(game)) newStringFromString("Starting game");
+    return newStringFromString("Could not start game");
 }
 
 char* Q(Game game)  {
-	unstartGame(game);
-    return newStringFromString("Stopping current game");
+	if (unstartGame(game)) newStringFromString("Quitting current game");
+    return newStringFromString("Could not quit current game");
 }
