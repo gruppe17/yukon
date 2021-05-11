@@ -105,8 +105,7 @@ void writePlayingCardSuitToString(PlayingCard card, char *string){
 char* playingCardNumberToString(PlayingCard card){
 	int stringLength = 1;
 	if (card->number == 9) stringLength++;
-	char *numberString = malloc(stringLength * sizeof(char) + 1);
-	if (numberString == NULL) return NULL;
+	char *numberString = newString(stringLength);
 
 	*(numberString + stringLength) = 0;
 	writePlayingCardNumberToString(card, numberString);
