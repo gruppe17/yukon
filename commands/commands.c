@@ -202,7 +202,6 @@ char* move(Game game, char *from, char *to){
 
 	char * fromColumn = strtok(from, moveDelimiter);
 	char * fromCard = strtok(NULL, moveDelimiter);
-	//char * toColumn = strtok(to, moveDelimiter);
 	trim(fromColumn);
 	trim(fromCard);
 	trim(to);

@@ -33,6 +33,7 @@ LinkedList* newLinkedList(){
 	//Tail is no longer used. It is in part maintained however.
 	//Todo: determine whether to implement tail completely or scrap it.
 	linkedList->tail = NULL;
+	linkedList->comparator = NULL;
 }
 
 bool hasComparator(LinkedList *linkedList){
@@ -113,8 +114,8 @@ bool add(LinkedList *linkedList, void* t){
 bool append(LinkedList *appendTo, LinkedList *appending){
 	if (appendTo->size == 0) return appendToEmpty(appendTo, appending);
 	appendTo->size += appending->size;
-	appendTo->tail->next = appending->head;
-	appendTo->tail = appending->tail;
+	getLastNode(appendTo)->next = appending->head;
+	appendTo->tail = getLastNode(appending); //Not strictly necessary
 	free(appending);
 	return true;
 }

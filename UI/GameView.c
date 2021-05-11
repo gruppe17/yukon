@@ -86,8 +86,8 @@ unsigned long long writeRow(int row, Deck *columns, int numColumns, char *str){
 char* getRowText(int row, Deck *columns, int numColumns){
 	unsigned long long rowMaxLength =   (numColumns - 1) * strlen(columnSpacer) +
 										numColumns * PLAYING_CARD_MAX_LENGTH_AS_STRING +
-										strlen(rowSuffix) +
-	                                    1; //Terminating null character
+										strlen(rowSuffix);
+
 	char *rowTextBuffer = newString(rowMaxLength);
 	unsigned long long offset = 0;
 	for (int i = 0; i < numColumns; ++i) {
