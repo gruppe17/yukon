@@ -42,7 +42,14 @@ Deck newStandardDeck();
  */
 bool fillDeck(Deck deck);
 
-Deck loadDeckFromFile(Deck deck, char* fileName);
+/**
+ * Frees the memory of the specified deck and all its cards
+ * @param deck the deck to destroy
+ * @author Rasmus Nylander, s205418
+ */
+void destroyDeck(Deck deck);
+
+Deck loadDeckFromFile(char* fileName);
 bool saveDeckToFile(Deck deck, char* fileName);
 
 /**

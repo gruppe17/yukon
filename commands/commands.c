@@ -11,11 +11,19 @@
 
 
 char* LD(Game game, char* filename){
+	if (game == NULL || isStarted(game)){
+		return newStringFromString("Cannot load a new deck");
+	}
 
+	destroyDeck(getDeck(game));
+    if(!filename || strlen(filename) < 0){
+        setDeck(game, newStandardDeck());
+    	return newStringFromString("Loaded a new standard deck");
+    }
+    Deck deck = loadDeckFromFile(filename);
+	if (deck == NULL) return newStringFromString("Could not load deck");
 
-    if(!filename || strlen(filename) < 0)
-        return newStringFromString("You need to specify a filename");
-
+    setDeck(game, deck);
     char out[255] = "Loading deck from file ";
     return strcat(out, filename) ;
 }
