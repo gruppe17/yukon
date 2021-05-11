@@ -82,8 +82,14 @@ char* SR(Game game) {
 }
 
 char* SD(Game game, char *filename) {
+	Deck deck;
+	if (game == NULL || (deck = getDeck(game)) == NULL) return newStringFromString("Game has no deck to save");
     char* output = newString(256);
-    sprintf(output, "Saving deck to file %s", filename);
+	if (!saveDeckToFile(deck, filename)){
+		sprintf(output, "Deck could not be saved to %s", filename);
+		return output;
+	}
+    sprintf(output, "Deck was saved to file %s", filename);
     return output;
 }
 
