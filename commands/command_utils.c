@@ -39,6 +39,7 @@ bool setLastCommand(char* commandString){
 		lastCommand = newString(strlen(commandString));
 	}
 	strcpy(lastCommand, commandString);
+	free(commandString);
 	return true;
 }
 
