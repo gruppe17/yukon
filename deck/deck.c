@@ -31,7 +31,6 @@ bool fillDeck(Deck deck){
 
 void destroyDeck(Deck deck){
 	if (deck == NULL) return;
-	int deckSize = size(deck);
 	while (!isEmpty(deck)){
 		free(pop(deck));
 	}

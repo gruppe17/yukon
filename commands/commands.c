@@ -15,15 +15,13 @@ char* LD(Game game, char* filename){
 		return newStringFromString("Cannot load a new deck");
 	}
 
-	destroyDeck(getDeck(game));
     if(!filename || strlen(filename) < 0){
         setDeck(game, newStandardDeck());
     	return newStringFromString("Loaded a new standard deck");
     }
     Deck deck = loadDeckFromFile(filename);
 	if (deck == NULL) return newStringFromString("Could not load deck");
-
-    setDeck(game, deck);
+	setDeck(game, deck);
     char out[255] = "Loading deck from file ";
     return strcat(out, filename) ;
 }

@@ -107,7 +107,9 @@ Deck getDeck(Game game){
 }
 
 bool setDeck(Game game, Deck deck){
-	if (deck == getDeck(game)) return false;
+	Deck oldDeck = getDeck(game);
+	if (deck == oldDeck) return false;
+	destroyDeck(getDeck(game));
 	game->deck = deck;
 	return true;
 }
