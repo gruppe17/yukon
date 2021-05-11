@@ -27,6 +27,7 @@ char* LD(Game game, char* filename){
 }
 
 char* SW(Game game) {
+	if (isStarted(game)) return newStringFromString("I'm sorry Dave, I'm afraid I can't do that.");
 	char* output = newString(256);
 
 	if (game == NULL || getDeck(game) == NULL){
