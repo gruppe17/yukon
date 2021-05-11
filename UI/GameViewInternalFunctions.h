@@ -85,10 +85,11 @@ char *getCardText(PlayingCard card);
  * Writes the specified finished deck to the specified string
  * @param finished the deck to write to the string
  * @param str the string to write the deck to
+ * @param number the number to write next to the deck
  * @return 	the number of characters written, excluding the terminating
  * 			null character
  */
-unsigned long long writeFinishedDeck(Deck finished, char *str);
+unsigned long long writeFinishedDeck(Deck finished, char *str, int number);
 /**
  * Returns a string representation of the top card in the specified deck
  * if it is not empty, otherwise returns a string containing the hiddenCardText

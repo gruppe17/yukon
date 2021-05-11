@@ -33,6 +33,11 @@ const char hiddenCardText[] = "[]";
  */
 const char rowSuffix[] = "\n";
 /**
+ * The prefix of the header for every finish deck
+ * @author Rasmus Nylander, s205418
+ */
+const char finishedPrefix[] = "F";
+/**
  * Spacer used to separate the columns and the finished decks.
  * @author Rasmus Nylander, s205418
  */

@@ -137,16 +137,16 @@ char* move(Game game, char *from, char *to){
 	else toDeck = columns[columnTo];
 
 	//Should use comparator thingy
-	int deckSize = size(columns[columnFrom]);
-	if (deckSize == 0) return newStringFromString(invalidMove);
+	int deckIndex = size(columns[columnFrom]) - 1;
+	if (deckIndex < 0) return newStringFromString(invalidMove);
 	PlayingCard card;
 	if (fromCard == NULL) card = getLast(columns[columnFrom]);
 	else{
-		for (; deckSize > 0; deckSize--) {
-			card = get(columns[columnFrom], deckSize);
+		for (; deckIndex >= 0; deckIndex--) {
+			card = get(columns[columnFrom], deckIndex);
 			if (!isFaceUp(card)) break;
 			char *cardString = playingCardToString(card);
-			if (strcmp(cardString, fromCard)){
+			if (strcmp(cardString, fromCard) == 0){
 				free(cardString);
 				break;
 			}
@@ -156,7 +156,7 @@ char* move(Game game, char *from, char *to){
 	PlayingCard cardEndTo = getLast(toDeck);
 	if ( (cardEndTo == NULL && getCardSize(card) == 12) ||
 			(getCardSize(cardEndTo) > getCardSize(card) && isDifferentSuit(card, cardEndTo))){
-		append(toDeck, cutEnd(columns[columnFrom], deckSize - 1));
+		append(toDeck, cutEnd(columns[columnFrom], deckIndex));
 		return newStringFromString("Move successful");
 	}
 	return newStringFromString(invalidMove);

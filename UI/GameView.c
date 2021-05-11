@@ -70,7 +70,7 @@ unsigned long long writeColumns(Deck *columns, int numColumns, Deck *finishedDec
 		offset += writeRow(i, columns, numColumns, str+offset);
 		if (i % 2 == 0 && i / 2 < numFinishedDecks) {
 			offset--;
-			offset += writeFinishedDeck(finishedDecks[i / 2] , str + offset);
+			offset += writeFinishedDeck(finishedDecks[i / 2] , str + offset, i / 2);
 		}
 	}
 	return offset;
@@ -118,12 +118,12 @@ int getTallestColumnHeight(Deck *columns, int numColumns){
 	return maxSize;
 }
 
-unsigned long long writeFinishedDeck(Deck finished, char *str){
+unsigned long long writeFinishedDeck(Deck finished, char *str, int number){
 	char* deckString = getFinishedDeckText(finished);
-	unsigned long long length = strlen(deckString) + strlen(finishedColumnSpacer) + strlen(rowSuffix);
-	sprintf(str,"%s%s%s", finishedColumnSpacer, deckString, rowSuffix);
+	//unsigned long long length = strlen(deckString) + strlen(finishedColumnSpacer) + strlen(rowSuffix);
+	sprintf(str,"%s%s%s%s%d%s", finishedColumnSpacer, deckString, columnSpacer, finishedPrefix, number, rowSuffix);
 	free(deckString);
-	return length;
+	return strlen(str);
 }
 
 char* getFinishedDeckText(Deck deck){
