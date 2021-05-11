@@ -164,17 +164,18 @@ Deck getDeckFromColumnText(Game game, char* text){
 	return getColumns(game)[getColumnNumber(text)];
 }
 
-bool cardMayMoveTo(PlayingCard card, Deck to, bool isFinishedDeck){
-	if (card == NULL || to == NULL) return false;
-	PlayingCard toCard = getLast(to);
-	if (isFinishedDeck)
-		return (getCardSize(card) == 0 && toCard == NULL) ||
-				(toCard != NULL && (getCardSize(toCard) == getCardSize(card) - 1) && !isDifferentSuit(toCard, card));
-
-	if ((toCard == NULL && getCardSize(card) == 12)) return true;
-	if ((getCardSize(toCard) > getCardSize(card) && isDifferentSuit(card, toCard))){
-		return true;
+bool cardMayMoveTo(Deck moving, Deck to, bool isFinishedDeck){
+	if (moving == NULL || isEmpty(moving) || to == NULL) return false;
+	PlayingCard toCard = getLast(to), topMoving = poll(moving);
+	if (isFinishedDeck){
+		if (size(moving) > 1) return false;
+		if (toCard == NULL) return getCardSize(topMoving) == 0;
+		if ((getCardSize(topMoving) == getCardSize(toCard) + 1) && !isDifferentSuit(topMoving, toCard)) return true;
+		return false;
 	}
+
+	if (toCard == NULL) return getCardSize(topMoving) == 12;
+	if ((getCardSize(toCard) == getCardSize(topMoving) + 1) && isDifferentSuit(topMoving, toCard)) return true;
 	return false;
 }
 
@@ -210,8 +211,9 @@ char* move(Game game, char *from, char *to){
 			free(cardString);
 		}
 	}
-	if (cardMayMoveTo(card, toDeck, isFinishedColumn(to))){
-		append(toDeck, cutEnd(fromDeck, deckIndex));
+	Deck moving = cutEnd(fromDeck, deckIndex);
+	if (cardMayMoveTo(moving, toDeck, isFinishedColumn(to))){
+		append(toDeck, moving);
 		return newStringFromString("Move successful");
 	}
 	return newStringFromString(invalidMove);
