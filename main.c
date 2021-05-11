@@ -14,7 +14,7 @@
 
 int main() {
 	Game game = newGame();
-	setDeck(game, newStandardDeck());
+	//setDeck(game, newStandardDeck());
 
 	initDisplay(game);
 

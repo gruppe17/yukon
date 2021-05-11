@@ -61,6 +61,7 @@ struct game {
 Game newGame(){
 	Game newGame = malloc(sizeof(struct game));
 	if (newGame == NULL) return NULL;
+	newGame->deck = NULL;
 	for (int i = 0; i < NUM_COLUMNS_IN_GAME; ++i) {
 		newGame->columns[i] = newDeck();
 	}
@@ -112,6 +113,7 @@ bool setDeck(Game game, Deck deck){
 }
 
 Deck* getDeckAsColumns(Game game){
+
 	Deck* deckAsColumns = NULL;
 	while (deckAsColumns == NULL) deckAsColumns = (Deck*) malloc(NUM_COLUMNS_IN_GAME * sizeof(Deck));
 	for (int i = 0; i < NUM_COLUMNS_IN_GAME; ++i) {
@@ -119,6 +121,7 @@ Deck* getDeckAsColumns(Game game){
 	}
 
 	Deck deck = getDeck(game);
+	if (deck == NULL) return deckAsColumns;
 	int deckSize = size(deck);
 	for (int i = 0; i < deckSize; ++i) {
 		add(*(deckAsColumns + (i % NUM_COLUMNS_IN_GAME)), get(deck, i));
