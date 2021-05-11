@@ -172,7 +172,7 @@ bool startGame(Game game){
 	return true;
 }
 
-bool unstartGame(Game game){
+bool unstartGame(Game game) {
 	if (game == NULL || !isStarted(game)) return false;
 	emptyDeckArray(getColumns(game), NUM_COLUMNS_IN_GAME);
 	emptyDeckArray(getFinished(game), PLAYING_CARD_NUM_SUITS);
@@ -184,4 +184,4 @@ bool unstartGame(Game game){
 	}
 	game->hasStarted = true;
 	return true;
-
+}
