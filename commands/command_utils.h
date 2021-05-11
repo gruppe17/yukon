@@ -35,5 +35,13 @@ bool setLastCommand(char* commandString);
 /**
  * Should the program close?
  */
-bool shouldExit;
+bool shouldExit();
+
+/**
+ * Sets should exit to the specified value
+ * @param shouldExit whether the program should exit
+ * @author Rasmus Nylander, s205418
+ */
+void setShouldExit(bool shouldExit);
+
 #endif //YUKON_COMMAND_UI_H

@@ -80,7 +80,7 @@ char* SD(Game game, char *filename) {
 }
 
 char* QQ() {
-    shouldExit = true;
+    setShouldExit(true);
     return newStringFromString("Stopping program");
 }
 

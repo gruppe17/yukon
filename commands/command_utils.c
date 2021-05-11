@@ -42,6 +42,15 @@ bool setLastCommand(char* commandString){
 	return true;
 }
 
+bool _shouldExit = false;
+bool shouldExit(){
+	return _shouldExit;
+}
+
+void setShouldExit(bool shouldExit){
+	_shouldExit = shouldExit;
+}
+
 char *RunCommand(Game game, char *str)
 {
     const char delim[] = " ";

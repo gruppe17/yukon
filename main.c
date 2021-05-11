@@ -18,9 +18,7 @@ int main() {
 
 	initDisplay(game);
 
-    shouldExit = false;
-
-    while(!shouldExit){
+    while(!shouldExit()){
         char *str = ReadString();
         char* commandStr = RunCommand(game, str);
 		displayGame(game, commandStr);
