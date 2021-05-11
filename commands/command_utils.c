@@ -51,66 +51,43 @@ void setShouldExit(bool shouldExit){
 	_shouldExit = shouldExit;
 }
 
-char *RunCommand(Game game, char *str)
-{
-    const char delim[] = " ";
-    char *firstWord = strtok(str, delim);
-    char *secondWord = strtok(NULL, delim);//Todo: This is never freed
+char *RunCommand(Game game, char *str) {
+	char *command = newStringFromString(str);
+	trim(command);
+	const char delim[] = " ";
+	char *firstWord = strtok(command, delim);
+	char *secondWord = strtok(NULL, delim);//Todo: This is never freed
 
-    char *firstWordCpy;
-    if (strlen(firstWord) > 0)
-    {
+	if (strlen(firstWord) < 1) return newStringFromString("You have to write a command!");
 
-        // Remove leading and trailing whitespaces
-        trim(firstWord);
-        trim(secondWord);
+	// Remove leading and trailing whitespaces
+	trim(firstWord);
+	trim(secondWord);
 
-        setLastCommand(firstWord);
-        // add if else ladder here with command checks
-        if (strcmp(lastCommand, COMMAND_LD) == 0)
-        {
-            return LD(game, secondWord);
-        }
-        else if (strcmp(lastCommand, COMMAND_SW) == 0)
-        {
-            return (SW(game));
-        }
-        else if (strcmp(lastCommand, COMMAND_SI) == 0)
-        {
-            return SI(game, secondWord);
-        }
-        else if (strcmp(lastCommand, COMMAND_SR) == 0)
-        {
-            return (SR(game));
-        }
-        else if (strcmp(lastCommand, COMMAND_SD) == 0)
-        {
-            return (SD(game, secondWord));
-        }
-        else if (strcmp(lastCommand, COMMAND_P) == 0)
-        {
-            return (P(game));
-        }
-        else if (strcmp(lastCommand, COMMAND_QQ) == 0)
-        {
-            return (QQ());
-        }
-        else if (strcmp(lastCommand, COMMAND_Q) == 0)
-        {
-            return (Q(game));
-        }
-        else
-        {
-        	secondWord = strtok(NULL, "->");
-        	trim(secondWord);
-	        if (secondWord != NULL && strlen(secondWord) > 0){
-		        return move(game, firstWord, secondWord);
-	        }
-	        return newStringFromString("The command was not found! Try again...");
-        }
-    }
-    else
-    {
-        return newStringFromString("You have to write a command!");
-    }
+	setLastCommand(str);
+	// add if else ladder here with command checks
+	if (strcmp(lastCommand, COMMAND_LD) == 0) {
+		return LD(game, secondWord);
+	} else if (strcmp(lastCommand, COMMAND_SW) == 0) {
+		return (SW(game));
+	} else if (strcmp(lastCommand, COMMAND_SI) == 0) {
+		return SI(game, secondWord);
+	} else if (strcmp(lastCommand, COMMAND_SR) == 0) {
+		return (SR(game));
+	} else if (strcmp(lastCommand, COMMAND_SD) == 0) {
+		return (SD(game, secondWord));
+	} else if (strcmp(lastCommand, COMMAND_P) == 0) {
+		return (P(game));
+	} else if (strcmp(lastCommand, COMMAND_QQ) == 0) {
+		return (QQ());
+	} else if (strcmp(lastCommand, COMMAND_Q) == 0) {
+		return (Q(game));
+	} else {
+		secondWord = strtok(NULL, "->");
+		trim(secondWord);
+		if (secondWord != NULL && strlen(secondWord) > 0) {
+			return move(game, firstWord, secondWord);
+		}
+		return newStringFromString("The command was not found! Try again...");
+	}
 }
