@@ -216,6 +216,8 @@ char* move(Game game, char *from, char *to){
 	if (deckIndex < 0) return newStringFromString(invalidMove);
 	Deck moving = cutEnd(fromDeck, deckIndex); //Suboptimal but still much faster than needed
 	if (cardMayMoveTo(moving, toDeck, isFinishedColumn(to))){
+		PlayingCard exposed = getLast(fromDeck);
+		if (!isFaceUp(exposed)) setFaceUp(exposed, true);
 		append(toDeck, moving);
 		return newStringFromString("Move successful");
 	}
