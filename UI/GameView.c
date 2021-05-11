@@ -42,16 +42,16 @@ char* getHeaderText(int numColumns){
 	unsigned long long headerLength =   numColumns * strlen(columnPrefix) +
 										(numColumns - 1) * strlen(columnSpacer) +
 	                                    numDigitsInRange(1, numColumns + 1, 10) +
-	                                    strlen(headerSuffix) +
-	                                    1; //Terminating null character
-	char *headerText = NULL;
-	while (headerText == NULL) headerText = (char *) malloc ((headerLength + 1) * sizeof(char));
+	                                    strlen(headerSuffix);
+	char *headerText = newString(headerLength);
 
 	unsigned long long offset = 0;
 	for (int i = 0; i < numColumns - 1; ++i) {
-		offset += sprintf_s(headerText + offset, headerLength - offset, "%s%d%s", columnPrefix, i + 1, columnSpacer);
+		//offset += sprintf_s(headerText + offset, headerLength - offset, "%s%d%s", columnPrefix, i + 1, columnSpacer);
+		offset += sprintf(headerText + offset, "%s%d%s", columnPrefix, i + 1, columnSpacer);
 	}
-	sprintf_s(headerText + offset, headerLength - offset, "%s%d%s", columnPrefix, numColumns, headerSuffix);
+	//sprintf_s(headerText + offset, headerLength - offset, "%s%d%s", columnPrefix, numColumns, headerSuffix);
+	sprintf(headerText + offset, "%s%d%s", columnPrefix, numColumns, headerSuffix);
 	return headerText;
 }
 
@@ -68,7 +68,7 @@ unsigned long long writeColumns(Deck *columns, int numColumns, Deck *finishedDec
 		offset += writeRow(i, columns, numColumns, str+offset);
 		if (i % 2 == 0 && i / 2 < numFinishedDecks) {
 			offset--;
-			offset += writeFinishedDeck(finishedDecks[i / 2] , str + offset);
+			offset += writeFinishedDeck(finishedDecks[i / 2] , str + offset, i / 2 + 1);
 		}
 	}
 	return offset;
@@ -86,16 +86,18 @@ unsigned long long writeRow(int row, Deck *columns, int numColumns, char *str){
 char* getRowText(int row, Deck *columns, int numColumns){
 	unsigned long long rowMaxLength =   (numColumns - 1) * strlen(columnSpacer) +
 										numColumns * PLAYING_CARD_MAX_LENGTH_AS_STRING +
-										strlen(rowSuffix) +
-	                                    1; //Terminating null character
+										strlen(rowSuffix);
+
 	char *rowTextBuffer = newString(rowMaxLength);
 	unsigned long long offset = 0;
 	for (int i = 0; i < numColumns; ++i) {
 		char * cardText = getCardText(get(columns[i], row));
-		offset += sprintf_s(rowTextBuffer + offset, rowMaxLength - offset, "%s%s", cardText, columnSpacer);
+		//offset += sprintf_s(rowTextBuffer + offset, rowMaxLength - offset, "%s%s", cardText, columnSpacer);
+		offset += sprintf(rowTextBuffer + offset, "%s%s", cardText, columnSpacer);
 		free(cardText);
 	}
-	sprintf_s(rowTextBuffer + offset - 1, rowMaxLength - offset + 1, "%s", rowSuffix); //Remove last column spacer and write suffix
+	//sprintf_s(rowTextBuffer + offset - 1, rowMaxLength - offset + 1, "%s", rowSuffix); //Remove last column spacer and write suffix
+	sprintf(rowTextBuffer + offset - 1, "%s", rowSuffix); //Remove last column spacer and write suffix
 	return realloc(rowTextBuffer, offset + 1);
 }
 
@@ -114,16 +116,16 @@ int getTallestColumnHeight(Deck *columns, int numColumns){
 	return maxSize;
 }
 
-unsigned long long writeFinishedDeck(Deck finished, char *str){
+unsigned long long writeFinishedDeck(Deck finished, char *str, int number){
 	char* deckString = getFinishedDeckText(finished);
-	unsigned long long length = strlen(deckString) + strlen(finishedColumnSpacer) + strlen(rowSuffix);
-	sprintf(str,"%s%s%s", finishedColumnSpacer, deckString, rowSuffix);
+	//unsigned long long length = strlen(deckString) + strlen(finishedColumnSpacer) + strlen(rowSuffix);
+	sprintf(str,"%s%s%s%s%d%s", finishedColumnSpacer, deckString, columnSpacer, finishedPrefix, number, rowSuffix);
 	free(deckString);
-	return length;
+	return strlen(str);
 }
 
 char* getFinishedDeckText(Deck deck){
-	PlayingCard card = poll(deck);
+	PlayingCard card = getLast(deck);
 	if (card == NULL) return strcpy(newString(strlen(hiddenCardText)), hiddenCardText);
 	return playingCardToString(card);
 }

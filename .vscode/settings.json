@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "command_ui.h": "c",
+        "user_input.h": "c"
+    }
+}

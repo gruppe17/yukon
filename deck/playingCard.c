@@ -6,6 +6,7 @@
 #include <string.h>
 #include "playingCard.h"
 #include "../utils/integerUtils.h"
+#include "../utils/strutils.h"
 
 #define BITS_FOR_SUITS 2
 #define BITS_FOR_CARDS_IN_SUIT 4
@@ -42,6 +43,14 @@ bool setFaceUp(PlayingCard card, bool up){
 	return true;
 }
 
+int getCardSize(PlayingCard card){
+	return card->number;
+}
+
+bool isDifferentSuit(PlayingCard cardA, PlayingCard cardB){
+	return cardA->suit != cardB->suit;
+}
+
 bool flipPlayingCard(PlayingCard card){
 	return setFaceUp(card, !isFaceUp(card));
 }
@@ -69,10 +78,9 @@ char* playingCardToString(PlayingCard card){
 
 //This should also use a dictionary or something
 char* playingCardSuitToString(PlayingCard card){
-	char *suitString = malloc(sizeof(char) * 2);
-	if (suitString == NULL) return NULL;
-	*(suitString + 1) = 0;
-	
+	char *suitString = newString(2);
+	writePlayingCardSuitToString(card, suitString);
+	return suitString;
 }
 
 void writePlayingCardSuitToString(PlayingCard card, char *string){
@@ -97,8 +105,7 @@ void writePlayingCardSuitToString(PlayingCard card, char *string){
 char* playingCardNumberToString(PlayingCard card){
 	int stringLength = 1;
 	if (card->number == 9) stringLength++;
-	char *numberString = malloc(stringLength * sizeof(char) + 1);
-	if (numberString == NULL) return NULL;
+	char *numberString = newString(stringLength);
 
 	*(numberString + stringLength) = 0;
 	writePlayingCardNumberToString(card, numberString);

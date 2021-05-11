@@ -5,28 +5,24 @@
 
 // Project includes
 #include "deck/deck.h"
-#include "commands/command_ui.h"
+#include "commands/command_utils.h"
 #include "utils/strutils.h"
 #include "game/game.h"
 #include "UI/GameView.h"
+#include "UI/user_interface.h"
 
 
 int main() {
+	setbuf(stdout, 0);
 	Game game = newGame();
-	setDeck(game, newStandardDeck());
-	shuffle(getDeck(game));
-	dealCards(game);
 
-	char* string = gameToDisplayString(game);
-	printf("%s", string);
+	initDisplay(game);
 
-    PrintConsoleMenu("Welcome to Yukon!");
-
-    shouldExit = false;
-
-    while(!shouldExit){
+    while(!shouldExit()){
         char *str = ReadString();
-        GetCommandFromString(str);
+        char* commandStr = RunCommand(game, str);
+		displayGame(game, commandStr);
+		free(commandStr);
     }
 
 	return 0;

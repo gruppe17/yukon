@@ -29,6 +29,18 @@ bool fillDeck(Deck deck){
 	return true;
 }
 
+void destroyDeck(Deck deck){
+	if (deck == NULL) return;
+	while (!isEmpty(deck)){
+		free(pop(deck));
+	}
+	free(deck);
+}
+
+Deck loadDeckFromFile(char* fileName){
+	return NULL;
+}
+
 bool saveDeckToFile(Deck deck, char* fileName){
 	return false;
 }

@@ -29,6 +29,10 @@ typedef struct playingCard* PlayingCard;
  */
 PlayingCard newCard(unsigned char suit, unsigned char number);
 
+int getCardSize(PlayingCard card);
+
+bool isDifferentSuit(PlayingCard cardA, PlayingCard cardB);
+
 /**
  * Returns a boolean indicating whether the specified card is face up
  * @param card the PlayingCard to determine if face up or not
@@ -78,7 +82,6 @@ char* playingCardSuitToString(PlayingCard card);
  * @author Rasmus Nylander, s205418
  */
 char* playingCardNumberToString(PlayingCard card);
-
 
 
 #endif //YUKON_PLAYINGCARD_H

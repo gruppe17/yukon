@@ -33,6 +33,7 @@ LinkedList* newLinkedList(){
 	//Tail is no longer used. It is in part maintained however.
 	//Todo: determine whether to implement tail completely or scrap it.
 	linkedList->tail = NULL;
+	linkedList->comparator = NULL;
 }
 
 bool hasComparator(LinkedList *linkedList){
@@ -88,10 +89,11 @@ Node** getNodePtrPtr(LinkedList *linkedList, int index){
 }
 
 Node* getLastNode(LinkedList *linkedList){
-	Node **tracer = &linkedList->head;
+	Node **tracer = &linkedList->tail;
 	while ((*tracer) && (*tracer)->next != NULL){
 		tracer = &(*tracer)->next;
 	}
+	if(tracer != &linkedList->tail) linkedList->tail = *tracer;
 	return *tracer;
 	//return linkedList->tail;
 }
@@ -112,8 +114,8 @@ bool add(LinkedList *linkedList, void* t){
 bool append(LinkedList *appendTo, LinkedList *appending){
 	if (appendTo->size == 0) return appendToEmpty(appendTo, appending);
 	appendTo->size += appending->size;
-	appendTo->tail->next = appending->head;
-	appendTo->tail = appending->tail;
+	getLastNode(appendTo)->next = appending->head;
+	appendTo->tail = getLastNode(appending); //Not strictly necessary
 	free(appending);
 	return true;
 }
@@ -214,7 +216,7 @@ bool insertAt(LinkedList *linkedList, void *t, int index){
 
 LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex){
 	if (startIndex > endIndex || startIndex < 0 || endIndex >= linkedList->size) return NULL;
-	LinkedList* newList = (LinkedList*) malloc(sizeof(LinkedList));
+	LinkedList* newList = newLinkedList();
 	if (newList == NULL) return NULL;
 
 	//Find the start of the new list
@@ -230,9 +232,12 @@ LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex){
 	}
 	*cut = (*tracer)->next;
 	newList->tail = *tracer;
-	newList->tail->next = NULL;
+	if (newList->tail != NULL)
+		newList->tail->next = NULL;
+	else newList->tail = newList->head;
 	newList->size = endIndex - startIndex + 1;
 	linkedList->size -= newList->size;
+	linkedList->tail = linkedList->head;
 	return newList;
 }
 
@@ -369,11 +374,17 @@ bool mergeSorted(LinkedList *linkedList, int startIndex, int endIndex, int midPo
 }
 
 bool clearList(LinkedList *linkedList){
-	if (isEmpty(linkedList)) return false;
+	bool changed = false;
 	while (!isEmpty(linkedList)){
 		pop(linkedList);
+		changed = true;
 	}
-	return true;
+	if (linkedList->head != NULL || linkedList->tail != NULL){
+		linkedList->head = NULL;
+		linkedList->tail = NULL;
+		changed = true;
+	}
+	return changed;
 }
 
 void destroyList(LinkedList *linkedList){
