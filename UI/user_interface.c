@@ -11,6 +11,7 @@ const char consoleMenuText[] = "Last command: %s\nMessage: %s\nInput:> ";
 const int numVariablesConsoleMenuText = 2;
 
 void displayGame(Game game, char* commandStr) {
+	system("cls");
 	char *stringGame = gameToDisplayString(game), *stringMenu = consoleMenuString(commandStr);
 	printf("%s%s", stringGame, stringMenu);
 	free(stringGame);
