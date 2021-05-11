@@ -88,6 +88,6 @@ char *RunCommand(Game game, char *str) {
 		if (secondWord != NULL && strlen(secondWord) > 0) {
 			return move(game, firstWord, secondWord);
 		}
-		return newStringFromString("The command was not found! Try again...");
 	}
+	return newStringFromString("The command was not found! Try again...");
 }
