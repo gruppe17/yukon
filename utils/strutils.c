@@ -10,6 +10,7 @@
 #define MAX_STRING_LENGTH 16384
 
 void trim(char * string) {
+	if (string == NULL) return;
     char *p = string;
 
     if(!p)

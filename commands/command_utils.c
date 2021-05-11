@@ -103,7 +103,7 @@ char *RunCommand(Game game, char *str)
         {
         	secondWord = strtok(NULL, "->");
         	trim(secondWord);
-	        if (strlen(secondWord) > 0){
+	        if (secondWord != NULL && strlen(secondWord) > 0){
 		        return move(game, firstWord, secondWord);
 	        }
 	        return newStringFromString("The command was not found! Try again...");

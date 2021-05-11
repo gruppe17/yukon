@@ -135,24 +135,25 @@ char* getColumnPrefix(char* column){
 }
 
 bool isValidMoveSyntax(char* fromColumn, char *card, char *to){
+	bool isValid = true;
 	char *fromColumnPrefix = getColumnPrefix(fromColumn);
 	char *toPrefix = getColumnPrefix(to);
 	if (!isValidColumnPrefix(fromColumnPrefix) || !isValidColumnPrefix(toPrefix)) {
 		free(fromColumnPrefix);
 		free(toPrefix);
-		return false;
+		isValid = false;
 	}
-	if (!isValidColumnNumber(getColumnNumber(fromColumn), isFinishedPrefix(fromColumn)) ||
-	    !isValidColumnNumber(getColumnNumber(to), isFinishedPrefix(to))) {
-		free(fromColumnPrefix);
-		free(toPrefix);
-		return false;
+	if (isValid &&
+		(!isValidColumnNumber(getColumnNumber(fromColumn), isFinishedPrefix(fromColumn)) ||
+	    !isValidColumnNumber(getColumnNumber(to), isFinishedPrefix(to)))) {
+		isValid = false;
 	}
+	if (isValid && strcmp(fromColumn, to) == 0) isValid = false;
+
 	free(fromColumnPrefix);
 	free(toPrefix);
-	if (strcmp(fromColumn, to) == 0) return false;
 
-	return true;
+	return isValid;
 }
 
 Deck getDeckFromColumnText(Game game, char* text){
