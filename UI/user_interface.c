@@ -6,12 +6,18 @@
 #include "../utils/strutils.h"
 #include "../commands/command_utils.h"
 #include <string.h>
+#include <windows.h>
 
 const char consoleMenuText[] = "Last command: %s\nMessage: %s\nInput:> ";
 const int numVariablesConsoleMenuText = 2;
 
-void displayGame(Game game, char* commandStr) {
+void clearScreen(){
 	system("cls");
+	Sleep(25);
+}
+
+void displayGame(Game game, char* commandStr) {
+	clearScreen();
 	char *stringGame = gameToDisplayString(game), *stringMenu = consoleMenuString(commandStr);
 	printf("%s%s", stringGame, stringMenu);
 	free(stringGame);
