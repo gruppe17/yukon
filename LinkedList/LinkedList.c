@@ -374,11 +374,17 @@ bool mergeSorted(LinkedList *linkedList, int startIndex, int endIndex, int midPo
 }
 
 bool clearList(LinkedList *linkedList){
-	if (isEmpty(linkedList)) return false;
+	bool changed = false;
 	while (!isEmpty(linkedList)){
 		pop(linkedList);
+		changed = true;
 	}
-	return true;
+	if (linkedList->head != NULL || linkedList->tail != NULL){
+		linkedList->head = NULL;
+		linkedList->tail = NULL;
+		changed = true;
+	}
+	return changed;
 }
 
 void destroyList(LinkedList *linkedList){
