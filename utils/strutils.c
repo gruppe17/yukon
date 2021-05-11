@@ -21,6 +21,8 @@ void trim(char * string) {
     while (isspace(p[l - 1])) p[--l] = 0;
     while (*p && isspace(*p)) ++p, --l;
 
+	if (l == strlen(string)) return;
+
     memmove(string, p, l + 1);
 }
 

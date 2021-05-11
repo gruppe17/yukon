@@ -15,7 +15,6 @@
 int main() {
 	setbuf(stdout, 0);
 	Game game = newGame();
-	//setDeck(game, newStandardDeck());
 
 	initDisplay(game);
 

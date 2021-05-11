@@ -233,8 +233,10 @@ LinkedList* cutList(LinkedList *linkedList, int startIndex, int endIndex){
 	newList->tail = *tracer;
 	if (newList->tail != NULL)
 		newList->tail->next = NULL;
+	else newList->tail = newList->head;
 	newList->size = endIndex - startIndex + 1;
 	linkedList->size -= newList->size;
+	linkedList->tail = linkedList->head;
 	return newList;
 }
 

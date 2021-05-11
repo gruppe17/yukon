@@ -108,6 +108,7 @@ char* Q(Game game)  {
 const char *invalidMove = "Invalid move";
 const char *moveDelimiter = ":";
 
+
 bool isFinishedPrefix(char *prefix){
 	return strcmp(prefix, finishedPrefix) == 0;
 }
@@ -117,8 +118,15 @@ bool isValidColumnPrefix(char* prefix){
 	return false;
 }
 
+char* getColumnPrefix(char* column){
+	//todo: should be more intelligent
+	char *prefix = newString(1);
+	prefix[0] = toupper(column[0]);
+	return prefix;
+}
+
 int getColumnNumber(char *column){
-	return atoi(&column[strlen(columnPrefix)]);
+	return atoi(&column[strlen(columnPrefix)]) - 1;
 }
 
 bool isValidColumnNumber(int number, bool isFinishedDeck){
@@ -127,46 +135,44 @@ bool isValidColumnNumber(int number, bool isFinishedDeck){
 	return number < NUM_COLUMNS_IN_GAME;
 }
 
-char* getColumnPrefix(char* column){
-	//todo: should be more intelligent
-	char *prefix = newString(1);
-	prefix[0] = toupper(column[0]);
-	return prefix;
+bool isFinishedColumn(char *columnText){
+	char* prefix = getColumnPrefix(columnText);
+	bool isFinished = isFinishedPrefix(prefix);
+	free(prefix);
+	return isFinished;
+}
+
+bool isValidColumn(char *column){
+	char *prefix = getColumnPrefix(column);
+	bool isValid = isValidColumnPrefix(prefix);
+	if (isValid && !isValidColumnNumber(getColumnNumber(column), isFinishedPrefix(prefix))) isValid = false;
+	free(prefix);
+	return isValid;
 }
 
 bool isValidMoveSyntax(char* fromColumn, char *card, char *to){
 	bool isValid = true;
-	char *fromColumnPrefix = getColumnPrefix(fromColumn);
-	char *toPrefix = getColumnPrefix(to);
-	if (!isValidColumnPrefix(fromColumnPrefix) || !isValidColumnPrefix(toPrefix)) {
-		free(fromColumnPrefix);
-		free(toPrefix);
-		isValid = false;
-	}
-	if (isValid &&
-		(!isValidColumnNumber(getColumnNumber(fromColumn), isFinishedPrefix(fromColumn)) ||
-	    !isValidColumnNumber(getColumnNumber(to), isFinishedPrefix(to)))) {
-		isValid = false;
-	}
+	if (!isValidColumn(fromColumn) || !isValidColumn(to)) isValid = false;
 	if (isValid && strcmp(fromColumn, to) == 0) isValid = false;
-
-	free(fromColumnPrefix);
-	free(toPrefix);
-
 	return isValid;
 }
 
 Deck getDeckFromColumnText(Game game, char* text){
-	if (isFinishedPrefix(getColumnPrefix(text))){
+	if (isFinishedColumn(text)){
 		return getFinished(game)[getColumnNumber(text)];
 	}
 	return getColumns(game)[getColumnNumber(text)];
 }
 
-bool cardMayMoveTo(PlayingCard card, PlayingCard to){
-	if (card == NULL) return false;
-	if ( (to == NULL && getCardSize(card) == 12)) return true;
-	if ((getCardSize(to) > getCardSize(card) && isDifferentSuit(card, to))){
+bool cardMayMoveTo(PlayingCard card, Deck to, bool isFinishedDeck){
+	if (card == NULL || to == NULL) return false;
+	PlayingCard toCard = getLast(to);
+	if (isFinishedDeck)
+		return (getCardSize(card) == 0 && toCard == NULL) ||
+				(toCard != NULL && (getCardSize(toCard) == getCardSize(card) - 1) && !isDifferentSuit(toCard, card));
+
+	if ((toCard == NULL && getCardSize(card) == 12)) return true;
+	if ((getCardSize(toCard) > getCardSize(card) && isDifferentSuit(card, toCard))){
 		return true;
 	}
 	return false;
@@ -204,8 +210,7 @@ char* move(Game game, char *from, char *to){
 			free(cardString);
 		}
 	}
-	PlayingCard cardEndTo = getLast(toDeck);
-	if (cardMayMoveTo(card, cardEndTo)){
+	if (cardMayMoveTo(card, toDeck, isFinishedColumn(to))){
 		append(toDeck, cutEnd(fromDeck, deckIndex));
 		return newStringFromString("Move successful");
 	}

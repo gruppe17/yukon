@@ -23,7 +23,7 @@
  * @author Tobias Maneschijn, s205422
  */
 char* lastCommand;
-int lastCommandBufferSize = -1;
+int lastCommandBufferSize = 0;
 
 char* getLastCommand(){
 	if (lastCommand == NULL) lastCommand = newString(0);
