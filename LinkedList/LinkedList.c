@@ -88,10 +88,11 @@ Node** getNodePtrPtr(LinkedList *linkedList, int index){
 }
 
 Node* getLastNode(LinkedList *linkedList){
-	Node **tracer = &linkedList->head;
+	Node **tracer = &linkedList->tail;
 	while ((*tracer) && (*tracer)->next != NULL){
 		tracer = &(*tracer)->next;
 	}
+	if(tracer != &linkedList->tail) linkedList->tail = *tracer;
 	return *tracer;
 	//return linkedList->tail;
 }
