@@ -42,10 +42,8 @@ char* getHeaderText(int numColumns){
 	unsigned long long headerLength =   numColumns * strlen(columnPrefix) +
 										(numColumns - 1) * strlen(columnSpacer) +
 	                                    numDigitsInRange(1, numColumns + 1, 10) +
-	                                    strlen(headerSuffix) +
-	                                    1; //Terminating null character
-	char *headerText = NULL;
-	while (headerText == NULL) headerText = (char *) malloc ((headerLength + 1) * sizeof(char));
+	                                    strlen(headerSuffix);
+	char *headerText = newString(headerLength);
 
 	unsigned long long offset = 0;
 	for (int i = 0; i < numColumns - 1; ++i) {
@@ -70,7 +68,7 @@ unsigned long long writeColumns(Deck *columns, int numColumns, Deck *finishedDec
 		offset += writeRow(i, columns, numColumns, str+offset);
 		if (i % 2 == 0 && i / 2 < numFinishedDecks) {
 			offset--;
-			offset += writeFinishedDeck(finishedDecks[i / 2] , str + offset, i / 2);
+			offset += writeFinishedDeck(finishedDecks[i / 2] , str + offset, i / 2 + 1);
 		}
 	}
 	return offset;

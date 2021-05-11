@@ -5,9 +5,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "commands.h"
 #include "command_utils.h"
 #include "../utils/strutils.h"
+#include "../UI/GameViewConstants.h"
 
 
 char* LD(Game game, char* filename){
@@ -27,13 +29,9 @@ char* LD(Game game, char* filename){
 }
 
 char* SW(Game game) {
+	if (game == NULL || getDeck(game) == NULL) return newStringFromString("Game has no deck and thus its cards cannot be shown");
 	if (isStarted(game)) return newStringFromString("I'm sorry Dave, I'm afraid I can't do that.");
-	char* output = newString(256);
 
-	if (game == NULL || getDeck(game) == NULL){
-		sprintf(output, "Game has no deck and thus its cards cannot be shown");
-		return output;
-	}
 	Deck deck = getDeck(game);
 	int deckSize = size(deck);
 	for (int i = 0; i < deckSize; ++i) {
@@ -110,40 +108,92 @@ char* Q(Game game)  {
 const char *invalidMove = "Invalid move";
 const char *moveDelimiter = ":";
 
+bool isFinishedPrefix(char *prefix){
+	return strcmp(prefix, finishedPrefix) == 0;
+}
 
+bool isValidColumnPrefix(char* prefix){
+	if (strcmp(prefix, columnPrefix) == 0 || isFinishedPrefix(prefix)) return true;
+	return false;
+}
+
+int getColumnNumber(char *column){
+	return atoi(&column[strlen(columnPrefix)]);
+}
+
+bool isValidColumnNumber(int number, bool isFinishedDeck){
+	if (number < 0) return false;
+	if (isFinishedDeck) return number < PLAYING_CARD_NUM_SUITS;
+	return number < NUM_COLUMNS_IN_GAME;
+}
+
+char* getColumnPrefix(char* column){
+	//todo: should be more intelligent
+	char *prefix = newString(1);
+	prefix[0] = toupper(column[0]);
+	return prefix;
+}
+
+bool isValidMoveSyntax(char* fromColumn, char *card, char *to){
+	char *fromColumnPrefix = getColumnPrefix(fromColumn);
+	char *toPrefix = getColumnPrefix(to);
+	if (!isValidColumnPrefix(fromColumnPrefix) || !isValidColumnPrefix(toPrefix)) {
+		free(fromColumnPrefix);
+		free(toPrefix);
+		return false;
+	}
+	if (!isValidColumnNumber(getColumnNumber(fromColumn), isFinishedPrefix(fromColumn)) ||
+	    !isValidColumnNumber(getColumnNumber(to), isFinishedPrefix(to))) {
+		free(fromColumnPrefix);
+		free(toPrefix);
+		return false;
+	}
+	free(fromColumnPrefix);
+	free(toPrefix);
+	if (strcmp(fromColumn, to) == 0) return false;
+
+	return true;
+}
+
+Deck getDeckFromColumnText(Game game, char* text){
+	if (isFinishedPrefix(getColumnPrefix(text))){
+		return getFinished(game)[getColumnNumber(text)];
+	}
+	return getColumns(game)[getColumnNumber(text)];
+}
+
+bool cardMayMoveTo(PlayingCard card, PlayingCard to){
+	if (card == NULL) return false;
+	if ( (to == NULL && getCardSize(card) == 12)) return true;
+	if ((getCardSize(to) > getCardSize(card) && isDifferentSuit(card, to))){
+		return true;
+	}
+	return false;
+}
+
+//This should be done much better but there is no time
 char* move(Game game, char *from, char *to){
 	if (!isStarted(game)) return newStringFromString("Cannot make a move before game has begun");
-	//This should be done much better but there is no time
-	if ((from[0] != 'C' && from[0] != 'F') || (to[0] != 'C' && to[0] != 'F')) return newStringFromString(invalidMove);
 
 	char * fromColumn = strtok(from, moveDelimiter);
 	char * fromCard = strtok(NULL, moveDelimiter);
+	//char * toColumn = strtok(to, moveDelimiter);
+	trim(fromColumn);
+	trim(fromCard);
+	trim(to);
 
-	char * toColumn = strtok(to, moveDelimiter);
-	if (strcmp(fromColumn, toColumn) == 0) return newStringFromString(invalidMove);
+	if (!isValidMoveSyntax(from, fromCard, to)) return newStringFromString(invalidMove);
 
-	int columnFrom = atoi(&fromColumn[1]) - 1;
-	int columnTo = atoi(&toColumn[1]) - 1;
-	if (columnFrom < 0 || columnTo < 0 || columnFrom > NUM_COLUMNS_IN_GAME || columnTo > NUM_COLUMNS_IN_GAME)
-		return newStringFromString(invalidMove);
-	if ((from[0] == 'F' && columnFrom > PLAYING_CARD_NUM_SUITS) || (to[0] == 'F' && columnTo > PLAYING_CARD_NUM_SUITS))
-		return newStringFromString(invalidMove);
-
-	Deck* columns = getColumns(game);
-	Deck toDeck;
-	if (toColumn[0] == 'F'){
-		toDeck = getFinished(game)[columnTo];
-	}
-	else toDeck = columns[columnTo];
-
+	Deck toDeck = getDeckFromColumnText(game, to);
+	Deck fromDeck = getDeckFromColumnText(game, fromColumn);
 	//Should use comparator thingy
-	int deckIndex = size(columns[columnFrom]) - 1;
+	int deckIndex = size(fromDeck) - 1;
 	if (deckIndex < 0) return newStringFromString(invalidMove);
 	PlayingCard card;
-	if (fromCard == NULL) card = getLast(columns[columnFrom]);
+	if (fromCard == NULL) card = getLast(fromDeck);
 	else{
 		for (; deckIndex >= 0; deckIndex--) {
-			card = get(columns[columnFrom], deckIndex);
+			card = get(fromDeck, deckIndex);
 			if (!isFaceUp(card)) break;
 			char *cardString = playingCardToString(card);
 			if (strcmp(cardString, fromCard) == 0){
@@ -154,9 +204,8 @@ char* move(Game game, char *from, char *to){
 		}
 	}
 	PlayingCard cardEndTo = getLast(toDeck);
-	if ( (cardEndTo == NULL && getCardSize(card) == 12) ||
-			(getCardSize(cardEndTo) > getCardSize(card) && isDifferentSuit(card, cardEndTo))){
-		append(toDeck, cutEnd(columns[columnFrom], deckIndex));
+	if (cardMayMoveTo(card, cardEndTo)){
+		append(toDeck, cutEnd(fromDeck, deckIndex));
 		return newStringFromString("Move successful");
 	}
 	return newStringFromString(invalidMove);
