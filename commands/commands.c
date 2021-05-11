@@ -214,10 +214,11 @@ char* move(Game game, char *from, char *to){
 	//Should use comparator thingy
 	int deckIndex = deckIndexFromCardString(fromDeck, fromCard);
 	if (deckIndex < 0) return newStringFromString(invalidMove);
-	Deck moving = cutEnd(fromDeck, deckIndex);
+	Deck moving = cutEnd(fromDeck, deckIndex); //Suboptimal but still much faster than needed
 	if (cardMayMoveTo(moving, toDeck, isFinishedColumn(to))){
 		append(toDeck, moving);
 		return newStringFromString("Move successful");
 	}
+	append(fromDeck, moving);
 	return newStringFromString(invalidMove);
 }
